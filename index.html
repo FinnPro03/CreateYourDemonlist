@@ -1,2306 +1,2315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreateYourDemonlist</title>
 
-    <title>CreateYourDemonlist</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #0b0d12;
+        color: #f4f6fb;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
+    button,
+    input {
+        font: inherit;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    /* HEADER */
+
+    header {
+        height: 68px;
+        background: #11151d;
+        border-bottom: 1px solid #252b38;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    .logo {
+        font-size: 21px;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .logo span {
+        color: #ff334d;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .header-btn {
+        background: #1a202b;
+        border: 1px solid #2c3442;
+        color: #fff;
+        padding: 9px 13px;
+        border-radius: 9px;
+    }
+
+    .header-btn:hover {
+        background: #222a37;
+    }
+
+    /* PROFILE SETUP */
+
+    .setup-screen {
+        min-height: calc(100vh - 68px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 25px;
+    }
+
+    .setup-card {
+        width: min(500px, 100%);
+        background: #11151d;
+        border: 1px solid #292f3b;
+        border-radius: 18px;
+        padding: 35px;
+        text-align: center;
+        box-shadow: 0 20px 70px rgba(0,0,0,.35);
+    }
+
+    .setup-icon {
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        background: #ff334d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 34px;
+        font-weight: 900;
+    }
+
+    .setup-card h1 {
+        margin: 0 0 10px;
+    }
+
+    .setup-card p {
+        color: #929aaa;
+        line-height: 1.5;
+    }
+
+    .username-input {
+        width: 100%;
+        margin-top: 20px;
+        background: #0b0e14;
+        color: white;
+        border: 1px solid #303746;
+        padding: 14px;
+        border-radius: 10px;
+        outline: none;
+    }
+
+    .username-input:focus {
+        border-color: #ff334d;
+    }
+
+    .primary-btn {
+        background: #ff334d;
+        color: white;
+        border: none;
+        padding: 13px 18px;
+        border-radius: 10px;
+        font-weight: 700;
+    }
+
+    .primary-btn:hover {
+        background: #ff4d63;
+    }
+
+    .setup-card .primary-btn {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    /* APP */
+
+    .app {
+        min-height: calc(100vh - 68px);
+        display: flex;
+    }
+
+    .sidebar {
+        width: 275px;
+        flex-shrink: 0;
+        background: #0f131a;
+        border-right: 1px solid #252b36;
+        padding: 20px;
+        min-height: calc(100vh - 68px);
+    }
+
+    .profile-box {
+        background: #171c25;
+        border: 1px solid #292f3a;
+        border-radius: 13px;
+        padding: 14px;
+        margin-bottom: 20px;
+    }
+
+    .profile-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #ff334d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 18px;
+    }
+
+    .profile-name {
+        font-weight: 800;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .profile-count {
+        font-size: 12px;
+        color: #8992a2;
+        margin-top: 4px;
+    }
+
+    .sidebar-title {
+        color: #7f8898;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 800;
+        margin: 20px 4px 8px;
+        letter-spacing: .8px;
+    }
+
+    .list-item {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: #d8dce5;
+        padding: 11px;
+        border-radius: 8px;
+        text-align: left;
+        margin-bottom: 3px;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .list-item:hover {
+        background: #191f29;
+    }
+
+    .list-item.active {
+        background: #252c38;
+        color: white;
+    }
+
+    .list-item-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .list-number {
+        color: #737c8d;
+        font-size: 12px;
+    }
+
+    .new-list-btn {
+        width: 100%;
+        background: #171d27;
+        border: 1px dashed #394252;
+        color: #b9c0cc;
+        padding: 11px;
+        border-radius: 9px;
+        margin-top: 8px;
+    }
+
+    .new-list-btn:hover {
+        background: #202733;
+    }
+
+    /* MAIN */
+
+    main {
+        flex: 1;
+        min-width: 0;
+        padding: 30px;
+    }
+
+    .welcome {
+        color: #8992a2;
+        margin-bottom: 25px;
+    }
+
+    .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .list-title {
+        font-size: 30px;
+        margin: 0;
+        word-break: break-word;
+    }
+
+    .list-actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .secondary-btn {
+        background: #171d27;
+        border: 1px solid #303847;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 9px;
+    }
+
+    .secondary-btn:hover {
+        background: #222936;
+    }
+
+    .danger-btn {
+        background: #27151a;
+        border: 1px solid #5b2631;
+        color: #ff8997;
+        padding: 10px 14px;
+        border-radius: 9px;
+    }
+
+    .danger-btn:hover {
+        background: #35191f;
+    }
+
+    .empty {
+        border: 1px dashed #343c4a;
+        border-radius: 14px;
+        padding: 55px 20px;
+        text-align: center;
+        color: #808999;
+    }
+
+    .empty strong {
+        display: block;
+        color: #cbd0da;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    /* LEVEL TABLE */
+
+    .level-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .level-row {
+        min-height: 82px;
+        background: #11161e;
+        border: 1px solid #252c38;
+        border-radius: 12px;
+        display: grid;
+        grid-template-columns: 55px 76px minmax(0, 1fr) 100px 90px 130px;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+    }
+
+    .level-row:hover {
+        border-color: #343d4c;
+    }
+
+    .rank {
+        font-size: 21px;
+        font-weight: 900;
+        text-align: center;
+        color: #929aaa;
+    }
+
+    .level-thumb {
+        width: 76px;
+        height: 52px;
+        border-radius: 7px;
+        object-fit: cover;
+        background: #202630;
+    }
+
+    .level-name {
+        font-weight: 800;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .level-creator {
+        color: #7f8898;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .points {
+        font-weight: 900;
+        color: #ffd15c;
+        text-align: right;
+    }
+
+    .source {
+        color: #778092;
+        font-size: 11px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .level-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 5px;
+    }
+
+    .small-btn {
+        background: #1b212b;
+        border: 1px solid #303847;
+        color: white;
+        border-radius: 7px;
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    .small-btn:hover {
+        background: #272f3b;
+    }
+
+    /* MODAL */
+
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.72);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        z-index: 100;
+    }
+
+    .modal {
+        width: min(700px, 100%);
+        max-height: 90vh;
+        overflow-y: auto;
+        background: #11161e;
+        border: 1px solid #2b333f;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 30px 100px rgba(0,0,0,.55);
+    }
+
+    .modal h2 {
+        margin-top: 0;
+    }
+
+    .modal-close {
+        float: right;
+        background: transparent;
+        border: none;
+        color: #8d96a6;
+        font-size: 23px;
+    }
+
+    .form-label {
+        display: block;
+        color: #aeb5c1;
+        font-size: 13px;
+        font-weight: 700;
+        margin: 14px 0 6px;
+    }
+
+    .form-input {
+        width: 100%;
+        background: #0b0f15;
+        border: 1px solid #303846;
+        border-radius: 9px;
+        color: white;
+        padding: 12px;
+        outline: none;
+    }
+
+    .form-input:focus {
+        border-color: #ff334d;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    /* SEARCH */
+
+    .search-box {
+        display: flex;
+        gap: 8px;
+    }
+
+    .search-box input {
+        flex: 1;
+    }
+
+    .search-results {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .search-result {
+        width: 100%;
+        background: #171d26;
+        border: 1px solid #29313e;
+        border-radius: 10px;
+        padding: 11px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+    }
+
+    .search-result:hover {
+        background: #202733;
+        border-color: #404a5b;
+    }
+
+    .result-thumb {
+        width: 70px;
+        height: 45px;
+        object-fit: cover;
+        border-radius: 6px;
+        background: #242b36;
+        flex-shrink: 0;
+    }
+
+    .result-info {
+        min-width: 0;
+    }
+
+    .result-name {
+        font-weight: 800;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .result-meta {
+        color: #7e8797;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    .loading {
+        color: #929aaa;
+        padding: 15px 0;
+    }
+
+    .error {
+        color: #ff7787;
+        background: #28151a;
+        border: 1px solid #54232d;
+        padding: 12px;
+        border-radius: 9px;
+        margin-top: 12px;
+    }
+
+    /* PROFILE MODAL */
+
+    .big-profile {
+        text-align: center;
+        padding: 15px;
+    }
+
+    .big-avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        background: #ff334d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        font-weight: 900;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: center;
+        gap: 35px;
+        margin-top: 20px;
+    }
+
+    .stat-number {
+        font-size: 25px;
+        font-weight: 900;
+    }
+
+    .stat-label {
+        color: #7e8797;
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+        .sidebar {
+            width: 220px;
         }
 
-        :root {
-            --bg: #090b10;
-            --panel: #11151d;
-            --panel2: #171c26;
-            --border: #272e3b;
-            --text: #f4f7fb;
-            --muted: #929bad;
-            --red: #ff3d4f;
-            --red2: #ff6674;
-            --green: #36d98b;
-            --blue: #4d8dff;
-            --danger: #ff4f5f;
+        .level-row {
+            grid-template-columns: 42px 60px minmax(0, 1fr) 75px;
         }
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top right, rgba(255,61,79,.10), transparent 35%),
-                radial-gradient(circle at bottom left, rgba(77,141,255,.08), transparent 35%),
-                var(--bg);
-            color: var(--text);
-            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        .level-thumb {
+            width: 60px;
+            height: 45px;
         }
 
-        button,
-        input {
-            font: inherit;
+        .source,
+        .level-actions {
+            display: none;
         }
+    }
 
-        button {
-            cursor: pointer;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
+    @media (max-width: 650px) {
         header {
-            height: 72px;
-            padding: 0 28px;
-            border-bottom: 1px solid var(--border);
-            background: rgba(9,11,16,.86);
-            backdrop-filter: blur(18px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 50;
+            padding: 0 12px;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            font-weight: 900;
-            font-size: 21px;
-            letter-spacing: -.5px;
-        }
-
-        .brand-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 11px;
-            background: linear-gradient(135deg, var(--red), #b91631);
-            display: grid;
-            place-items: center;
-            box-shadow: 0 8px 30px rgba(255,61,79,.25);
-        }
-
-        .brand-icon::before {
-            content: "D";
-            font-weight: 1000;
-            color: white;
-        }
-
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-name {
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        .btn {
-            border: 1px solid var(--border);
-            background: var(--panel2);
-            color: var(--text);
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-weight: 750;
-            transition: .18s;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            border-color: #3b4556;
-            background: #1d2430;
-        }
-
-        .btn.primary {
-            background: var(--red);
-            border-color: var(--red);
-            color: white;
-        }
-
-        .btn.primary:hover {
-            background: var(--red2);
-            border-color: var(--red2);
-        }
-
-        .btn.danger {
-            color: #ff8b96;
-        }
-
-        .btn.small {
-            padding: 7px 10px;
-            font-size: 13px;
-        }
-
-        main {
-            width: min(1250px, calc(100% - 32px));
-            margin: 32px auto 80px;
-        }
-
-        .hero {
-            padding: 30px;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            background: linear-gradient(145deg, rgba(23,28,38,.95), rgba(14,17,24,.95));
-            margin-bottom: 22px;
-        }
-
-        .hero h1 {
-            margin: 0 0 8px;
-            font-size: clamp(30px, 5vw, 48px);
-            letter-spacing: -2px;
-        }
-
-        .hero p {
-            margin: 0;
-            color: var(--muted);
-            max-width: 760px;
-            line-height: 1.6;
-        }
-
-        .dashboard {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 20px;
-        }
-
-        .sidebar,
-        .content-panel {
-            border: 1px solid var(--border);
-            background: rgba(17,21,29,.92);
-            border-radius: 18px;
+        .logo {
+            font-size: 17px;
         }
 
         .sidebar {
-            padding: 16px;
-            height: fit-content;
+            width: 100%;
+            min-height: auto;
+            border-right: none;
+            border-bottom: 1px solid #252b36;
+        }
+
+        .app {
+            display: block;
+        }
+
+        main {
+            padding: 18px 12px;
+        }
+
+        .sidebar {
+            padding: 12px;
         }
 
         .sidebar-title {
-            color: var(--muted);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1.3px;
-            margin: 5px 8px 12px;
-            font-weight: 800;
+            margin-top: 12px;
         }
 
-        .list-button {
-            width: 100%;
-            border: 1px solid transparent;
-            background: transparent;
-            color: var(--text);
-            text-align: left;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 5px;
+        .list-item {
+            display: inline-flex;
+            width: auto;
+            margin-right: 4px;
         }
 
-        .list-button:hover {
-            background: var(--panel2);
+        .new-list-btn {
+            margin-bottom: 8px;
         }
 
-        .list-button.active {
-            background: rgba(255,61,79,.11);
-            border-color: rgba(255,61,79,.28);
+        .level-row {
+            grid-template-columns: 38px 58px minmax(0, 1fr) 65px;
+            gap: 7px;
+            padding: 8px;
         }
 
-        .list-button-name {
-            font-weight: 800;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .list-button-meta {
-            color: var(--muted);
-            font-size: 12px;
-            margin-top: 3px;
-        }
-
-        .content-panel {
-            min-width: 0;
-            overflow: hidden;
-        }
-
-        .panel-head {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .panel-head h2 {
-            margin: 0;
-            font-size: 22px;
-        }
-
-        .panel-head p {
-            margin: 4px 0 0;
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .panel-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .empty {
-            padding: 60px 20px;
-            text-align: center;
-            color: var(--muted);
-        }
-
-        .empty strong {
-            display: block;
-            color: var(--text);
-            font-size: 18px;
-            margin-bottom: 7px;
-        }
-
-        .level-list {
-            padding: 12px;
-        }
-
-        .level {
-            display: grid;
-            grid-template-columns: 55px 110px 1fr auto;
-            gap: 14px;
-            align-items: center;
-            padding: 11px;
-            border: 1px solid transparent;
-            border-radius: 13px;
-            transition: .15s;
-        }
-
-        .level:hover {
-            background: #151a23;
-            border-color: var(--border);
-        }
-
-        .rank {
-            font-size: 20px;
-            font-weight: 950;
-            color: #b7bfce;
-            text-align: center;
-        }
-
-        .thumb {
-            width: 110px;
-            height: 62px;
-            border-radius: 9px;
-            background: #0b0e13;
-            border: 1px solid var(--border);
-            object-fit: cover;
-            display: block;
-        }
-
-        .thumb.no-image {
-            display: grid;
-            place-items: center;
-            color: #596273;
-            font-size: 12px;
-            text-align: center;
-        }
-
-        .level-name {
-            font-weight: 900;
-            font-size: 16px;
-            overflow-wrap: anywhere;
-        }
-
-        .level-creator {
-            color: var(--muted);
-            margin-top: 4px;
-            font-size: 13px;
-        }
-
-        .level-info {
-            margin-top: 5px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            font-size: 11px;
-            color: #aab2c1;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: 3px 7px;
-            background: #10141b;
-        }
-
-        .points {
-            color: #ff6978;
-            font-weight: 900;
+        .level-thumb {
+            width: 58px;
+            height: 42px;
         }
 
         .level-actions {
-            display: flex;
-            gap: 6px;
-        }
-
-        .modal-bg {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,.72);
-            backdrop-filter: blur(8px);
-            z-index: 100;
-            display: grid;
-            place-items: center;
-            padding: 18px;
-        }
-
-        .modal {
-            width: min(700px, 100%);
-            max-height: 90vh;
-            overflow: auto;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            background: #10141b;
-            box-shadow: 0 30px 100px rgba(0,0,0,.5);
-        }
-
-        .modal-head {
-            padding: 19px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-head h3 {
-            margin: 0;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .modal-footer {
-            padding: 15px 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-        }
-
-        label {
-            display: block;
-            font-size: 13px;
-            color: #b9c0cd;
-            font-weight: 750;
-            margin: 0 0 7px;
-        }
-
-        input {
-            width: 100%;
-            background: #0b0e13;
-            color: var(--text);
-            border: 1px solid var(--border);
-            outline: none;
-            border-radius: 10px;
-            padding: 12px 13px;
-        }
-
-        input:focus {
-            border-color: rgba(255,61,79,.65);
-            box-shadow: 0 0 0 3px rgba(255,61,79,.08);
-        }
-
-        .field {
-            margin-bottom: 16px;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 8px;
-        }
-
-        .search-box input {
-            flex: 1;
-        }
-
-        .search-results {
-            margin-top: 14px;
-            display: grid;
-            gap: 8px;
-        }
-
-        .search-result {
-            display: grid;
-            grid-template-columns: 100px 1fr auto;
-            gap: 12px;
-            align-items: center;
-            border: 1px solid var(--border);
-            background: #0d1118;
-            padding: 9px;
-            border-radius: 12px;
-        }
-
-        .search-result img {
-            width: 100px;
-            height: 56px;
-            object-fit: cover;
-            border-radius: 8px;
-            background: #090b10;
-        }
-
-        .result-title {
-            font-weight: 850;
-        }
-
-        .result-meta {
-            color: var(--muted);
-            font-size: 12px;
-            margin-top: 3px;
-        }
-
-        .source {
-            display: inline-block;
-            margin-top: 5px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: .8px;
-            color: #8e98aa;
-        }
-
-        .auth-screen {
-            min-height: calc(100vh - 72px);
-            display: grid;
-            place-items: center;
-            padding: 25px;
-        }
-
-        .auth-card {
-            width: min(440px, 100%);
-            padding: 28px;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            background: #11151d;
-            box-shadow: 0 25px 80px rgba(0,0,0,.35);
-        }
-
-        .auth-card h1 {
-            margin: 0 0 7px;
-        }
-
-        .auth-card p {
-            color: var(--muted);
-            line-height: 1.5;
-        }
-
-        .auth-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5px;
-            padding: 4px;
-            background: #0b0e13;
-            border-radius: 11px;
-            margin: 20px 0;
-        }
-
-        .auth-tab {
-            border: 0;
-            background: transparent;
-            color: var(--muted);
-            padding: 9px;
-            border-radius: 8px;
-            font-weight: 800;
-        }
-
-        .auth-tab.active {
-            background: var(--panel2);
-            color: white;
-        }
-
-        .notice {
-            padding: 11px 13px;
-            border-radius: 10px;
-            background: rgba(77,141,255,.09);
-            border: 1px solid rgba(77,141,255,.22);
-            color: #a8c5ff;
-            font-size: 13px;
-            line-height: 1.45;
-            margin-bottom: 15px;
-        }
-
-        .error {
-            background: rgba(255,61,79,.09);
-            border-color: rgba(255,61,79,.25);
-            color: #ff9da7;
-        }
-
-        .success {
-            background: rgba(54,217,139,.08);
-            border-color: rgba(54,217,139,.22);
-            color: #8df0bd;
-        }
-
-        .profile-card {
-            padding: 20px;
-        }
-
-        .profile-top {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(135deg, var(--red), #7e1730);
-            font-size: 24px;
-            font-weight: 950;
-        }
-
-        .profile-top h2 {
-            margin: 0;
-        }
-
-        .profile-top p {
-            margin: 3px 0 0;
-            color: var(--muted);
-        }
-
-        .mobile-only {
             display: none;
         }
 
-        @media (max-width: 850px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                display: block;
-            }
-
-            .level {
-                grid-template-columns: 42px 85px 1fr;
-            }
-
-            .thumb {
-                width: 85px;
-                height: 48px;
-            }
-
-            .level-actions {
-                grid-column: 3;
-            }
+        .list-header {
+            align-items: flex-start;
+            flex-direction: column;
         }
 
-        @media (max-width: 600px) {
-            header {
-                padding: 0 14px;
-            }
-
-            .brand {
-                font-size: 16px;
-            }
-
-            .user-name {
-                display: none;
-            }
-
-            main {
-                width: min(100% - 18px, 1250px);
-                margin-top: 15px;
-            }
-
-            .hero {
-                padding: 21px;
-            }
-
-            .level {
-                grid-template-columns: 38px 70px 1fr;
-                gap: 8px;
-            }
-
-            .thumb {
-                width: 70px;
-                height: 40px;
-            }
-
-            .search-result {
-                grid-template-columns: 70px 1fr;
-            }
-
-            .search-result .btn {
-                grid-column: 2;
-            }
-
-            .search-result img {
-                width: 70px;
-                height: 40px;
-            }
+        .list-actions {
+            width: 100%;
         }
-    </style>
+
+        .list-actions button {
+            flex: 1;
+        }
+
+        .header-buttons .header-btn {
+            padding: 7px 9px;
+            font-size: 12px;
+        }
+    }
+</style>
 </head>
 
 <body>
 
 <header>
-    <div class="brand">
-        <div class="brand-icon"></div>
-        CreateYourDemonlist
-    </div>
+    <div class="logo">Create<span>Your</span>Demonlist</div>
 
-    <div class="user-area">
-        <span id="headerUser" class="user-name"></span>
-        <button id="authButton" class="btn small">Log in</button>
+    <div class="header-buttons">
+        <button class="header-btn" onclick="openProfile()">👤 Profile</button>
+        <button class="header-btn" onclick="changeUsername()">✏️ Username</button>
     </div>
 </header>
 
-<div id="authScreen" class="auth-screen hidden">
-    <div class="auth-card">
-        <h1 id="authTitle">Welcome back</h1>
-        <p id="authDescription">
-            Log in to create and manage your own Geometry Dash Demonlists.
-        </p>
 
-        <div class="auth-tabs">
-            <button id="loginTab" class="auth-tab active">Log in</button>
-            <button id="signupTab" class="auth-tab">Create account</button>
-        </div>
+<!-- FIRST-TIME PROFILE SETUP -->
 
-        <div id="authMessage" class="notice hidden"></div>
+<section id="setupScreen" class="setup-screen">
+    <div class="setup-card">
+        <div class="setup-icon">D</div>
 
-        <form id="authForm">
-            <div id="usernameField" class="field hidden">
-                <label for="username">Username</label>
-                <input
-                    id="username"
-                    type="text"
-                    maxlength="24"
-                    autocomplete="username"
-                    placeholder="Choose a username"
-                >
-            </div>
+        <h1>CreateYourDemonlist</h1>
 
-            <div class="field">
-                <label for="email">Email</label>
-                <input
-                    id="email"
-                    type="email"
-                    required
-                    autocomplete="email"
-                    placeholder="you@example.com"
-                >
-            </div>
-
-            <div class="field">
-                <label for="password">Password</label>
-                <input
-                    id="password"
-                    type="password"
-                    required
-                    minlength="6"
-                    autocomplete="current-password"
-                    placeholder="At least 6 characters"
-                >
-            </div>
-
-            <button class="btn primary" style="width:100%;" type="submit">
-                <span id="authSubmitText">Log in</span>
-            </button>
-        </form>
-    </div>
-</div>
-
-<main id="app" class="hidden">
-
-    <section class="hero">
-        <h1>Your Demonlists. Your rules.</h1>
         <p>
-            Create custom Geometry Dash Demonlists, search real levels,
-            give them custom points, rename your lists, and manage everything
-            from your own account.
+            Create your local profile and start making your own Geometry Dash Demonlists.
         </p>
-    </section>
 
-    <div class="dashboard">
+        <input
+            id="usernameInput"
+            class="username-input"
+            maxlength="30"
+            placeholder="Enter your username..."
+        >
 
-        <aside class="sidebar">
-            <div class="sidebar-title">Your lists</div>
-
-            <button id="newListButton" class="btn primary" style="width:100%; margin-bottom:14px;">
-                + New Demonlist
-            </button>
-
-            <div id="listsContainer"></div>
-
-            <button id="profileButton" class="btn" style="width:100%; margin-top:12px;">
-                👤 My Profile
-            </button>
-
-            <button id="logoutButton" class="btn danger" style="width:100%; margin-top:7px;">
-                Log out
-            </button>
-        </aside>
-
-        <section class="content-panel">
-
-            <div id="noListPanel" class="empty">
-                <strong>Create your first Demonlist</strong>
-                Make a list and start adding real Geometry Dash levels.
-            </div>
-
-            <div id="listPanel" class="hidden">
-
-                <div class="panel-head">
-                    <div>
-                        <h2 id="currentListName">Demonlist</h2>
-                        <p id="currentListMeta"></p>
-                    </div>
-
-                    <div class="panel-actions">
-                        <button id="renameListButton" class="btn small">
-                            Rename
-                        </button>
-
-                        <button id="addLevelButton" class="btn primary small">
-                            + Add Level
-                        </button>
-                    </div>
-                </div>
-
-                <div id="levelsContainer" class="level-list"></div>
-
-            </div>
-
-            <div id="profilePanel" class="hidden">
-                <div class="panel-head">
-                    <div>
-                        <h2>My Profile</h2>
-                        <p>Your account and Demonlist collection.</p>
-                    </div>
-                </div>
-
-                <div class="profile-card">
-                    <div class="profile-top">
-                        <div id="profileAvatar" class="avatar">?</div>
-                        <div>
-                            <h2 id="profileUsername"></h2>
-                            <p id="profileEmail"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
+        <button class="primary-btn" onclick="createProfile()">
+            Continue
+        </button>
     </div>
-</main>
+</section>
 
-<!-- CREATE LIST MODAL -->
-<div id="listModal" class="modal-bg hidden">
-    <div class="modal">
-        <div class="modal-head">
-            <h3 id="listModalTitle">Create Demonlist</h3>
-            <button class="btn small" data-close="listModal">✕</button>
-        </div>
 
-        <div class="modal-body">
-            <div id="listModalMessage" class="notice hidden"></div>
+<!-- MAIN APP -->
 
-            <div class="field">
-                <label for="listName">List name</label>
-                <input
-                    id="listName"
-                    maxlength="80"
-                    placeholder="My Demonlist"
-                >
+<div id="app" class="app hidden">
+
+    <aside class="sidebar">
+
+        <div class="profile-box">
+            <div class="profile-row">
+                <div id="avatar" class="avatar">?</div>
+
+                <div>
+                    <div id="profileName" class="profile-name">Username</div>
+                    <div id="profileCount" class="profile-count">
+                        0 Demonlists
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="modal-footer">
-            <button class="btn" data-close="listModal">Cancel</button>
-            <button id="saveListButton" class="btn primary">Save</button>
-        </div>
-    </div>
+        <div class="sidebar-title">Your Demonlists</div>
+
+        <div id="listContainer"></div>
+
+        <button class="new-list-btn" onclick="createList()">
+            + Create Demonlist
+        </button>
+
+    </aside>
+
+
+    <main>
+
+        <div id="welcomeText" class="welcome"></div>
+
+        <div id="listArea"></div>
+
+    </main>
+
 </div>
 
-<!-- ADD LEVEL MODAL -->
-<div id="levelModal" class="modal-bg hidden">
-    <div class="modal">
-        <div class="modal-head">
-            <h3>Add level</h3>
-            <button class="btn small" data-close="levelModal">✕</button>
-        </div>
 
-        <div class="modal-body">
+<!-- MODAL -->
 
-            <div class="notice">
-                Search Pointercrate and AREDL for real levels. Results are not fake sample data.
-            </div>
-
-            <div class="search-box">
-                <input
-                    id="levelSearch"
-                    placeholder="Search a level name, creator, or ID..."
-                >
-                <button id="searchButton" class="btn primary">
-                    Search
-                </button>
-            </div>
-
-            <div id="searchStatus" style="color:var(--muted); font-size:13px; margin-top:10px;"></div>
-
-            <div id="searchResults" class="search-results"></div>
-
-            <hr style="border:0;border-top:1px solid var(--border);margin:20px 0;">
-
-            <div class="field">
-                <label for="levelName">Level name</label>
-                <input id="levelName" maxlength="150">
-            </div>
-
-            <div class="field">
-                <label for="levelCreator">Creator</label>
-                <input id="levelCreator" maxlength="150">
-            </div>
-
-            <div class="field">
-                <label for="levelId">Geometry Dash level ID</label>
-                <input id="levelId" maxlength="30">
-            </div>
-
-            <div class="field">
-                <label for="levelPoints">Points</label>
-                <input id="levelPoints" type="number" min="0" step="0.01" value="0">
-            </div>
-
-            <div class="field">
-                <label for="levelVideo">YouTube video URL</label>
-                <input id="levelVideo" placeholder="https://www.youtube.com/watch?v=...">
-            </div>
-
-            <div class="field">
-                <label for="levelThumbnail">Thumbnail URL</label>
-                <input id="levelThumbnail" placeholder="https://...">
-            </div>
-
-            <div id="levelMessage" class="notice hidden"></div>
-        </div>
-
-        <div class="modal-footer">
-            <button class="btn" data-close="levelModal">Cancel</button>
-            <button id="saveLevelButton" class="btn primary">Add Level</button>
-        </div>
-    </div>
+<div id="modalBackdrop" class="modal-backdrop hidden" onclick="closeModalOutside(event)">
+    <div id="modal" class="modal"></div>
 </div>
+
 
 <script>
-/*
-===========================================================
-CreateYourDemonlist
-Frontend
-===========================================================
-
-IMPORTANT:
-Replace ONLY these two values with the values from your
-Supabase project.
-
-Use the PUBLISHABLE key.
-
-NEVER put a Supabase secret/service_role key here.
-===========================================================
-*/
-
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
-const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
-
-const { createClient } = window.supabase;
-
-const supabaseClient = createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY,
-    {
-        auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-        }
-    }
-);
-
 
 /* =========================================================
-   API SOURCES
+   STORAGE
 ========================================================= */
 
-const POINTERCRATE_API = "https://pointercrate.com/api/v2/demons/";
-const AREDL_API = "https://api.aredl.net/v2/api/aredl/levels";
+const STORAGE_KEY = "createYourDemonlist_v1";
 
+let state = loadState();
 
-/* =========================================================
-   STATE
-========================================================= */
-
-let currentUser = null;
-let currentProfile = null;
-let currentLists = [];
-let currentList = null;
-
-let authMode = "login";
-let editingListId = null;
-let editingLevelId = null;
-
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const authScreen = document.getElementById("authScreen");
-const app = document.getElementById("app");
-
-const authButton = document.getElementById("authButton");
-const headerUser = document.getElementById("headerUser");
-
-const loginTab = document.getElementById("loginTab");
-const signupTab = document.getElementById("signupTab");
-
-const authTitle = document.getElementById("authTitle");
-const authDescription = document.getElementById("authDescription");
-const authSubmitText = document.getElementById("authSubmitText");
-
-const usernameField = document.getElementById("usernameField");
-const usernameInput = document.getElementById("username");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-
-const authForm = document.getElementById("authForm");
-const authMessage = document.getElementById("authMessage");
-
-const listsContainer = document.getElementById("listsContainer");
-
-const noListPanel = document.getElementById("noListPanel");
-const listPanel = document.getElementById("listPanel");
-const profilePanel = document.getElementById("profilePanel");
-
-const currentListName = document.getElementById("currentListName");
-const currentListMeta = document.getElementById("currentListMeta");
-
-const levelsContainer = document.getElementById("levelsContainer");
-
-const listModal = document.getElementById("listModal");
-const listModalTitle = document.getElementById("listModalTitle");
-const listNameInput = document.getElementById("listName");
-const listModalMessage = document.getElementById("listModalMessage");
-
-const levelModal = document.getElementById("levelModal");
-
-const levelSearch = document.getElementById("levelSearch");
-const searchButton = document.getElementById("searchButton");
-const searchStatus = document.getElementById("searchStatus");
-const searchResults = document.getElementById("searchResults");
-
-const levelName = document.getElementById("levelName");
-const levelCreator = document.getElementById("levelCreator");
-const levelId = document.getElementById("levelId");
-const levelPoints = document.getElementById("levelPoints");
-const levelVideo = document.getElementById("levelVideo");
-const levelThumbnail = document.getElementById("levelThumbnail");
-const levelMessage = document.getElementById("levelMessage");
-
-const profileUsername = document.getElementById("profileUsername");
-const profileEmail = document.getElementById("profileEmail");
-const profileAvatar = document.getElementById("profileAvatar");
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function escapeHTML(value) {
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-function showMessage(element, message, type = "") {
-    element.textContent = message;
-    element.className = "notice";
-
-    if (type === "error") {
-        element.classList.add("error");
-    }
-
-    if (type === "success") {
-        element.classList.add("success");
-    }
-
-    element.classList.remove("hidden");
-}
-
-function hideMessage(element) {
-    element.classList.add("hidden");
-}
-
-function openModal(element) {
-    element.classList.remove("hidden");
-}
-
-function closeModal(element) {
-    element.classList.add("hidden");
-}
-
-function getInitial(name) {
-    return (name || "?").trim().charAt(0).toUpperCase();
-}
-
-function extractYouTubeId(url) {
-    if (!url) return null;
+function loadState() {
 
     try {
-        const parsed = new URL(url);
 
-        if (parsed.hostname.includes("youtube.com")) {
-            if (parsed.pathname === "/watch") {
-                return parsed.searchParams.get("v");
-            }
+        const saved = localStorage.getItem(STORAGE_KEY);
 
-            if (parsed.pathname.startsWith("/shorts/")) {
-                return parsed.pathname.split("/shorts/")[1].split("/")[0];
-            }
-
-            if (parsed.pathname.startsWith("/embed/")) {
-                return parsed.pathname.split("/embed/")[1].split("/")[0];
-            }
+        if (!saved) {
+            return {
+                username: "",
+                lists: [],
+                selectedListId: null
+            };
         }
 
-        if (parsed.hostname === "youtu.be") {
-            return parsed.pathname.slice(1).split("/")[0];
-        }
-    } catch {
-        return null;
-    }
+        const data = JSON.parse(saved);
 
-    return null;
+        return {
+            username: data.username || "",
+            lists: Array.isArray(data.lists) ? data.lists : [],
+            selectedListId: data.selectedListId || null
+        };
+
+    } catch (error) {
+
+        console.error(error);
+
+        return {
+            username: "",
+            lists: [],
+            selectedListId: null
+        };
+    }
 }
 
-function youtubeThumbnail(url) {
-    const id = extractYouTubeId(url);
 
-    if (!id) {
-        return null;
-    }
+function saveState() {
 
-    return `https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`;
-}
-
-function normalizeNumber(value) {
-    const number = Number(value);
-    return Number.isFinite(number) ? number : 0;
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state)
+    );
 }
 
 
 /* =========================================================
-   AUTH
+   INITIALIZATION
 ========================================================= */
 
-function setAuthMode(mode) {
-    authMode = mode;
+function initialize() {
 
-    const signup = mode === "signup";
+    if (!state.username) {
 
-    loginTab.classList.toggle("active", !signup);
-    signupTab.classList.toggle("active", signup);
+        document
+            .getElementById("setupScreen")
+            .classList.remove("hidden");
 
-    usernameField.classList.toggle("hidden", !signup);
+        document
+            .getElementById("app")
+            .classList.add("hidden");
 
-    authTitle.textContent = signup
-        ? "Create your account"
-        : "Welcome back";
-
-    authDescription.textContent = signup
-        ? "Create your account and start building your own Demonlists."
-        : "Log in to manage your Demonlists.";
-
-    authSubmitText.textContent = signup
-        ? "Create account"
-        : "Log in";
-
-    hideMessage(authMessage);
-}
-
-loginTab.addEventListener("click", () => setAuthMode("login"));
-signupTab.addEventListener("click", () => setAuthMode("signup"));
-
-authButton.addEventListener("click", async () => {
-    if (currentUser) {
-        await supabaseClient.auth.signOut();
-    } else {
-        showLoginScreen();
-    }
-});
-
-document.getElementById("logoutButton").addEventListener("click", async () => {
-    await supabaseClient.auth.signOut();
-});
-
-function showLoginScreen() {
-    app.classList.add("hidden");
-    authScreen.classList.remove("hidden");
-    setAuthMode("login");
-}
-
-function showApp() {
-    authScreen.classList.add("hidden");
-    app.classList.remove("hidden");
-}
-
-authForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    hideMessage(authMessage);
-
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    if (!email || !password) {
-        showMessage(authMessage, "Enter your email and password.", "error");
         return;
     }
 
-    authSubmitText.textContent = "Working...";
-    
-    try {
-        if (authMode === "login") {
+    document
+        .getElementById("setupScreen")
+        .classList.add("hidden");
 
-            const { error } = await supabaseClient.auth.signInWithPassword({
-                email,
-                password
-            });
+    document
+        .getElementById("app")
+        .classList.remove("hidden");
 
-            if (error) throw error;
+    if (
+        !state.selectedListId ||
+        !state.lists.some(x => x.id === state.selectedListId)
+    ) {
 
-        } else {
+        state.selectedListId =
+            state.lists.length
+                ? state.lists[0].id
+                : null;
 
-            const username = usernameInput.value.trim();
-
-            if (!username) {
-                throw new Error("Choose a username.");
-            }
-
-            if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-                throw new Error("Username can only contain letters, numbers, and underscores.");
-            }
-
-            const { data, error } = await supabaseClient.auth.signUp({
-                email,
-                password
-            });
-
-            if (error) throw error;
-
-            if (!data.user) {
-                throw new Error("Account creation did not return a user.");
-            }
-
-            const { error: profileError } = await supabaseClient
-                .from("profiles")
-                .insert({
-                    id: data.user.id,
-                    username
-                });
-
-            if (profileError) {
-                throw profileError;
-            }
-
-            showMessage(
-                authMessage,
-                "Account created. Check your email if email confirmation is enabled.",
-                "success"
-            );
-
-            if (!data.session) {
-                authSubmitText.textContent = "Create account";
-                return;
-            }
-        }
-
-    } catch (error) {
-        showMessage(
-            authMessage,
-            error.message || "Something went wrong.",
-            "error"
-        );
+        saveState();
     }
 
-    authSubmitText.textContent =
-        authMode === "signup" ? "Create account" : "Log in";
-});
-
-
-/* =========================================================
-   INITIAL AUTH CHECK
-========================================================= */
-
-supabaseClient.auth.onAuthStateChange(async (_event, session) => {
-    if (session?.user) {
-        currentUser = session.user;
-        await initializeUser();
-    } else {
-        currentUser = null;
-        currentProfile = null;
-        currentLists = [];
-        currentList = null;
-
-        headerUser.textContent = "";
-        authButton.textContent = "Log in";
-
-        showLoginScreen();
-    }
-});
-
-async function initializeUser() {
-    headerUser.textContent = currentUser.email || "";
-    authButton.textContent = "Log out";
-
-    await loadProfile();
-    await loadLists();
-
-    showApp();
+    render();
 }
+
+initialize();
 
 
 /* =========================================================
    PROFILE
 ========================================================= */
 
-async function loadProfile() {
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id", currentUser.id)
-        .maybeSingle();
+function createProfile() {
 
-    if (error) {
-        console.error(error);
+    const input =
+        document.getElementById("usernameInput");
+
+    const username =
+        input.value.trim();
+
+    if (!username) {
+
+        alert("Please enter a username.");
+
+        input.focus();
+
         return;
     }
 
-    currentProfile = data;
+    state.username = username;
 
-    if (!currentProfile) {
-        const fallbackUsername =
-            currentUser.email?.split("@")[0] || "Player";
+    saveState();
 
-        const { data: createdProfile, error: createError } =
-            await supabaseClient
-                .from("profiles")
-                .insert({
-                    id: currentUser.id,
-                    username: fallbackUsername
-                })
-                .select()
-                .single();
-
-        if (!createError) {
-            currentProfile = createdProfile;
-        }
-    }
-
-    renderProfile();
+    initialize();
 }
 
-function renderProfile() {
-    const username =
-        currentProfile?.username ||
-        currentUser.email?.split("@")[0] ||
-        "Player";
 
-    profileUsername.textContent = username;
-    profileEmail.textContent = currentUser.email || "";
-    profileAvatar.textContent = getInitial(username);
+function changeUsername() {
+
+    const newName =
+        prompt(
+            "Enter your new username:",
+            state.username
+        );
+
+    if (newName === null) return;
+
+    const clean =
+        newName.trim();
+
+    if (!clean) {
+
+        alert("Username cannot be empty.");
+
+        return;
+    }
+
+    state.username =
+        clean.slice(0, 30);
+
+    saveState();
+
+    render();
+}
+
+
+function openProfile() {
+
+    const count =
+        state.lists.length;
+
+    const totalLevels =
+        state.lists.reduce(
+            (total, list) =>
+                total + list.levels.length,
+            0
+        );
+
+    openModal(`
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >×</button>
+
+        <div class="big-profile">
+
+            <div class="big-avatar">
+                ${escapeHtml(
+                    state.username
+                        .charAt(0)
+                        .toUpperCase()
+                )}
+            </div>
+
+            <h2>
+                ${escapeHtml(state.username)}
+            </h2>
+
+            <div class="stats">
+
+                <div>
+                    <div class="stat-number">
+                        ${count}
+                    </div>
+
+                    <div class="stat-label">
+                        Demonlists
+                    </div>
+                </div>
+
+                <div>
+                    <div class="stat-number">
+                        ${totalLevels}
+                    </div>
+
+                    <div class="stat-label">
+                        Levels Added
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    `);
 }
 
 
 /* =========================================================
-   LISTS
+   DEMONLIST CREATION
 ========================================================= */
 
-async function loadLists() {
-    const { data, error } = await supabaseClient
-        .from("demonlists")
-        .select("*")
-        .eq("owner_id", currentUser.id)
-        .order("created_at", { ascending: true });
+function createList() {
 
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    currentLists = data || [];
-
-    renderLists();
-
-    if (currentLists.length === 0) {
-        currentList = null;
-        renderCurrentList();
-        return;
-    }
-
-    const stillExists =
-        currentList &&
-        currentLists.some(list => list.id === currentList.id);
-
-    if (!stillExists) {
-        currentList = currentLists[0];
-    } else {
-        currentList =
-            currentLists.find(list => list.id === currentList.id) ||
-            currentLists[0];
-    }
-
-    renderCurrentList();
-}
-
-function renderLists() {
-    if (!currentLists.length) {
-        listsContainer.innerHTML = `
-            <div style="color:var(--muted);font-size:13px;padding:8px;">
-                No lists yet.
-            </div>
-        `;
-        return;
-    }
-
-    listsContainer.innerHTML = currentLists.map(list => `
-        <button
-            class="list-button ${currentList?.id === list.id ? "active" : ""}"
-            data-list-id="${escapeHTML(list.id)}"
-        >
-            <div class="list-button-name">
-                ${escapeHTML(list.name)}
-            </div>
-            <div class="list-button-meta">
-                Demonlist
-            </div>
-        </button>
-    `).join("");
-
-    listsContainer.querySelectorAll("[data-list-id]").forEach(button => {
-        button.addEventListener("click", () => {
-            const list = currentLists.find(
-                item => item.id === button.dataset.listId
-            );
-
-            if (!list) return;
-
-            currentList = list;
-            renderLists();
-            renderCurrentList();
-        });
-    });
-}
-
-function renderCurrentList() {
-    profilePanel.classList.add("hidden");
-
-    if (!currentList) {
-        noListPanel.classList.remove("hidden");
-        listPanel.classList.add("hidden");
-        return;
-    }
-
-    noListPanel.classList.add("hidden");
-    listPanel.classList.remove("hidden");
-
-    currentListName.textContent = currentList.name;
-
-    loadLevels();
-}
-
-async function createList(name) {
-    const cleanName = name.trim();
-
-    if (!cleanName) {
-        throw new Error("Give the list a name.");
-    }
-
-    const { data, error } = await supabaseClient
-        .from("demonlists")
-        .insert({
-            owner_id: currentUser.id,
-            name: cleanName
-        })
-        .select()
-        .single();
-
-    if (error) throw error;
-
-    currentLists.push(data);
-    currentList = data;
-
-    renderLists();
-    renderCurrentList();
-}
-
-async function renameList(name) {
-    if (!currentList) return;
-
-    const cleanName = name.trim();
-
-    if (!cleanName) {
-        throw new Error("Give the list a name.");
-    }
-
-    const { data, error } = await supabaseClient
-        .from("demonlists")
-        .update({
-            name: cleanName,
-            updated_at: new Date().toISOString()
-        })
-        .eq("id", currentList.id)
-        .select()
-        .single();
-
-    if (error) throw error;
-
-    currentList = data;
-
-    const index = currentLists.findIndex(
-        list => list.id === data.id
-    );
-
-    if (index !== -1) {
-        currentLists[index] = data;
-    }
-
-    renderLists();
-    renderCurrentList();
-}
-
-document.getElementById("newListButton").addEventListener("click", () => {
-    editingListId = null;
-    listModalTitle.textContent = "Create Demonlist";
-    listNameInput.value = "";
-    hideMessage(listModalMessage);
-    openModal(listModal);
-    setTimeout(() => listNameInput.focus(), 50);
-});
-
-document.getElementById("renameListButton").addEventListener("click", () => {
-    if (!currentList) return;
-
-    editingListId = currentList.id;
-
-    listModalTitle.textContent = "Rename Demonlist";
-    listNameInput.value = currentList.name;
-
-    hideMessage(listModalMessage);
-
-    openModal(listModal);
-
-    setTimeout(() => {
-        listNameInput.focus();
-        listNameInput.select();
-    }, 50);
-});
-
-document.getElementById("saveListButton").addEventListener("click", async () => {
-    hideMessage(listModalMessage);
-
-    try {
-        if (editingListId) {
-            await renameList(listNameInput.value);
-        } else {
-            await createList(listNameInput.value);
-        }
-
-        closeModal(listModal);
-
-    } catch (error) {
-        showMessage(
-            listModalMessage,
-            error.message || "Could not save the list.",
-            "error"
+    const name =
+        prompt(
+            "What should your Demonlist be called?"
         );
+
+    if (name === null) return;
+
+    const clean =
+        name.trim();
+
+    if (!clean) {
+
+        alert("The list needs a name.");
+
+        return;
     }
-});
+
+    const list = {
+
+        id:
+            crypto.randomUUID
+                ? crypto.randomUUID()
+                : Date.now().toString(),
+
+        name:
+            clean.slice(0, 100),
+
+        levels: [],
+
+        createdAt:
+            Date.now(),
+
+        updatedAt:
+            Date.now()
+    };
+
+    state.lists.push(list);
+
+    state.selectedListId =
+        list.id;
+
+    saveState();
+
+    render();
+}
+
+
+function renameList() {
+
+    const list =
+        getSelectedList();
+
+    if (!list) return;
+
+    const name =
+        prompt(
+            "New Demonlist name:",
+            list.name
+        );
+
+    if (name === null) return;
+
+    const clean =
+        name.trim();
+
+    if (!clean) {
+
+        alert("The list needs a name.");
+
+        return;
+    }
+
+    list.name =
+        clean.slice(0, 100);
+
+    list.updatedAt =
+        Date.now();
+
+    saveState();
+
+    render();
+}
+
+
+function deleteList() {
+
+    const list =
+        getSelectedList();
+
+    if (!list) return;
+
+    const confirmed =
+        confirm(
+            `Delete "${list.name}"?\n\nThis will remove all levels from this local list.`
+        );
+
+    if (!confirmed) return;
+
+    state.lists =
+        state.lists.filter(
+            x => x.id !== list.id
+        );
+
+    state.selectedListId =
+        state.lists.length
+            ? state.lists[0].id
+            : null;
+
+    saveState();
+
+    render();
+}
+
+
+function selectList(id) {
+
+    state.selectedListId =
+        id;
+
+    saveState();
+
+    render();
+}
+
+
+function getSelectedList() {
+
+    return state.lists.find(
+        x => x.id === state.selectedListId
+    );
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render() {
+
+    document.getElementById("profileName")
+        .textContent = state.username;
+
+    document.getElementById("profileCount")
+        .textContent =
+            `${state.lists.length} ${
+                state.lists.length === 1
+                    ? "Demonlist"
+                    : "Demonlists"
+            }`;
+
+    document.getElementById("avatar")
+        .textContent =
+            state.username
+                .charAt(0)
+                .toUpperCase();
+
+    document.getElementById("welcomeText")
+        .textContent =
+            `Welcome, ${state.username}. Build your own rankings.`;
+
+    renderSidebar();
+    renderList();
+}
+
+
+function renderSidebar() {
+
+    const container =
+        document.getElementById("listContainer");
+
+    container.innerHTML = "";
+
+    state.lists.forEach(
+        (list, index) => {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "list-item" +
+                (
+                    list.id === state.selectedListId
+                        ? " active"
+                        : ""
+                );
+
+            button.onclick =
+                () => selectList(list.id);
+
+            button.innerHTML = `
+
+                <span class="list-item-name">
+                    ${escapeHtml(list.name)}
+                </span>
+
+                <span class="list-number">
+                    ${list.levels.length}
+                </span>
+
+            `;
+
+            container.appendChild(button);
+        }
+    );
+}
+
+
+function renderList() {
+
+    const area =
+        document.getElementById("listArea");
+
+    const list =
+        getSelectedList();
+
+    if (!list) {
+
+        area.innerHTML = `
+
+            <div class="empty">
+
+                <strong>No Demonlists yet.</strong>
+
+                Create your first Demonlist from
+                the sidebar.
+
+                <br><br>
+
+                <button
+                    class="primary-btn"
+                    onclick="createList()"
+                >
+                    + Create Demonlist
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    area.innerHTML = `
+
+        <div class="list-header">
+
+            <h1 class="list-title">
+                ${escapeHtml(list.name)}
+            </h1>
+
+            <div class="list-actions">
+
+                <button
+                    class="secondary-btn"
+                    onclick="openAddLevel()"
+                >
+                    + Add Level
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="renameList()"
+                >
+                    ✏️ Rename
+                </button>
+
+                <button
+                    class="danger-btn"
+                    onclick="deleteList()"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="levelList"></div>
+    `;
+
+    renderLevels();
+}
 
 
 /* =========================================================
    LEVELS
 ========================================================= */
 
-async function loadLevels() {
-    if (!currentList) return;
+function renderLevels() {
 
-    levelsContainer.innerHTML = `
-        <div class="empty">
-            Loading levels...
-        </div>
-    `;
+    const list =
+        getSelectedList();
 
-    const { data, error } = await supabaseClient
-        .from("list_levels")
-        .select("*")
-        .eq("list_id", currentList.id)
-        .order("rank_position", { ascending: true });
+    const container =
+        document.getElementById("levelList");
 
-    if (error) {
-        console.error(error);
+    if (!list || !container) return;
 
-        levelsContainer.innerHTML = `
+    if (!list.levels.length) {
+
+        container.innerHTML = `
+
             <div class="empty">
-                <strong>Couldn't load this list</strong>
-                ${escapeHTML(error.message)}
-            </div>
-        `;
 
-        return;
-    }
+                <strong>This Demonlist is empty.</strong>
 
-    currentListMeta.textContent =
-        `${data.length} ${data.length === 1 ? "level" : "levels"}`;
+                Search for a real Geometry Dash level
+                to add it.
 
-    if (!data.length) {
-        levelsContainer.innerHTML = `
-            <div class="empty">
-                <strong>This Demonlist is empty</strong>
-                Add a level to start building it.
-            </div>
-        `;
-        return;
-    }
-
-    levelsContainer.innerHTML = data.map((level, index) => {
-
-        const thumbnail =
-            level.thumbnail_url ||
-            youtubeThumbnail(level.video_url);
-
-        const thumbnailHTML = thumbnail
-            ? `<img
-                class="thumb"
-                src="${escapeHTML(thumbnail)}"
-                alt=""
-                loading="lazy"
-                onerror="this.outerHTML='<div class=&quot;thumb no-image&quot;>No thumbnail</div>'"
-            >`
-            : `<div class="thumb no-image">No thumbnail</div>`;
-
-        return `
-            <article class="level">
-
-                <div class="rank">
-                    ${index + 1}
-                </div>
-
-                ${thumbnailHTML}
-
-                <div>
-                    <div class="level-name">
-                        ${escapeHTML(level.name)}
-                    </div>
-
-                    <div class="level-creator">
-                        by ${escapeHTML(level.creator || "Unknown")}
-                    </div>
-
-                    <div class="level-info">
-                        <span class="tag">
-                            ID ${escapeHTML(level.gd_level_id || "Unknown")}
-                        </span>
-
-                        <span class="tag">
-                            ${escapeHTML(level.source || "Custom")}
-                        </span>
-
-                        <span class="tag points">
-                            ${normalizeNumber(level.points)} pts
-                        </span>
-                    </div>
-                </div>
-
-                <div class="level-actions">
-                    ${
-                        level.video_url
-                        ? `
-                            <button
-                                class="btn small"
-                                data-video="${escapeHTML(level.video_url)}"
-                            >
-                                Video
-                            </button>
-                        `
-                        : ""
-                    }
-
-                    <button
-                        class="btn small"
-                        data-edit-level="${escapeHTML(level.id)}"
-                    >
-                        Edit
-                    </button>
-
-                    <button
-                        class="btn small danger"
-                        data-delete-level="${escapeHTML(level.id)}"
-                    >
-                        Delete
-                    </button>
-                </div>
-
-            </article>
-        `;
-    }).join("");
-
-    levelsContainer.querySelectorAll("[data-video]").forEach(button => {
-        button.addEventListener("click", () => {
-            window.open(
-                button.dataset.video,
-                "_blank",
-                "noopener,noreferrer"
-            );
-        });
-    });
-
-    levelsContainer.querySelectorAll("[data-delete-level]").forEach(button => {
-        button.addEventListener("click", () => {
-            deleteLevel(button.dataset.deleteLevel);
-        });
-    });
-
-    levelsContainer.querySelectorAll("[data-edit-level]").forEach(button => {
-        button.addEventListener("click", async () => {
-            await openEditLevel(button.dataset.editLevel);
-        });
-    });
-}
-
-async function deleteLevel(id) {
-    const confirmed = confirm(
-        "Delete this level from your Demonlist?"
-    );
-
-    if (!confirmed) return;
-
-    const { error } = await supabaseClient
-        .from("list_levels")
-        .delete()
-        .eq("id", id)
-        .eq("list_id", currentList.id);
-
-    if (error) {
-        alert(error.message);
-        return;
-    }
-
-    await normalizeRanks();
-    await loadLevels();
-}
-
-async function normalizeRanks() {
-    if (!currentList) return;
-
-    const { data, error } = await supabaseClient
-        .from("list_levels")
-        .select("id")
-        .eq("list_id", currentList.id)
-        .order("points", { ascending: false })
-        .order("created_at", { ascending: true });
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    for (let i = 0; i < data.length; i++) {
-        await supabaseClient
-            .from("list_levels")
-            .update({
-                rank_position: i + 1
-            })
-            .eq("id", data[i].id)
-            .eq("list_id", currentList.id);
-    }
-}
-
-
-/* =========================================================
-   ADD / EDIT LEVEL MODAL
-========================================================= */
-
-document.getElementById("addLevelButton").addEventListener("click", () => {
-    editingLevelId = null;
-
-    document.querySelector("#levelModal h3").textContent =
-        "Add level";
-
-    clearLevelForm();
-
-    openModal(levelModal);
-    setTimeout(() => levelSearch.focus(), 50);
-});
-
-function clearLevelForm() {
-    levelSearch.value = "";
-
-    levelName.value = "";
-    levelCreator.value = "";
-    levelId.value = "";
-    levelPoints.value = "0";
-    levelVideo.value = "";
-    levelThumbnail.value = "";
-
-    searchResults.innerHTML = "";
-    searchStatus.textContent = "";
-
-    hideMessage(levelMessage);
-}
-
-async function openEditLevel(id) {
-    const { data, error } = await supabaseClient
-        .from("list_levels")
-        .select("*")
-        .eq("id", id)
-        .eq("list_id", currentList.id)
-        .single();
-
-    if (error) {
-        alert(error.message);
-        return;
-    }
-
-    editingLevelId = id;
-
-    document.querySelector("#levelModal h3").textContent =
-        "Edit level";
-
-    levelName.value = data.name || "";
-    levelCreator.value = data.creator || "";
-    levelId.value = data.gd_level_id || "";
-    levelPoints.value = data.points ?? 0;
-    levelVideo.value = data.video_url || "";
-    levelThumbnail.value = data.thumbnail_url || "";
-
-    levelSearch.value = "";
-    searchResults.innerHTML = "";
-    searchStatus.textContent = "";
-
-    hideMessage(levelMessage);
-
-    openModal(levelModal);
-}
-
-document.getElementById("saveLevelButton").addEventListener("click", async () => {
-    hideMessage(levelMessage);
-
-    if (!currentList) {
-        showMessage(levelMessage, "Create a Demonlist first.", "error");
-        return;
-    }
-
-    const name = levelName.value.trim();
-    const creator = levelCreator.value.trim();
-    const gdId = levelId.value.trim();
-    const points = normalizeNumber(levelPoints.value);
-    const video = levelVideo.value.trim();
-    const thumbnail =
-        levelThumbnail.value.trim() ||
-        youtubeThumbnail(video);
-
-    if (!name) {
-        showMessage(levelMessage, "Enter a level name.", "error");
-        return;
-    }
-
-    if (!gdId) {
-        showMessage(levelMessage, "Enter the Geometry Dash level ID.", "error");
-        return;
-    }
-
-    try {
-
-        if (!editingLevelId) {
-
-            const { count, error: duplicateError } =
-                await supabaseClient
-                    .from("list_levels")
-                    .select("*", {
-                        count: "exact",
-                        head: true
-                    })
-                    .eq("list_id", currentList.id)
-                    .eq("gd_level_id", gdId);
-
-            if (duplicateError) throw duplicateError;
-
-            if (count > 0) {
-                throw new Error(
-                    "That level is already in this Demonlist."
-                );
-            }
-
-            const { data: existingLevels, error: rankError } =
-                await supabaseClient
-                    .from("list_levels")
-                    .select("rank_position")
-                    .eq("list_id", currentList.id)
-                    .order("rank_position", {
-                        ascending: false
-                    })
-                    .limit(1);
-
-            if (rankError) throw rankError;
-
-            const nextRank =
-                existingLevels?.length
-                    ? Number(existingLevels[0].rank_position) + 1
-                    : 1;
-
-            const { error } = await supabaseClient
-                .from("list_levels")
-                .insert({
-                    list_id: currentList.id,
-                    gd_level_id: gdId,
-                    name,
-                    creator,
-                    points,
-                    video_url: video || null,
-                    thumbnail_url: thumbnail || null,
-                    source: "Custom",
-                    rank_position: nextRank
-                });
-
-            if (error) throw error;
-
-        } else {
-
-            const { error } = await supabaseClient
-                .from("list_levels")
-                .update({
-                    gd_level_id: gdId,
-                    name,
-                    creator,
-                    points,
-                    video_url: video || null,
-                    thumbnail_url: thumbnail || null
-                })
-                .eq("id", editingLevelId)
-                .eq("list_id", currentList.id);
-
-            if (error) throw error;
-        }
-
-        await normalizeRanks();
-        await loadLevels();
-
-        closeModal(levelModal);
-
-    } catch (error) {
-        showMessage(
-            levelMessage,
-            error.message || "Could not save the level.",
-            "error"
-        );
-    }
-});
-
-
-/* =========================================================
-   LEVEL SEARCH
-========================================================= */
-
-searchButton.addEventListener("click", performLevelSearch);
-
-levelSearch.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-        performLevelSearch();
-    }
-});
-
-async function performLevelSearch() {
-    const query = levelSearch.value.trim();
-
-    if (!query) {
-        searchStatus.textContent = "Type a level name, creator, or ID.";
-        searchResults.innerHTML = "";
-        return;
-    }
-
-    searchButton.disabled = true;
-    searchButton.textContent = "Searching...";
-    searchStatus.textContent = "Searching Pointercrate + AREDL...";
-    searchResults.innerHTML = "";
-
-    try {
-        const results = await Promise.allSettled([
-            searchPointercrate(query),
-            searchAREDL(query)
-        ]);
-
-        let combined = [];
-
-        for (const result of results) {
-            if (result.status === "fulfilled") {
-                combined.push(...result.value);
-            }
-        }
-
-        combined = deduplicateSearchResults(combined);
-
-        if (!combined.length) {
-            searchStatus.textContent =
-                "No matching levels were found.";
-            return;
-        }
-
-        searchStatus.textContent =
-            `${combined.length} result${combined.length === 1 ? "" : "s"} found.`;
-
-        renderSearchResults(combined);
-
-    } catch (error) {
-        console.error(error);
-
-        searchStatus.textContent =
-            "The level search failed. The external API may be unavailable right now.";
-    }
-
-    searchButton.disabled = false;
-    searchButton.textContent = "Search";
-}
-
-async function searchPointercrate(query) {
-    const response = await fetch(
-        `${POINTERCRATE_API}?name=${encodeURIComponent(query)}&limit=50`
-    );
-
-    if (!response.ok) {
-        throw new Error(`Pointercrate HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    const rows =
-        Array.isArray(data)
-            ? data
-            : Array.isArray(data.data)
-                ? data.data
-                : [];
-
-    return rows.map(level => {
-
-        const video =
-            level.video_url ||
-            level.verification_video ||
-            level.video ||
-            null;
-
-        const thumbnail =
-            level.thumbnail_url ||
-            level.thumbnail ||
-            youtubeThumbnail(video);
-
-        return {
-            source: "Pointercrate",
-            id: String(
-                level.id ??
-                level.level_id ??
-                level.position ??
-                ""
-            ),
-            name:
-                level.name ??
-                level.level_name ??
-                "Unknown level",
-            creator:
-                level.publisher?.name ??
-                level.creator?.name ??
-                level.creator ??
-                "Unknown",
-            points: normalizeNumber(
-                level.points ??
-                level.demon_points ??
-                0
-            ),
-            video,
-            thumbnail
-        };
-    }).filter(level => level.name);
-}
-
-async function searchAREDL(query) {
-    /*
-        AREDL's API schema can evolve, so this intentionally accepts
-        several common response shapes rather than assuming only one.
-    */
-
-    const url =
-        `${AREDL_API}?name=${encodeURIComponent(query)}`;
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-        throw new Error(`AREDL HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    const rows =
-        Array.isArray(data)
-            ? data
-            : Array.isArray(data.data)
-                ? data.data
-                : Array.isArray(data.levels)
-                    ? data.levels
-                    : [];
-
-    return rows.map(level => {
-
-        const video =
-            level.video_url ||
-            level.verification_video ||
-            level.video ||
-            level.youtube_url ||
-            null;
-
-        const thumbnail =
-            level.thumbnail_url ||
-            level.thumbnail ||
-            youtubeThumbnail(video);
-
-        return {
-            source: "AREDL",
-            id: String(
-                level.id ??
-                level.level_id ??
-                level.gd_id ??
-                ""
-            ),
-            name:
-                level.name ??
-                level.level_name ??
-                "Unknown level",
-            creator:
-                level.creator ??
-                level.publisher?.name ??
-                level.author ??
-                "Unknown",
-            points: normalizeNumber(
-                level.points ??
-                level.demon_points ??
-                0
-            ),
-            video,
-            thumbnail
-        };
-    }).filter(level => level.name);
-}
-
-function deduplicateSearchResults(results) {
-    const seen = new Set();
-
-    return results.filter(level => {
-
-        const key =
-            `${level.name.toLowerCase()}|${level.id}`;
-
-        if (seen.has(key)) {
-            return false;
-        }
-
-        seen.add(key);
-        return true;
-
-    }).slice(0, 100);
-}
-
-function renderSearchResults(results) {
-    searchResults.innerHTML = results.map((level, index) => {
-
-        const image =
-            level.thumbnail
-                ? `
-                    <img
-                        src="${escapeHTML(level.thumbnail)}"
-                        alt=""
-                        loading="lazy"
-                        onerror="this.style.visibility='hidden'"
-                    >
-                `
-                : `
-                    <div
-                        style="
-                            width:100px;
-                            height:56px;
-                            border-radius:8px;
-                            background:#090b10;
-                        "
-                    ></div>
-                `;
-
-        return `
-            <div class="search-result">
-
-                ${image}
-
-                <div>
-                    <div class="result-title">
-                        ${escapeHTML(level.name)}
-                    </div>
-
-                    <div class="result-meta">
-                        ${escapeHTML(level.creator)}
-                        ${level.id ? ` · ID ${escapeHTML(level.id)}` : ""}
-                    </div>
-
-                    <div class="source">
-                        ${escapeHTML(level.source)}
-                    </div>
-                </div>
+                <br><br>
 
                 <button
-                    class="btn primary small"
-                    data-result-index="${index}"
+                    class="primary-btn"
+                    onclick="openAddLevel()"
                 >
-                    Use level
+                    🔎 Search Levels
                 </button>
 
             </div>
+
         `;
-    }).join("");
 
-    searchResults
-        .querySelectorAll("[data-result-index]")
-        .forEach(button => {
+        return;
+    }
 
-            button.addEventListener("click", () => {
+    list.levels.sort(
+        (a, b) =>
+            Number(b.points) -
+            Number(a.points)
+    );
 
-                const level =
-                    results[Number(button.dataset.resultIndex)];
+    container.innerHTML =
+        `<div class="level-list"></div>`;
 
-                selectSearchResult(level);
-            });
-        });
+    const levelList =
+        container.querySelector(".level-list");
+
+    list.levels.forEach(
+        (level, index) => {
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "level-row";
+
+            row.innerHTML = `
+
+                <div class="rank">
+                    #${index + 1}
+                </div>
+
+                <img
+                    class="level-thumb"
+                    src="${escapeAttribute(
+                        level.thumbnail ||
+                        createFallbackThumbnail()
+                    )}"
+                    onerror="this.src='${createFallbackThumbnail()}'"
+                >
+
+                <div>
+
+                    <div class="level-name">
+                        ${escapeHtml(level.name)}
+                    </div>
+
+                    <div class="level-creator">
+                        ${escapeHtml(
+                            level.creator || "Unknown creator"
+                        )}
+                    </div>
+
+                </div>
+
+                <div class="points">
+                    ${formatPoints(level.points)}
+                </div>
+
+                <div class="source">
+                    ${escapeHtml(
+                        level.source || "GD"
+                    )}
+                </div>
+
+                <div class="level-actions">
+
+                    <button
+                        class="small-btn"
+                        onclick="editLevel('${escapeAttribute(level.id)}')"
+                    >
+                        ✏️
+                    </button>
+
+                    <button
+                        class="small-btn"
+                        onclick="deleteLevel('${escapeAttribute(level.id)}')"
+                    >
+                        🗑
+                    </button>
+
+                </div>
+            `;
+
+            levelList.appendChild(row);
+        }
+    );
 }
+
+
+function formatPoints(points) {
+
+    const number =
+        Number(points);
+
+    if (!Number.isFinite(number)) {
+        return "0";
+    }
+
+    return Number.isInteger(number)
+        ? number.toLocaleString()
+        : number.toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits: 2
+            }
+        );
+}
+
+
+function deleteLevel(id) {
+
+    const list =
+        getSelectedList();
+
+    if (!list) return;
+
+    const level =
+        list.levels.find(
+            x => x.id === id
+        );
+
+    if (!level) return;
+
+    if (
+        !confirm(
+            `Remove "${level.name}" from this Demonlist?`
+        )
+    ) {
+        return;
+    }
+
+    list.levels =
+        list.levels.filter(
+            x => x.id !== id
+        );
+
+    list.updatedAt =
+        Date.now();
+
+    saveState();
+
+    render();
+}
+
+
+function editLevel(id) {
+
+    const list =
+        getSelectedList();
+
+    if (!list) return;
+
+    const level =
+        list.levels.find(
+            x => x.id === id
+        );
+
+    if (!level) return;
+
+    openModal(`
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >×</button>
+
+        <h2>Edit Level</h2>
+
+        <label class="form-label">
+            Level Name
+        </label>
+
+        <input
+            id="editName"
+            class="form-input"
+            value="${escapeAttribute(level.name)}"
+        >
+
+        <label class="form-label">
+            Creator
+        </label>
+
+        <input
+            id="editCreator"
+            class="form-input"
+            value="${escapeAttribute(level.creator || "")}"
+        >
+
+        <label class="form-label">
+            Points
+        </label>
+
+        <input
+            id="editPoints"
+            class="form-input"
+            type="number"
+            step="0.01"
+            value="${escapeAttribute(level.points)}"
+        >
+
+        <label class="form-label">
+            Video URL
+        </label>
+
+        <input
+            id="editVideo"
+            class="form-input"
+            value="${escapeAttribute(level.videoUrl || "")}"
+        >
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="saveLevelEdit('${escapeAttribute(id)}')"
+            >
+                Save
+            </button>
+
+        </div>
+    `);
+}
+
+
+function saveLevelEdit(id) {
+
+    const list =
+        getSelectedList();
+
+    const level =
+        list.levels.find(
+            x => x.id === id
+        );
+
+    if (!level) return;
+
+    const name =
+        document.getElementById("editName")
+            .value.trim();
+
+    const creator =
+        document.getElementById("editCreator")
+            .value.trim();
+
+    const points =
+        Number(
+            document.getElementById("editPoints")
+                .value
+        );
+
+    const videoUrl =
+        document.getElementById("editVideo")
+            .value.trim();
+
+    if (!name) {
+
+        alert("Level name cannot be empty.");
+
+        return;
+    }
+
+    if (!Number.isFinite(points)) {
+
+        alert("Enter a valid number of points.");
+
+        return;
+    }
+
+    level.name = name;
+    level.creator = creator;
+    level.points = points;
+    level.videoUrl = videoUrl;
+
+    const videoThumbnail =
+        getYouTubeThumbnail(videoUrl);
+
+    if (videoThumbnail) {
+        level.thumbnail =
+            videoThumbnail;
+    }
+
+    list.updatedAt =
+        Date.now();
+
+    saveState();
+
+    closeModal();
+
+    render();
+}
+
+
+/* =========================================================
+   ADD LEVEL MODAL
+========================================================= */
+
+function openAddLevel() {
+
+    openModal(`
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >×</button>
+
+        <h2>Search Geometry Dash Levels</h2>
+
+        <p style="color:#7f8898">
+            Search real levels using Pointercrate
+            and AREDL.
+        </p>
+
+        <div class="search-box">
+
+            <input
+                id="levelSearch"
+                class="form-input"
+                placeholder="Search level name..."
+                onkeydown="if(event.key==='Enter') searchLevels()"
+            >
+
+            <button
+                class="primary-btn"
+                onclick="searchLevels()"
+            >
+                Search
+            </button>
+
+        </div>
+
+        <div id="searchStatus"></div>
+
+        <div id="searchResults" class="search-results"></div>
+
+    `);
+
+    setTimeout(() => {
+
+        document
+            .getElementById("levelSearch")
+            ?.focus();
+
+    }, 50);
+}
+
+
+/* =========================================================
+   LEVEL API SEARCH
+========================================================= */
+
+async function searchLevels() {
+
+    const input =
+        document.getElementById("levelSearch");
+
+    const results =
+        document.getElementById("searchResults");
+
+    const status =
+        document.getElementById("searchStatus");
+
+    if (!input || !results) return;
+
+    const query =
+        input.value.trim();
+
+    if (!query) {
+
+        status.innerHTML =
+            `<div class="error">
+                Enter a level name.
+            </div>`;
+
+        return;
+    }
+
+    results.innerHTML =
+        `<div class="loading">
+            Searching Pointercrate and AREDL...
+        </div>`;
+
+    status.innerHTML = "";
+
+    const resultsMap =
+        new Map();
+
+    /* POINTERCRATE */
+
+    try {
+
+        const pointerResponse =
+            await fetch(
+                "https://pointercrate.com/api/v2/demons/"
+            );
+
+        if (pointerResponse.ok) {
+
+            const pointerData =
+                await pointerResponse.json();
+
+            const demons =
+                Array.isArray(pointerData)
+                    ? pointerData
+                    : pointerData.data || [];
+
+            demons
+                .filter(level =>
+                    String(
+                        level.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(query.toLowerCase())
+                )
+                .forEach(level => {
+
+                    const id =
+                        String(
+                            level.id ||
+                            level.level_id ||
+                            level.name
+                        );
+
+                    resultsMap.set(
+                        "pointercrate-" + id,
+                        {
+                            id:
+                                "pointercrate-" + id,
+
+                            gdId:
+                                level.id || "",
+
+                            name:
+                                level.name ||
+                                "Unknown Level",
+
+                            creator:
+                                level.position?.creator?.name ||
+                                level.creator?.name ||
+                                level.creator ||
+                                "Unknown",
+
+                            points:
+                                0,
+
+                            source:
+                                "Pointercrate",
+
+                            thumbnail:
+                                getYouTubeThumbnail(
+                                    level.video ||
+                                    level.video_url ||
+                                    ""
+                                ),
+
+                            videoUrl:
+                                level.video ||
+                                level.video_url ||
+                                ""
+                        }
+                    );
+                });
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Pointercrate search failed:",
+            error
+        );
+    }
+
+
+    /* AREDL */
+
+    try {
+
+        const aredlResponse =
+            await fetch(
+                "https://api.aredl.net/v2/api/aredl/levels"
+            );
+
+        if (aredlResponse.ok) {
+
+            const aredlData =
+                await aredlResponse.json();
+
+            const levels =
+                Array.isArray(aredlData)
+                    ? aredlData
+                    : aredlData.data ||
+                      aredlData.levels ||
+                      [];
+
+            levels
+                .filter(level =>
+                    String(
+                        level.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(query.toLowerCase())
+                )
+                .forEach(level => {
+
+                    const id =
+                        String(
+                            level.id ||
+                            level.level_id ||
+                            level.name
+                        );
+
+                    const key =
+                        "aredl-" + id;
+
+                    if (
+                        !resultsMap.has(key)
+                    ) {
+
+                        resultsMap.set(
+                            key,
+                            {
+                                id: key,
+
+                                gdId:
+                                    level.id || "",
+
+                                name:
+                                    level.name ||
+                                    "Unknown Level",
+
+                                creator:
+                                    level.creator ||
+                                    level.author ||
+                                    "Unknown",
+
+                                points:
+                                    0,
+
+                                source:
+                                    "AREDL",
+
+                                thumbnail:
+                                    getYouTubeThumbnail(
+                                        level.video ||
+                                        level.video_url ||
+                                        ""
+                                    ),
+
+                                videoUrl:
+                                    level.video ||
+                                    level.video_url ||
+                                    ""
+                            }
+                        );
+                    }
+                });
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "AREDL search failed:",
+            error
+        );
+    }
+
+
+    const resultsArray =
+        Array.from(
+            resultsMap.values()
+        ).slice(0, 50);
+
+    if (!resultsArray.length) {
+
+        results.innerHTML = `
+
+            <div class="empty">
+
+                <strong>No levels found.</strong>
+
+                Try another search.
+
+            </div>
+        `;
+
+        return;
+    }
+
+    results.innerHTML = "";
+
+    resultsArray.forEach(level => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "search-result";
+
+        button.onclick =
+            () => selectSearchResult(level);
+
+        const thumbnail =
+            level.thumbnail ||
+            createFallbackThumbnail();
+
+        button.innerHTML = `
+
+            <img
+                class="result-thumb"
+                src="${escapeAttribute(thumbnail)}"
+                onerror="this.src='${createFallbackThumbnail()}'"
+            >
+
+            <div class="result-info">
+
+                <div class="result-name">
+                    ${escapeHtml(level.name)}
+                </div>
+
+                <div class="result-meta">
+                    ${escapeHtml(level.creator)}
+                    •
+                    ${escapeHtml(level.source)}
+                </div>
+
+            </div>
+        `;
+
+        results.appendChild(button);
+    });
+}
+
+
+/* =========================================================
+   SELECT SEARCH RESULT
+========================================================= */
 
 function selectSearchResult(level) {
 
-    levelName.value = level.name || "";
-    levelCreator.value = level.creator || "";
-    levelId.value = level.id || "";
+    openModal(`
 
-    levelPoints.value =
-        level.points > 0
-            ? level.points
-            : "0";
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >×</button>
 
-    levelVideo.value =
-        level.video || "";
+        <h2>
+            ${escapeHtml(level.name)}
+        </h2>
 
-    levelThumbnail.value =
-        level.thumbnail || "";
+        <p style="color:#7f8898">
+            ${escapeHtml(level.creator)}
+            •
+            ${escapeHtml(level.source)}
+        </p>
 
-    showMessage(
-        levelMessage,
-        `${level.name} selected.`,
-        "success"
+        <label class="form-label">
+            Points
+        </label>
+
+        <input
+            id="newLevelPoints"
+            class="form-input"
+            type="number"
+            step="0.01"
+            value="0"
+            placeholder="Example: 100"
+        >
+
+        <label class="form-label">
+            Video URL
+        </label>
+
+        <input
+            id="newLevelVideo"
+            class="form-input"
+            value="${escapeAttribute(level.videoUrl || "")}"
+            placeholder="YouTube video URL (optional)"
+        >
+
+        <p style="
+            color:#737d8e;
+            font-size:12px;
+            margin-top:12px;
+        ">
+            The points determine the level's position
+            in your Demonlist.
+        </p>
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-btn"
+                onclick="openAddLevel()"
+            >
+                Back
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick='addSelectedLevel(${JSON.stringify(level)})'
+            >
+                Add To Demonlist
+            </button>
+
+        </div>
+    `);
+}
+
+
+/* =========================================================
+   ADD SELECTED LEVEL
+========================================================= */
+
+function addSelectedLevel(level) {
+
+    const list =
+        getSelectedList();
+
+    if (!list) return;
+
+    const points =
+        Number(
+            document.getElementById("newLevelPoints")
+                .value
+        );
+
+    const videoUrl =
+        document.getElementById("newLevelVideo")
+            .value.trim();
+
+    if (!Number.isFinite(points)) {
+
+        alert("Enter a valid points value.");
+
+        return;
+    }
+
+    const duplicate =
+        list.levels.some(
+            existing =>
+                (
+                    existing.source === level.source &&
+                    existing.gdId &&
+                    level.gdId &&
+                    String(existing.gdId) ===
+                    String(level.gdId)
+                ) ||
+                (
+                    existing.name.toLowerCase() ===
+                    level.name.toLowerCase()
+                )
+        );
+
+    if (duplicate) {
+
+        alert(
+            "This level is already in this Demonlist."
+        );
+
+        return;
+    }
+
+    const thumbnail =
+        getYouTubeThumbnail(videoUrl) ||
+        level.thumbnail ||
+        "";
+
+    list.levels.push({
+
+        id:
+            crypto.randomUUID
+                ? crypto.randomUUID()
+                : Date.now().toString(),
+
+        gdId:
+            level.gdId || "",
+
+        name:
+            level.name,
+
+        creator:
+            level.creator || "Unknown",
+
+        points:
+            points,
+
+        source:
+            level.source,
+
+        videoUrl:
+            videoUrl,
+
+        thumbnail:
+            thumbnail,
+
+        addedAt:
+            Date.now()
+    });
+
+    list.updatedAt =
+        Date.now();
+
+    saveState();
+
+    closeModal();
+
+    render();
+}
+
+
+/* =========================================================
+   YOUTUBE THUMBNAILS
+========================================================= */
+
+function getYouTubeThumbnail(url) {
+
+    if (!url) return "";
+
+    try {
+
+        const parsed =
+            new URL(url);
+
+        let videoId = "";
+
+        if (
+            parsed.hostname.includes(
+                "youtube.com"
+            )
+        ) {
+
+            videoId =
+                parsed.searchParams.get("v") || "";
+
+        }
+
+        if (
+            parsed.hostname === "youtu.be"
+        ) {
+
+            videoId =
+                parsed.pathname
+                    .replace("/", "");
+        }
+
+        if (
+            parsed.pathname.includes(
+                "/shorts/"
+            )
+        ) {
+
+            videoId =
+                parsed.pathname
+                    .split("/shorts/")[1]
+                    .split("/")[0];
+        }
+
+        if (
+            parsed.pathname.includes(
+                "/embed/"
+            )
+        ) {
+
+            videoId =
+                parsed.pathname
+                    .split("/embed/")[1]
+                    .split("/")[0];
+        }
+
+        if (!videoId) return "";
+
+        return (
+            "https://img.youtube.com/vi/" +
+            videoId +
+            "/hqdefault.jpg"
+        );
+
+    } catch {
+
+        return "";
+    }
+}
+
+
+function createFallbackThumbnail() {
+
+    return (
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="300"
+                height="180"
+                viewBox="0 0 300 180"
+            >
+                <rect
+                    width="300"
+                    height="180"
+                    fill="#202630"
+                />
+
+                <text
+                    x="150"
+                    y="95"
+                    text-anchor="middle"
+                    fill="#7d8798"
+                    font-size="18"
+                    font-family="Arial"
+                >
+                    GD LEVEL
+                </text>
+            </svg>
+        `)
     );
 }
 
 
 /* =========================================================
-   PROFILE BUTTON
+   MODAL
 ========================================================= */
 
-document.getElementById("profileButton").addEventListener("click", () => {
+function openModal(html) {
 
-    noListPanel.classList.add("hidden");
-    listPanel.classList.add("hidden");
-    profilePanel.classList.remove("hidden");
+    document
+        .getElementById("modal")
+        .innerHTML = html;
 
-    renderProfile();
-});
-
-
-/* =========================================================
-   MODAL CLOSE BUTTONS
-========================================================= */
-
-document.querySelectorAll("[data-close]").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        const target =
-            document.getElementById(button.dataset.close);
-
-        if (target) {
-            closeModal(target);
-        }
-    });
-});
-
-document.querySelectorAll(".modal-bg").forEach(modal => {
-
-    modal.addEventListener("click", event => {
-
-        if (event.target === modal) {
-            closeModal(modal);
-        }
-    });
-});
+    document
+        .getElementById("modalBackdrop")
+        .classList.remove("hidden");
+}
 
 
-/* =========================================================
-   ESCAPE KEY
-========================================================= */
+function closeModal() {
 
-document.addEventListener("keydown", event => {
+    document
+        .getElementById("modalBackdrop")
+        .classList.add("hidden");
 
-    if (event.key !== "Escape") return;
-
-    document.querySelectorAll(".modal-bg").forEach(modal => {
-        closeModal(modal);
-    });
-});
+    document
+        .getElementById("modal")
+        .innerHTML = "";
+}
 
 
-/* =========================================================
-   START
-========================================================= */
+function closeModalOutside(event) {
 
-(async function start() {
+    if (
+        event.target ===
+        document.getElementById("modalBackdrop")
+    ) {
 
-    const {
-        data: {
-            session
-        }
-    } = await supabaseClient.auth.getSession();
-
-    if (session?.user) {
-        currentUser = session.user;
-        await initializeUser();
-    } else {
-        showLoginScreen();
+        closeModal();
     }
+}
 
-})();
+
+/* =========================================================
+   SECURITY / TEXT HELPERS
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function escapeAttribute(value) {
+
+    return escapeHtml(value);
+}
+
 </script>
 
 </body>
