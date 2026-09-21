@@ -3,718 +3,1039 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CreateYourDemonlist</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
 
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #0b0d12;
-        color: #f4f6fb;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    button,
-    input {
-        font: inherit;
-    }
+body {
+    margin: 0;
+    background: #090b10;
+    color: #f4f6fb;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-    button {
-        cursor: pointer;
-    }
+button,
+input {
+    font: inherit;
+}
 
-    .hidden {
-        display: none !important;
-    }
+button {
+    cursor: pointer;
+}
 
-    /* HEADER */
+.hidden {
+    display: none !important;
+}
 
-    header {
-        height: 68px;
-        background: #11151d;
-        border-bottom: 1px solid #252b38;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 24px;
-        position: sticky;
-        top: 0;
-        z-index: 50;
-    }
+/* =========================================================
+   HEADER
+========================================================= */
 
-    .logo {
-        font-size: 21px;
-        font-weight: 800;
-        color: #ffffff;
-    }
+header {
+    height: 68px;
+    background: #11151d;
+    border-bottom: 1px solid #252b36;
 
-    .logo span {
-        color: #ff334d;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    .header-buttons {
-        display: flex;
-        gap: 8px;
-    }
+    padding: 0 24px;
 
-    .header-btn {
-        background: #1a202b;
-        border: 1px solid #2c3442;
-        color: #fff;
-        padding: 9px 13px;
-        border-radius: 9px;
-    }
+    position: sticky;
+    top: 0;
 
-    .header-btn:hover {
-        background: #222a37;
-    }
+    z-index: 100;
+}
 
-    /* PROFILE SETUP */
+.logo {
+    font-size: 21px;
+    font-weight: 900;
+}
 
-    .setup-screen {
-        min-height: calc(100vh - 68px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 25px;
-    }
+.logo span {
+    color: #ff334d;
+}
 
-    .setup-card {
-        width: min(500px, 100%);
-        background: #11151d;
-        border: 1px solid #292f3b;
-        border-radius: 18px;
-        padding: 35px;
-        text-align: center;
-        box-shadow: 0 20px 70px rgba(0,0,0,.35);
-    }
+.header-buttons {
+    display: flex;
+    gap: 8px;
+}
 
-    .setup-icon {
-        width: 76px;
-        height: 76px;
-        border-radius: 50%;
-        background: #ff334d;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        font-size: 34px;
-        font-weight: 900;
-    }
+.header-btn {
+    background: #1a202b;
+    border: 1px solid #2d3543;
+    color: white;
 
-    .setup-card h1 {
-        margin: 0 0 10px;
-    }
+    padding: 9px 13px;
+    border-radius: 9px;
+}
 
-    .setup-card p {
-        color: #929aaa;
-        line-height: 1.5;
-    }
+.header-btn:hover {
+    background: #242b37;
+}
 
-    .username-input {
-        width: 100%;
-        margin-top: 20px;
-        background: #0b0e14;
-        color: white;
-        border: 1px solid #303746;
-        padding: 14px;
-        border-radius: 10px;
-        outline: none;
-    }
+/* =========================================================
+   SETUP
+========================================================= */
 
-    .username-input:focus {
-        border-color: #ff334d;
-    }
+.setup-screen {
+    min-height: calc(100vh - 68px);
 
-    .primary-btn {
-        background: #ff334d;
-        color: white;
-        border: none;
-        padding: 13px 18px;
-        border-radius: 10px;
-        font-weight: 700;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .primary-btn:hover {
-        background: #ff4d63;
-    }
+    padding: 25px;
+}
 
-    .setup-card .primary-btn {
-        width: 100%;
-        margin-top: 12px;
-    }
+.setup-card {
+    width: min(500px, 100%);
 
-    /* APP */
+    background: #11151d;
+    border: 1px solid #292f3b;
 
-    .app {
-        min-height: calc(100vh - 68px);
-        display: flex;
-    }
+    border-radius: 18px;
 
-    .sidebar {
-        width: 275px;
-        flex-shrink: 0;
-        background: #0f131a;
-        border-right: 1px solid #252b36;
-        padding: 20px;
-        min-height: calc(100vh - 68px);
-    }
+    padding: 35px;
 
-    .profile-box {
-        background: #171c25;
-        border: 1px solid #292f3a;
-        border-radius: 13px;
-        padding: 14px;
-        margin-bottom: 20px;
-    }
+    text-align: center;
 
-    .profile-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
+    box-shadow: 0 25px 80px rgba(0,0,0,.4);
+}
 
-    .avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: #ff334d;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 900;
-        font-size: 18px;
-    }
+.setup-icon {
+    width: 76px;
+    height: 76px;
 
-    .profile-name {
-        font-weight: 800;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+    margin: 0 auto 20px;
 
-    .profile-count {
-        font-size: 12px;
-        color: #8992a2;
-        margin-top: 4px;
-    }
+    border-radius: 50%;
 
-    .sidebar-title {
-        color: #7f8898;
-        font-size: 12px;
-        text-transform: uppercase;
-        font-weight: 800;
-        margin: 20px 4px 8px;
-        letter-spacing: .8px;
-    }
+    background: #ff334d;
 
-    .list-item {
-        width: 100%;
-        background: transparent;
-        border: none;
-        color: #d8dce5;
-        padding: 11px;
-        border-radius: 8px;
-        text-align: left;
-        margin-bottom: 3px;
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .list-item:hover {
-        background: #191f29;
-    }
+    font-size: 34px;
+    font-weight: 900;
+}
 
-    .list-item.active {
-        background: #252c38;
-        color: white;
-    }
+.setup-card h1 {
+    margin-bottom: 10px;
+}
 
-    .list-item-name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+.setup-card p {
+    color: #8e97a7;
+    line-height: 1.5;
+}
 
-    .list-number {
-        color: #737c8d;
-        font-size: 12px;
-    }
+.username-input {
+    width: 100%;
 
-    .new-list-btn {
-        width: 100%;
-        background: #171d27;
-        border: 1px dashed #394252;
-        color: #b9c0cc;
-        padding: 11px;
-        border-radius: 9px;
-        margin-top: 8px;
-    }
+    background: #0b0e14;
+    border: 1px solid #303746;
 
-    .new-list-btn:hover {
-        background: #202733;
-    }
+    color: white;
 
-    /* MAIN */
+    padding: 14px;
 
-    main {
-        flex: 1;
-        min-width: 0;
-        padding: 30px;
-    }
+    border-radius: 10px;
 
-    .welcome {
-        color: #8992a2;
-        margin-bottom: 25px;
-    }
+    outline: none;
 
-    .list-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
+    margin-top: 18px;
+}
 
-    .list-title {
-        font-size: 30px;
-        margin: 0;
-        word-break: break-word;
-    }
+.username-input:focus {
+    border-color: #ff334d;
+}
 
-    .list-actions {
-        display: flex;
-        gap: 8px;
-        flex-shrink: 0;
-    }
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-    .secondary-btn {
-        background: #171d27;
-        border: 1px solid #303847;
-        color: white;
-        padding: 10px 14px;
-        border-radius: 9px;
-    }
+.primary-btn {
+    background: #ff334d;
+    border: none;
 
-    .secondary-btn:hover {
-        background: #222936;
-    }
+    color: white;
 
-    .danger-btn {
-        background: #27151a;
-        border: 1px solid #5b2631;
-        color: #ff8997;
-        padding: 10px 14px;
-        border-radius: 9px;
-    }
+    padding: 11px 16px;
 
-    .danger-btn:hover {
-        background: #35191f;
-    }
+    border-radius: 9px;
 
-    .empty {
-        border: 1px dashed #343c4a;
-        border-radius: 14px;
-        padding: 55px 20px;
-        text-align: center;
-        color: #808999;
-    }
+    font-weight: 800;
+}
 
-    .empty strong {
-        display: block;
-        color: #cbd0da;
-        font-size: 18px;
-        margin-bottom: 8px;
-    }
+.primary-btn:hover {
+    background: #ff4d63;
+}
 
-    /* LEVEL TABLE */
+.secondary-btn {
+    background: #171d27;
 
-    .level-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
+    border: 1px solid #303847;
+
+    color: white;
+
+    padding: 10px 14px;
+
+    border-radius: 9px;
+}
+
+.secondary-btn:hover {
+    background: #222936;
+}
+
+.danger-btn {
+    background: #28151a;
+
+    border: 1px solid #5b2631;
+
+    color: #ff8b99;
+
+    padding: 10px 14px;
+
+    border-radius: 9px;
+}
+
+.danger-btn:hover {
+    background: #361a20;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    min-height: calc(100vh - 68px);
+
+    display: flex;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    width: 275px;
+
+    flex-shrink: 0;
+
+    background: #0f131a;
+
+    border-right: 1px solid #252b36;
+
+    padding: 20px;
+
+    min-height: calc(100vh - 68px);
+}
+
+.profile-box {
+    background: #171c25;
+
+    border: 1px solid #292f3a;
+
+    border-radius: 13px;
+
+    padding: 14px;
+
+    margin-bottom: 20px;
+}
+
+.profile-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #ff334d;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.profile-name {
+    font-weight: 900;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-count {
+    color: #818a9b;
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+.sidebar-title {
+    color: #7f8898;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    font-weight: 900;
+
+    letter-spacing: .8px;
+
+    margin: 20px 4px 8px;
+}
+
+.list-item {
+    width: 100%;
+
+    background: transparent;
+    border: none;
+
+    color: #d7dce5;
+
+    padding: 11px;
+
+    border-radius: 8px;
+
+    text-align: left;
+
+    display: flex;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    margin-bottom: 3px;
+}
+
+.list-item:hover {
+    background: #191f29;
+}
+
+.list-item.active {
+    background: #252c38;
+    color: white;
+}
+
+.list-item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.list-number {
+    color: #707a8b;
+    font-size: 12px;
+}
+
+.new-list-btn {
+    width: 100%;
+
+    background: #171d27;
+
+    border: 1px dashed #394252;
+
+    color: #bac1cc;
+
+    padding: 11px;
+
+    border-radius: 9px;
+
+    margin-top: 8px;
+}
+
+.new-list-btn:hover {
+    background: #202733;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 30px;
+}
+
+.welcome {
+    color: #8992a2;
+
+    margin-bottom: 25px;
+}
+
+.list-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.list-title {
+    margin: 0;
+
+    font-size: 30px;
+
+    word-break: break-word;
+}
+
+.list-actions {
+    display: flex;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+    border: 1px dashed #343c4a;
+
+    border-radius: 14px;
+
+    padding: 55px 20px;
+
+    text-align: center;
+
+    color: #808999;
+}
+
+.empty strong {
+    display: block;
+
+    color: #cbd0da;
+
+    font-size: 18px;
+
+    margin-bottom: 8px;
+}
+
+/* =========================================================
+   LEVEL LIST
+========================================================= */
+
+.level-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.level-row {
+    min-height: 90px;
+
+    background: #11161e;
+
+    border: 1px solid #252c38;
+
+    border-radius: 12px;
+
+    display: grid;
+
+    grid-template-columns:
+        55px
+        90px
+        minmax(0, 1fr)
+        180px
+        100px;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 10px 14px;
+
+    transition: .15s;
+}
+
+.level-row:hover {
+    border-color: #394354;
+
+    transform: translateY(-1px);
+}
+
+.rank {
+    text-align: center;
+
+    font-size: 22px;
+
+    font-weight: 900;
+
+    color: #929aaa;
+}
+
+.level-thumb {
+    width: 90px;
+    height: 58px;
+
+    object-fit: cover;
+
+    border-radius: 7px;
+
+    background: #202630;
+}
+
+.level-name {
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.level-creator {
+    color: #8a94a5;
+
+    font-size: 12px;
+
+    margin-top: 5px;
+}
+
+.verification {
+    min-width: 0;
+}
+
+.verifier {
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #d3d8e1;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.verified-time {
+    color: #737d8e;
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+.source {
+    text-align: center;
+
+    color: #737d8e;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+}
+
+.level-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 5px;
+}
+
+.small-btn {
+    background: #1b212b;
+
+    border: 1px solid #303847;
+
+    color: white;
+
+    border-radius: 7px;
+
+    padding: 7px 9px;
+
+    font-size: 12px;
+}
+
+.small-btn:hover {
+    background: #272f3b;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-box {
+    display: flex;
+
+    gap: 8px;
+}
+
+.search-box input {
+    flex: 1;
+}
+
+.search-results {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 15px;
+}
+
+.search-result {
+    width: 100%;
+
+    background: #171d26;
+
+    border: 1px solid #29313e;
+
+    border-radius: 10px;
+
+    padding: 11px;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+.search-result:hover {
+    background: #202733;
+
+    border-color: #404a5b;
+}
+
+.result-thumb {
+    width: 70px;
+    height: 45px;
+
+    object-fit: cover;
+
+    border-radius: 6px;
+
+    background: #242b36;
+
+    flex-shrink: 0;
+}
+
+.result-info {
+    min-width: 0;
+}
+
+.result-name {
+    font-weight: 900;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.result-meta {
+    color: #7e8797;
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+.loading {
+    color: #929aaa;
+
+    padding: 15px 0;
+}
+
+.error {
+    color: #ff7787;
+
+    background: #28151a;
+
+    border: 1px solid #54232d;
+
+    padding: 12px;
+
+    border-radius: 9px;
+
+    margin-top: 12px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-backdrop {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.74);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 500;
+}
+
+.modal {
+    width: min(700px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #11161e;
+
+    border: 1px solid #2b333f;
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    box-shadow: 0 30px 100px rgba(0,0,0,.55);
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
+.modal-close {
+    float: right;
+
+    background: transparent;
+
+    border: none;
+
+    color: #8d96a6;
+
+    font-size: 23px;
+}
+
+.form-label {
+    display: block;
+
+    color: #aeb5c1;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin: 14px 0 6px;
+}
+
+.form-input {
+    width: 100%;
+
+    background: #0b0f15;
+
+    border: 1px solid #303846;
+
+    border-radius: 9px;
+
+    color: white;
+
+    padding: 12px;
+
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: #ff334d;
+}
+
+.modal-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.big-profile {
+    text-align: center;
+
+    padding: 15px;
+}
+
+.big-avatar {
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    margin: 0 auto 15px;
+
+    background: #ff334d;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 35px;
+
+    font-weight: 900;
+}
+
+.stats {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 35px;
+
+    margin-top: 20px;
+}
+
+.stat-number {
+    font-size: 25px;
+
+    font-weight: 900;
+}
+
+.stat-label {
+    color: #7e8797;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+.settings-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.settings-grid button {
+    width: 100%;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width: 1000px) {
 
     .level-row {
-        min-height: 82px;
-        background: #11161e;
-        border: 1px solid #252c38;
-        border-radius: 12px;
-        display: grid;
-        grid-template-columns: 55px 76px minmax(0, 1fr) 100px 90px 130px;
-        align-items: center;
-        gap: 12px;
-        padding: 10px 14px;
-    }
-
-    .level-row:hover {
-        border-color: #343d4c;
-    }
-
-    .rank {
-        font-size: 21px;
-        font-weight: 900;
-        text-align: center;
-        color: #929aaa;
+        grid-template-columns:
+            45px
+            70px
+            minmax(0,1fr)
+            150px;
     }
 
     .level-thumb {
-        width: 76px;
-        height: 52px;
-        border-radius: 7px;
-        object-fit: cover;
-        background: #202630;
-    }
-
-    .level-name {
-        font-weight: 800;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .level-creator {
-        color: #7f8898;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-
-    .points {
-        font-weight: 900;
-        color: #ffd15c;
-        text-align: right;
+        width: 70px;
+        height: 50px;
     }
 
     .source {
-        color: #778092;
-        font-size: 11px;
-        text-align: center;
-        text-transform: uppercase;
+        display: none;
+    }
+}
+
+@media(max-width: 700px) {
+
+    header {
+        padding: 0 12px;
     }
 
-    .level-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 5px;
+    .logo {
+        font-size: 17px;
     }
 
-    .small-btn {
-        background: #1b212b;
-        border: 1px solid #303847;
-        color: white;
-        border-radius: 7px;
-        padding: 7px 9px;
-        font-size: 12px;
-    }
-
-    .small-btn:hover {
-        background: #272f3b;
-    }
-
-    /* MODAL */
-
-    .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,.72);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        z-index: 100;
-    }
-
-    .modal {
-        width: min(700px, 100%);
-        max-height: 90vh;
-        overflow-y: auto;
-        background: #11161e;
-        border: 1px solid #2b333f;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 30px 100px rgba(0,0,0,.55);
-    }
-
-    .modal h2 {
-        margin-top: 0;
-    }
-
-    .modal-close {
-        float: right;
-        background: transparent;
-        border: none;
-        color: #8d96a6;
-        font-size: 23px;
-    }
-
-    .form-label {
+    .app {
         display: block;
-        color: #aeb5c1;
-        font-size: 13px;
-        font-weight: 700;
-        margin: 14px 0 6px;
     }
 
-    .form-input {
+    .sidebar {
         width: 100%;
-        background: #0b0f15;
-        border: 1px solid #303846;
-        border-radius: 9px;
-        color: white;
+
+        min-height: auto;
+
+        border-right: none;
+
+        border-bottom: 1px solid #252b36;
+
         padding: 12px;
-        outline: none;
     }
 
-    .form-input:focus {
-        border-color: #ff334d;
+    main {
+        padding: 18px 12px;
     }
 
-    .modal-footer {
-        display: flex;
-        justify-content: flex-end;
-        gap: 8px;
-        margin-top: 20px;
+    .list-item {
+        display: inline-flex;
+
+        width: auto;
+
+        margin-right: 4px;
     }
 
-    /* SEARCH */
-
-    .search-box {
-        display: flex;
-        gap: 8px;
+    .new-list-btn {
+        margin-bottom: 8px;
     }
 
-    .search-box input {
+    .list-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .list-actions {
+        width: 100%;
+
+        flex-wrap: wrap;
+    }
+
+    .list-actions button {
         flex: 1;
     }
 
-    .search-results {
-        margin-top: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 7px;
+    .level-row {
+        grid-template-columns:
+            35px
+            60px
+            minmax(0,1fr);
+
+        gap: 8px;
+
+        padding: 8px;
     }
 
-    .search-result {
-        width: 100%;
-        background: #171d26;
-        border: 1px solid #29313e;
-        border-radius: 10px;
-        padding: 11px;
-        color: white;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-align: left;
+    .level-thumb {
+        width: 60px;
+        height: 43px;
     }
 
-    .search-result:hover {
-        background: #202733;
-        border-color: #404a5b;
+    .verification,
+    .level-actions {
+        display: none;
     }
 
-    .result-thumb {
-        width: 70px;
-        height: 45px;
-        object-fit: cover;
-        border-radius: 6px;
-        background: #242b36;
-        flex-shrink: 0;
-    }
+    .header-btn {
+        padding: 7px 9px;
 
-    .result-info {
-        min-width: 0;
-    }
-
-    .result-name {
-        font-weight: 800;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .result-meta {
-        color: #7e8797;
         font-size: 12px;
-        margin-top: 4px;
     }
 
-    .loading {
-        color: #929aaa;
-        padding: 15px 0;
+    .settings-grid {
+        grid-template-columns: 1fr;
     }
+}
 
-    .error {
-        color: #ff7787;
-        background: #28151a;
-        border: 1px solid #54232d;
-        padding: 12px;
-        border-radius: 9px;
-        margin-top: 12px;
-    }
-
-    /* PROFILE MODAL */
-
-    .big-profile {
-        text-align: center;
-        padding: 15px;
-    }
-
-    .big-avatar {
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        margin: 0 auto 15px;
-        background: #ff334d;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 35px;
-        font-weight: 900;
-    }
-
-    .stats {
-        display: flex;
-        justify-content: center;
-        gap: 35px;
-        margin-top: 20px;
-    }
-
-    .stat-number {
-        font-size: 25px;
-        font-weight: 900;
-    }
-
-    .stat-label {
-        color: #7e8797;
-        font-size: 12px;
-        margin-top: 3px;
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 900px) {
-        .sidebar {
-            width: 220px;
-        }
-
-        .level-row {
-            grid-template-columns: 42px 60px minmax(0, 1fr) 75px;
-        }
-
-        .level-thumb {
-            width: 60px;
-            height: 45px;
-        }
-
-        .source,
-        .level-actions {
-            display: none;
-        }
-    }
-
-    @media (max-width: 650px) {
-        header {
-            padding: 0 12px;
-        }
-
-        .logo {
-            font-size: 17px;
-        }
-
-        .sidebar {
-            width: 100%;
-            min-height: auto;
-            border-right: none;
-            border-bottom: 1px solid #252b36;
-        }
-
-        .app {
-            display: block;
-        }
-
-        main {
-            padding: 18px 12px;
-        }
-
-        .sidebar {
-            padding: 12px;
-        }
-
-        .sidebar-title {
-            margin-top: 12px;
-        }
-
-        .list-item {
-            display: inline-flex;
-            width: auto;
-            margin-right: 4px;
-        }
-
-        .new-list-btn {
-            margin-bottom: 8px;
-        }
-
-        .level-row {
-            grid-template-columns: 38px 58px minmax(0, 1fr) 65px;
-            gap: 7px;
-            padding: 8px;
-        }
-
-        .level-thumb {
-            width: 58px;
-            height: 42px;
-        }
-
-        .level-actions {
-            display: none;
-        }
-
-        .list-header {
-            align-items: flex-start;
-            flex-direction: column;
-        }
-
-        .list-actions {
-            width: 100%;
-        }
-
-        .list-actions button {
-            flex: 1;
-        }
-
-        .header-buttons .header-btn {
-            padding: 7px 9px;
-            font-size: 12px;
-        }
-    }
 </style>
 </head>
 
 <body>
 
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header>
-    <div class="logo">Create<span>Your</span>Demonlist</div>
+
+    <div class="logo">
+        Create<span>Your</span>Demonlist
+    </div>
 
     <div class="header-buttons">
-        <button class="header-btn" onclick="openProfile()">👤 Profile</button>
-        <button class="header-btn" onclick="changeUsername()">✏️ Username</button>
+
+        <button
+            class="header-btn"
+            onclick="openProfile()"
+        >
+            👤 Profile
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="openSettings()"
+        >
+            ⚙️
+        </button>
+
     </div>
+
 </header>
 
 
-<!-- FIRST-TIME PROFILE SETUP -->
+<!-- =====================================================
+     PROFILE SETUP
+===================================================== -->
 
-<section id="setupScreen" class="setup-screen">
+<section
+    id="setupScreen"
+    class="setup-screen"
+>
+
     <div class="setup-card">
-        <div class="setup-icon">D</div>
 
-        <h1>CreateYourDemonlist</h1>
+        <div class="setup-icon">
+            D
+        </div>
+
+        <h1>
+            CreateYourDemonlist
+        </h1>
 
         <p>
-            Create your local profile and start making your own Geometry Dash Demonlists.
+            Create your local profile and start
+            building your own Geometry Dash
+            Demonlists.
         </p>
 
         <input
@@ -724,37 +1045,76 @@
             placeholder="Enter your username..."
         >
 
-        <button class="primary-btn" onclick="createProfile()">
+        <button
+            class="primary-btn"
+            style="width:100%;margin-top:12px;"
+            onclick="createProfile()"
+        >
             Continue
         </button>
+
     </div>
+
 </section>
 
 
-<!-- MAIN APP -->
+<!-- =====================================================
+     APP
+===================================================== -->
 
-<div id="app" class="app hidden">
+<div
+    id="app"
+    class="app hidden"
+>
 
     <aside class="sidebar">
 
         <div class="profile-box">
+
             <div class="profile-row">
-                <div id="avatar" class="avatar">?</div>
+
+                <div
+                    id="avatar"
+                    class="avatar"
+                >
+                    ?
+                </div>
 
                 <div>
-                    <div id="profileName" class="profile-name">Username</div>
-                    <div id="profileCount" class="profile-count">
+
+                    <div
+                        id="profileName"
+                        class="profile-name"
+                    >
+                        Username
+                    </div>
+
+                    <div
+                        id="profileCount"
+                        class="profile-count"
+                    >
                         0 Demonlists
                     </div>
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="sidebar-title">Your Demonlists</div>
+
+        <div class="sidebar-title">
+            Your Demonlists
+        </div>
+
 
         <div id="listContainer"></div>
 
-        <button class="new-list-btn" onclick="createList()">
+
+        <button
+            class="new-list-btn"
+            onclick="createList()"
+        >
             + Create Demonlist
         </button>
 
@@ -763,7 +1123,10 @@
 
     <main>
 
-        <div id="welcomeText" class="welcome"></div>
+        <div
+            id="welcomeText"
+            class="welcome"
+        ></div>
 
         <div id="listArea"></div>
 
@@ -772,10 +1135,21 @@
 </div>
 
 
-<!-- MODAL -->
+<!-- =====================================================
+     MODAL
+===================================================== -->
 
-<div id="modalBackdrop" class="modal-backdrop hidden" onclick="closeModalOutside(event)">
-    <div id="modal" class="modal"></div>
+<div
+    id="modalBackdrop"
+    class="modal-backdrop hidden"
+    onclick="closeModalOutside(event)"
+>
+
+    <div
+        id="modal"
+        class="modal"
+    ></div>
+
 </div>
 
 
@@ -785,17 +1159,24 @@
    STORAGE
 ========================================================= */
 
-const STORAGE_KEY = "createYourDemonlist_v1";
+const STORAGE_KEY =
+    "createYourDemonlist_v2";
 
-let state = loadState();
+let state =
+    loadState();
+
 
 function loadState() {
 
     try {
 
-        const saved = localStorage.getItem(STORAGE_KEY);
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
 
         if (!saved) {
+
             return {
                 username: "",
                 lists: [],
@@ -803,17 +1184,24 @@ function loadState() {
             };
         }
 
-        const data = JSON.parse(saved);
+        const data =
+            JSON.parse(saved);
 
         return {
-            username: data.username || "",
-            lists: Array.isArray(data.lists) ? data.lists : [],
-            selectedListId: data.selectedListId || null
+
+            username:
+                data.username || "",
+
+            lists:
+                Array.isArray(data.lists)
+                    ? data.lists
+                    : [],
+
+            selectedListId:
+                data.selectedListId || null
         };
 
-    } catch (error) {
-
-        console.error(error);
+    } catch {
 
         return {
             username: "",
@@ -829,6 +1217,30 @@ function saveState() {
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(state)
+    );
+}
+
+
+/* =========================================================
+   ID
+========================================================= */
+
+function createId() {
+
+    if (
+        window.crypto &&
+        crypto.randomUUID
+    ) {
+
+        return crypto.randomUUID();
+    }
+
+    return (
+        Date.now() +
+        "-" +
+        Math.random()
+            .toString(36)
+            .slice(2)
     );
 }
 
@@ -860,9 +1272,14 @@ function initialize() {
         .getElementById("app")
         .classList.remove("hidden");
 
+
     if (
         !state.selectedListId ||
-        !state.lists.some(x => x.id === state.selectedListId)
+        !state.lists.some(
+            list =>
+                list.id ===
+                state.selectedListId
+        )
     ) {
 
         state.selectedListId =
@@ -876,6 +1293,7 @@ function initialize() {
     render();
 }
 
+
 initialize();
 
 
@@ -886,21 +1304,24 @@ initialize();
 function createProfile() {
 
     const input =
-        document.getElementById("usernameInput");
+        document.getElementById(
+            "usernameInput"
+        );
 
     const username =
         input.value.trim();
 
     if (!username) {
 
-        alert("Please enter a username.");
-
-        input.focus();
+        alert(
+            "Please enter a username."
+        );
 
         return;
     }
 
-    state.username = username;
+    state.username =
+        username.slice(0,30);
 
     saveState();
 
@@ -910,26 +1331,29 @@ function createProfile() {
 
 function changeUsername() {
 
-    const newName =
+    const result =
         prompt(
             "Enter your new username:",
             state.username
         );
 
-    if (newName === null) return;
+    if (result === null)
+        return;
 
-    const clean =
-        newName.trim();
+    const username =
+        result.trim();
 
-    if (!clean) {
+    if (!username) {
 
-        alert("Username cannot be empty.");
+        alert(
+            "Username cannot be empty."
+        );
 
         return;
     }
 
     state.username =
-        clean.slice(0, 30);
+        username.slice(0,30);
 
     saveState();
 
@@ -939,13 +1363,11 @@ function changeUsername() {
 
 function openProfile() {
 
-    const count =
-        state.lists.length;
-
     const totalLevels =
         state.lists.reduce(
-            (total, list) =>
-                total + list.levels.length,
+            (total,list) =>
+                total +
+                list.levels.length,
             0
         );
 
@@ -954,70 +1376,84 @@ function openProfile() {
         <button
             class="modal-close"
             onclick="closeModal()"
-        >×</button>
+        >
+            ×
+        </button>
 
         <div class="big-profile">
 
             <div class="big-avatar">
+
                 ${escapeHtml(
                     state.username
                         .charAt(0)
                         .toUpperCase()
                 )}
+
             </div>
 
             <h2>
-                ${escapeHtml(state.username)}
+                ${escapeHtml(
+                    state.username
+                )}
             </h2>
 
             <div class="stats">
 
                 <div>
+
                     <div class="stat-number">
-                        ${count}
+                        ${state.lists.length}
                     </div>
 
                     <div class="stat-label">
                         Demonlists
                     </div>
+
                 </div>
 
                 <div>
+
                     <div class="stat-number">
                         ${totalLevels}
                     </div>
 
                     <div class="stat-label">
-                        Levels Added
+                        Levels
                     </div>
+
                 </div>
 
             </div>
 
         </div>
+
     `);
 }
 
 
 /* =========================================================
-   DEMONLIST CREATION
+   LISTS
 ========================================================= */
 
 function createList() {
 
-    const name =
+    const result =
         prompt(
             "What should your Demonlist be called?"
         );
 
-    if (name === null) return;
+    if (result === null)
+        return;
 
-    const clean =
-        name.trim();
+    const name =
+        result.trim();
 
-    if (!clean) {
+    if (!name) {
 
-        alert("The list needs a name.");
+        alert(
+            "The list needs a name."
+        );
 
         return;
     }
@@ -1025,12 +1461,10 @@ function createList() {
     const list = {
 
         id:
-            crypto.randomUUID
-                ? crypto.randomUUID()
-                : Date.now().toString(),
+            createId(),
 
         name:
-            clean.slice(0, 100),
+            name.slice(0,100),
 
         levels: [],
 
@@ -1052,33 +1486,58 @@ function createList() {
 }
 
 
+function selectList(id) {
+
+    state.selectedListId =
+        id;
+
+    saveState();
+
+    render();
+}
+
+
+function getSelectedList() {
+
+    return state.lists.find(
+        list =>
+            list.id ===
+            state.selectedListId
+    );
+}
+
+
 function renameList() {
 
     const list =
         getSelectedList();
 
-    if (!list) return;
+    if (!list)
+        return;
 
-    const name =
+    const result =
         prompt(
             "New Demonlist name:",
             list.name
         );
 
-    if (name === null) return;
+    if (result === null)
+        return;
 
-    const clean =
-        name.trim();
+    const name =
+        result.trim();
 
-    if (!clean) {
+    if (!name) {
 
-        alert("The list needs a name.");
+        alert(
+            "The list needs a name."
+        );
 
         return;
     }
 
     list.name =
-        clean.slice(0, 100);
+        name.slice(0,100);
 
     list.updatedAt =
         Date.now();
@@ -1094,18 +1553,23 @@ function deleteList() {
     const list =
         getSelectedList();
 
-    if (!list) return;
+    if (!list)
+        return;
 
-    const confirmed =
-        confirm(
-            `Delete "${list.name}"?\n\nThis will remove all levels from this local list.`
-        );
+    if (
+        !confirm(
+            `Delete "${list.name}"?\n\nThis will delete all levels in this list.`
+        )
+    ) {
 
-    if (!confirmed) return;
+        return;
+    }
 
     state.lists =
         state.lists.filter(
-            x => x.id !== list.id
+            item =>
+                item.id !==
+                list.id
         );
 
     state.selectedListId =
@@ -1119,35 +1583,23 @@ function deleteList() {
 }
 
 
-function selectList(id) {
-
-    state.selectedListId =
-        id;
-
-    saveState();
-
-    render();
-}
-
-
-function getSelectedList() {
-
-    return state.lists.find(
-        x => x.id === state.selectedListId
-    );
-}
-
-
 /* =========================================================
    RENDER
 ========================================================= */
 
 function render() {
 
-    document.getElementById("profileName")
-        .textContent = state.username;
+    document
+        .getElementById(
+            "profileName"
+        )
+        .textContent =
+            state.username;
 
-    document.getElementById("profileCount")
+    document
+        .getElementById(
+            "profileCount"
+        )
         .textContent =
             `${state.lists.length} ${
                 state.lists.length === 1
@@ -1155,17 +1607,24 @@ function render() {
                     : "Demonlists"
             }`;
 
-    document.getElementById("avatar")
+    document
+        .getElementById(
+            "avatar"
+        )
         .textContent =
             state.username
                 .charAt(0)
                 .toUpperCase();
 
-    document.getElementById("welcomeText")
+    document
+        .getElementById(
+            "welcomeText"
+        )
         .textContent =
             `Welcome, ${state.username}. Build your own rankings.`;
 
     renderSidebar();
+
     renderList();
 }
 
@@ -1173,40 +1632,55 @@ function render() {
 function renderSidebar() {
 
     const container =
-        document.getElementById("listContainer");
+        document.getElementById(
+            "listContainer"
+        );
 
     container.innerHTML = "";
 
     state.lists.forEach(
-        (list, index) => {
+        list => {
 
             const button =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
             button.className =
                 "list-item" +
                 (
-                    list.id === state.selectedListId
+                    list.id ===
+                    state.selectedListId
                         ? " active"
                         : ""
                 );
 
             button.onclick =
-                () => selectList(list.id);
+                () =>
+                    selectList(
+                        list.id
+                    );
 
             button.innerHTML = `
 
                 <span class="list-item-name">
-                    ${escapeHtml(list.name)}
+
+                    ${escapeHtml(
+                        list.name
+                    )}
+
                 </span>
 
                 <span class="list-number">
-                    ${list.levels.length}
-                </span>
 
+                    ${list.levels.length}
+
+                </span>
             `;
 
-            container.appendChild(button);
+            container.appendChild(
+                button
+            );
         }
     );
 }
@@ -1215,7 +1689,9 @@ function renderSidebar() {
 function renderList() {
 
     const area =
-        document.getElementById("listArea");
+        document.getElementById(
+            "listArea"
+        );
 
     const list =
         getSelectedList();
@@ -1226,10 +1702,11 @@ function renderList() {
 
             <div class="empty">
 
-                <strong>No Demonlists yet.</strong>
+                <strong>
+                    No Demonlists yet.
+                </strong>
 
-                Create your first Demonlist from
-                the sidebar.
+                Create your first Demonlist.
 
                 <br><br>
 
@@ -1241,7 +1718,6 @@ function renderList() {
                 </button>
 
             </div>
-
         `;
 
         return;
@@ -1252,13 +1728,15 @@ function renderList() {
         <div class="list-header">
 
             <h1 class="list-title">
-                ${escapeHtml(list.name)}
+                ${escapeHtml(
+                    list.name
+                )}
             </h1>
 
             <div class="list-actions">
 
                 <button
-                    class="secondary-btn"
+                    class="primary-btn"
                     onclick="openAddLevel()"
                 >
                     + Add Level
@@ -1299,9 +1777,13 @@ function renderLevels() {
         getSelectedList();
 
     const container =
-        document.getElementById("levelList");
+        document.getElementById(
+            "levelList"
+        );
 
-    if (!list || !container) return;
+    if (!list || !container)
+        return;
+
 
     if (!list.levels.length) {
 
@@ -1309,10 +1791,12 @@ function renderLevels() {
 
             <div class="empty">
 
-                <strong>This Demonlist is empty.</strong>
+                <strong>
+                    This Demonlist is empty.
+                </strong>
 
-                Search for a real Geometry Dash level
-                to add it.
+                Search for a real Geometry Dash
+                level to add it.
 
                 <br><br>
 
@@ -1324,29 +1808,28 @@ function renderLevels() {
                 </button>
 
             </div>
-
         `;
 
         return;
     }
 
-    list.levels.sort(
-        (a, b) =>
-            Number(b.points) -
-            Number(a.points)
-    );
 
     container.innerHTML =
         `<div class="level-list"></div>`;
 
     const levelList =
-        container.querySelector(".level-list");
+        container.querySelector(
+            ".level-list"
+        );
+
 
     list.levels.forEach(
-        (level, index) => {
+        (level,index) => {
 
             const row =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             row.className =
                 "level-row";
@@ -1369,28 +1852,84 @@ function renderLevels() {
                 <div>
 
                     <div class="level-name">
-                        ${escapeHtml(level.name)}
+
+                        ${escapeHtml(
+                            level.name
+                        )}
+
                     </div>
 
                     <div class="level-creator">
+
+                        By
                         ${escapeHtml(
-                            level.creator || "Unknown creator"
+                            level.creator ||
+                            "Unknown"
                         )}
+
                     </div>
 
                 </div>
 
-                <div class="points">
-                    ${formatPoints(level.points)}
+
+                <div class="verification">
+
+                    <div class="verifier">
+
+                        🛠️
+
+                        ${
+                            level.verifier
+                                ? `Verified by ${escapeHtml(
+                                    level.verifier
+                                )}`
+                                : "Verifier not added"
+                        }
+
+                    </div>
+
+                    <div class="verified-time">
+
+                        ${
+                            level.verifiedDate
+                                ? `📅 Verified ${timeAgo(
+                                    level.verifiedDate
+                                )}`
+                                : "📅 Verification date not added"
+                        }
+
+                    </div>
+
                 </div>
+
 
                 <div class="source">
+
                     ${escapeHtml(
-                        level.source || "GD"
+                        level.source ||
+                        "GD"
                     )}
+
                 </div>
 
+
                 <div class="level-actions">
+
+                    <button
+                        class="small-btn"
+                        onclick="moveLevelUp('${escapeAttribute(level.id)}')"
+                        title="Move up"
+                    >
+                        ↑
+                    </button>
+
+                    <button
+                        class="small-btn"
+                        onclick="moveLevelDown('${escapeAttribute(level.id)}')"
+                        title="Move down"
+                    >
+                        ↓
+                    </button>
 
                     <button
                         class="small-btn"
@@ -1407,60 +1946,49 @@ function renderLevels() {
                     </button>
 
                 </div>
+
             `;
 
-            levelList.appendChild(row);
+            levelList.appendChild(
+                row
+            );
         }
     );
 }
 
 
-function formatPoints(points) {
+/* =========================================================
+   MOVE LEVELS
+========================================================= */
 
-    const number =
-        Number(points);
-
-    if (!Number.isFinite(number)) {
-        return "0";
-    }
-
-    return Number.isInteger(number)
-        ? number.toLocaleString()
-        : number.toLocaleString(
-            undefined,
-            {
-                maximumFractionDigits: 2
-            }
-        );
-}
-
-
-function deleteLevel(id) {
+function moveLevelUp(id) {
 
     const list =
         getSelectedList();
 
-    if (!list) return;
+    if (!list)
+        return;
 
-    const level =
-        list.levels.find(
-            x => x.id === id
+    const index =
+        list.levels.findIndex(
+            level =>
+                level.id === id
         );
 
-    if (!level) return;
-
     if (
-        !confirm(
-            `Remove "${level.name}" from this Demonlist?`
-        )
+        index <= 0
     ) {
         return;
     }
 
-    list.levels =
-        list.levels.filter(
-            x => x.id !== id
-        );
+    [
+        list.levels[index - 1],
+        list.levels[index]
+    ] =
+    [
+        list.levels[index],
+        list.levels[index - 1]
+    ];
 
     list.updatedAt =
         Date.now();
@@ -1471,162 +1999,47 @@ function deleteLevel(id) {
 }
 
 
-function editLevel(id) {
+function moveLevelDown(id) {
 
     const list =
         getSelectedList();
 
-    if (!list) return;
+    if (!list)
+        return;
 
-    const level =
-        list.levels.find(
-            x => x.id === id
+    const index =
+        list.levels.findIndex(
+            level =>
+                level.id === id
         );
 
-    if (!level) return;
-
-    openModal(`
-
-        <button
-            class="modal-close"
-            onclick="closeModal()"
-        >×</button>
-
-        <h2>Edit Level</h2>
-
-        <label class="form-label">
-            Level Name
-        </label>
-
-        <input
-            id="editName"
-            class="form-input"
-            value="${escapeAttribute(level.name)}"
-        >
-
-        <label class="form-label">
-            Creator
-        </label>
-
-        <input
-            id="editCreator"
-            class="form-input"
-            value="${escapeAttribute(level.creator || "")}"
-        >
-
-        <label class="form-label">
-            Points
-        </label>
-
-        <input
-            id="editPoints"
-            class="form-input"
-            type="number"
-            step="0.01"
-            value="${escapeAttribute(level.points)}"
-        >
-
-        <label class="form-label">
-            Video URL
-        </label>
-
-        <input
-            id="editVideo"
-            class="form-input"
-            value="${escapeAttribute(level.videoUrl || "")}"
-        >
-
-        <div class="modal-footer">
-
-            <button
-                class="secondary-btn"
-                onclick="closeModal()"
-            >
-                Cancel
-            </button>
-
-            <button
-                class="primary-btn"
-                onclick="saveLevelEdit('${escapeAttribute(id)}')"
-            >
-                Save
-            </button>
-
-        </div>
-    `);
-}
-
-
-function saveLevelEdit(id) {
-
-    const list =
-        getSelectedList();
-
-    const level =
-        list.levels.find(
-            x => x.id === id
-        );
-
-    if (!level) return;
-
-    const name =
-        document.getElementById("editName")
-            .value.trim();
-
-    const creator =
-        document.getElementById("editCreator")
-            .value.trim();
-
-    const points =
-        Number(
-            document.getElementById("editPoints")
-                .value
-        );
-
-    const videoUrl =
-        document.getElementById("editVideo")
-            .value.trim();
-
-    if (!name) {
-
-        alert("Level name cannot be empty.");
-
+    if (
+        index < 0 ||
+        index >= list.levels.length - 1
+    ) {
         return;
     }
 
-    if (!Number.isFinite(points)) {
-
-        alert("Enter a valid number of points.");
-
-        return;
-    }
-
-    level.name = name;
-    level.creator = creator;
-    level.points = points;
-    level.videoUrl = videoUrl;
-
-    const videoThumbnail =
-        getYouTubeThumbnail(videoUrl);
-
-    if (videoThumbnail) {
-        level.thumbnail =
-            videoThumbnail;
-    }
+    [
+        list.levels[index],
+        list.levels[index + 1]
+    ] =
+    [
+        list.levels[index + 1],
+        list.levels[index]
+    ];
 
     list.updatedAt =
         Date.now();
 
     saveState();
-
-    closeModal();
 
     render();
 }
 
 
 /* =========================================================
-   ADD LEVEL MODAL
+   ADD LEVEL
 ========================================================= */
 
 function openAddLevel() {
@@ -1636,13 +2049,19 @@ function openAddLevel() {
         <button
             class="modal-close"
             onclick="closeModal()"
-        >×</button>
+        >
+            ×
+        </button>
 
-        <h2>Search Geometry Dash Levels</h2>
+        <h2>
+            Search Geometry Dash Levels
+        </h2>
 
         <p style="color:#7f8898">
-            Search real levels using Pointercrate
-            and AREDL.
+
+            Search real levels using
+            Pointercrate and AREDL.
+
         </p>
 
         <div class="search-box">
@@ -1650,7 +2069,7 @@ function openAddLevel() {
             <input
                 id="levelSearch"
                 class="form-input"
-                placeholder="Search level name..."
+                placeholder="Search level..."
                 onkeydown="if(event.key==='Enter') searchLevels()"
             >
 
@@ -1665,36 +2084,48 @@ function openAddLevel() {
 
         <div id="searchStatus"></div>
 
-        <div id="searchResults" class="search-results"></div>
+        <div
+            id="searchResults"
+            class="search-results"
+        ></div>
 
     `);
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        document
-            .getElementById("levelSearch")
-            ?.focus();
+            document
+                .getElementById(
+                    "levelSearch"
+                )
+                ?.focus();
 
-    }, 50);
+        },
+        50
+    );
 }
 
 
 /* =========================================================
-   LEVEL API SEARCH
+   SEARCH
 ========================================================= */
 
 async function searchLevels() {
 
     const input =
-        document.getElementById("levelSearch");
+        document.getElementById(
+            "levelSearch"
+        );
 
     const results =
-        document.getElementById("searchResults");
+        document.getElementById(
+            "searchResults"
+        );
 
     const status =
-        document.getElementById("searchStatus");
-
-    if (!input || !results) return;
+        document.getElementById(
+            "searchStatus"
+        );
 
     const query =
         input.value.trim();
@@ -1716,90 +2147,100 @@ async function searchLevels() {
 
     status.innerHTML = "";
 
+
     const resultsMap =
         new Map();
+
 
     /* POINTERCRATE */
 
     try {
 
-        const pointerResponse =
+        const response =
             await fetch(
                 "https://pointercrate.com/api/v2/demons/"
             );
 
-        if (pointerResponse.ok) {
+        if (response.ok) {
 
-            const pointerData =
-                await pointerResponse.json();
+            const data =
+                await response.json();
 
-            const demons =
-                Array.isArray(pointerData)
-                    ? pointerData
-                    : pointerData.data || [];
+            const levels =
+                Array.isArray(data)
+                    ? data
+                    : data.data || [];
 
-            demons
-                .filter(level =>
-                    String(
-                        level.name || ""
-                    )
-                    .toLowerCase()
-                    .includes(query.toLowerCase())
-                )
-                .forEach(level => {
-
-                    const id =
+            levels
+                .filter(
+                    level =>
                         String(
-                            level.id ||
-                            level.level_id ||
-                            level.name
-                        );
+                            level.name || ""
+                        )
+                        .toLowerCase()
+                        .includes(
+                            query.toLowerCase()
+                        )
+                )
+                .forEach(
+                    level => {
 
-                    resultsMap.set(
-                        "pointercrate-" + id,
-                        {
-                            id:
-                                "pointercrate-" + id,
+                        const id =
+                            String(
+                                level.id ||
+                                level.level_id ||
+                                level.name
+                            );
 
-                            gdId:
-                                level.id || "",
+                        resultsMap.set(
+                            "pointercrate-" + id,
+                            {
 
-                            name:
-                                level.name ||
-                                "Unknown Level",
+                                id:
+                                    "pointercrate-" +
+                                    id,
 
-                            creator:
-                                level.position?.creator?.name ||
-                                level.creator?.name ||
-                                level.creator ||
-                                "Unknown",
+                                gdId:
+                                    level.id ||
+                                    "",
 
-                            points:
-                                0,
+                                name:
+                                    level.name ||
+                                    "Unknown Level",
 
-                            source:
-                                "Pointercrate",
+                                creator:
+                                    level.position
+                                        ?.creator
+                                        ?.name ||
+                                    level.creator
+                                        ?.name ||
+                                    level.creator ||
+                                    "Unknown",
 
-                            thumbnail:
-                                getYouTubeThumbnail(
+                                source:
+                                    "Pointercrate",
+
+                                videoUrl:
                                     level.video ||
                                     level.video_url ||
-                                    ""
-                                ),
+                                    "",
 
-                            videoUrl:
-                                level.video ||
-                                level.video_url ||
-                                ""
-                        }
-                    );
-                });
+                                thumbnail:
+                                    getYouTubeThumbnail(
+                                        level.video ||
+                                        level.video_url ||
+                                        ""
+                                    )
+                            }
+                        );
+                    }
+                );
         }
 
-    } catch (error) {
+    } catch(error) {
 
         console.warn(
-            "Pointercrate search failed:",
+            "Pointercrate failed",
             error
         );
     }
@@ -1809,108 +2250,117 @@ async function searchLevels() {
 
     try {
 
-        const aredlResponse =
+        const response =
             await fetch(
                 "https://api.aredl.net/v2/api/aredl/levels"
             );
 
-        if (aredlResponse.ok) {
+        if (response.ok) {
 
-            const aredlData =
-                await aredlResponse.json();
+            const data =
+                await response.json();
 
             const levels =
-                Array.isArray(aredlData)
-                    ? aredlData
-                    : aredlData.data ||
-                      aredlData.levels ||
+                Array.isArray(data)
+                    ? data
+                    : data.data ||
+                      data.levels ||
                       [];
 
             levels
-                .filter(level =>
-                    String(
-                        level.name || ""
-                    )
-                    .toLowerCase()
-                    .includes(query.toLowerCase())
-                )
-                .forEach(level => {
-
-                    const id =
+                .filter(
+                    level =>
                         String(
-                            level.id ||
-                            level.level_id ||
-                            level.name
-                        );
+                            level.name || ""
+                        )
+                        .toLowerCase()
+                        .includes(
+                            query.toLowerCase()
+                        )
+                )
+                .forEach(
+                    level => {
 
-                    const key =
-                        "aredl-" + id;
+                        const id =
+                            String(
+                                level.id ||
+                                level.level_id ||
+                                level.name
+                            );
 
-                    if (
-                        !resultsMap.has(key)
-                    ) {
+                        const key =
+                            "aredl-" + id;
 
-                        resultsMap.set(
-                            key,
-                            {
-                                id: key,
+                        if (
+                            !resultsMap.has(
+                                key
+                            )
+                        ) {
 
-                                gdId:
-                                    level.id || "",
+                            resultsMap.set(
+                                key,
+                                {
 
-                                name:
-                                    level.name ||
-                                    "Unknown Level",
+                                    id: key,
 
-                                creator:
-                                    level.creator ||
-                                    level.author ||
-                                    "Unknown",
+                                    gdId:
+                                        level.id ||
+                                        "",
 
-                                points:
-                                    0,
+                                    name:
+                                        level.name ||
+                                        "Unknown Level",
 
-                                source:
-                                    "AREDL",
+                                    creator:
+                                        level.creator ||
+                                        level.author ||
+                                        "Unknown",
 
-                                thumbnail:
-                                    getYouTubeThumbnail(
+                                    source:
+                                        "AREDL",
+
+                                    videoUrl:
                                         level.video ||
                                         level.video_url ||
-                                        ""
-                                    ),
+                                        "",
 
-                                videoUrl:
-                                    level.video ||
-                                    level.video_url ||
-                                    ""
-                            }
-                        );
+                                    thumbnail:
+                                        getYouTubeThumbnail(
+                                            level.video ||
+                                            level.video_url ||
+                                            ""
+                                        )
+                                }
+                            );
+                        }
                     }
-                });
+                );
         }
 
-    } catch (error) {
+    } catch(error) {
 
         console.warn(
-            "AREDL search failed:",
+            "AREDL failed",
             error
         );
     }
 
 
-    const resultsArray =
+    const found =
         Array.from(
             resultsMap.values()
-        ).slice(0, 50);
+        ).slice(0,50);
 
-    if (!resultsArray.length) {
+
+    if (!found.length) {
 
         results.innerHTML = `
 
             <div class="empty">
 
-                <strong>No levels found.</strong>
+                <strong>
+                    No levels found.
+                </strong>
 
                 Try another search.
 
@@ -1920,48 +2370,71 @@ async function searchLevels() {
         return;
     }
 
+
     results.innerHTML = "";
 
-    resultsArray.forEach(level => {
 
-        const button =
-            document.createElement("button");
+    found.forEach(
+        level => {
 
-        button.className =
-            "search-result";
+            const button =
+                document.createElement(
+                    "button"
+                );
 
-        button.onclick =
-            () => selectSearchResult(level);
+            button.className =
+                "search-result";
 
-        const thumbnail =
-            level.thumbnail ||
-            createFallbackThumbnail();
+            button.onclick =
+                () =>
+                    selectSearchResult(
+                        level
+                    );
 
-        button.innerHTML = `
+            button.innerHTML = `
 
-            <img
-                class="result-thumb"
-                src="${escapeAttribute(thumbnail)}"
-                onerror="this.src='${createFallbackThumbnail()}'"
-            >
+                <img
+                    class="result-thumb"
+                    src="${escapeAttribute(
+                        level.thumbnail ||
+                        createFallbackThumbnail()
+                    )}"
+                    onerror="this.src='${createFallbackThumbnail()}'"
+                >
 
-            <div class="result-info">
+                <div class="result-info">
 
-                <div class="result-name">
-                    ${escapeHtml(level.name)}
+                    <div class="result-name">
+
+                        ${escapeHtml(
+                            level.name
+                        )}
+
+                    </div>
+
+                    <div class="result-meta">
+
+                        ${escapeHtml(
+                            level.creator
+                        )}
+
+                        •
+
+                        ${escapeHtml(
+                            level.source
+                        )}
+
+                    </div>
+
                 </div>
 
-                <div class="result-meta">
-                    ${escapeHtml(level.creator)}
-                    •
-                    ${escapeHtml(level.source)}
-                </div>
+            `;
 
-            </div>
-        `;
-
-        results.appendChild(button);
-    });
+            results.appendChild(
+                button
+            );
+        }
+    );
 }
 
 
@@ -1976,30 +2449,67 @@ function selectSearchResult(level) {
         <button
             class="modal-close"
             onclick="closeModal()"
-        >×</button>
+        >
+            ×
+        </button>
 
         <h2>
-            ${escapeHtml(level.name)}
+            ${escapeHtml(
+                level.name
+            )}
         </h2>
 
         <p style="color:#7f8898">
-            ${escapeHtml(level.creator)}
-            •
-            ${escapeHtml(level.source)}
+
+            Creator:
+            ${escapeHtml(
+                level.creator
+            )}
+
+            <br>
+
+            Source:
+            ${escapeHtml(
+                level.source
+            )}
+
         </p>
 
+
         <label class="form-label">
-            Points
+            Creator
         </label>
 
         <input
-            id="newLevelPoints"
+            id="newCreator"
             class="form-input"
-            type="number"
-            step="0.01"
-            value="0"
-            placeholder="Example: 100"
+            value="${escapeAttribute(
+                level.creator || ""
+            )}"
         >
+
+
+        <label class="form-label">
+            Verifier
+        </label>
+
+        <input
+            id="newVerifier"
+            class="form-input"
+            placeholder="Who verified this level?"
+        >
+
+
+        <label class="form-label">
+            Verified Date
+        </label>
+
+        <input
+            id="newVerifiedDate"
+            class="form-input"
+            type="date"
+        >
+
 
         <label class="form-label">
             Video URL
@@ -2008,18 +2518,12 @@ function selectSearchResult(level) {
         <input
             id="newLevelVideo"
             class="form-input"
-            value="${escapeAttribute(level.videoUrl || "")}"
-            placeholder="YouTube video URL (optional)"
+            value="${escapeAttribute(
+                level.videoUrl || ""
+            )}"
+            placeholder="YouTube URL (optional)"
         >
 
-        <p style="
-            color:#737d8e;
-            font-size:12px;
-            margin-top:12px;
-        ">
-            The points determine the level's position
-            in your Demonlist.
-        </p>
 
         <div class="modal-footer">
 
@@ -2038,6 +2542,7 @@ function selectSearchResult(level) {
             </button>
 
         </div>
+
     `);
 }
 
@@ -2051,40 +2556,70 @@ function addSelectedLevel(level) {
     const list =
         getSelectedList();
 
-    if (!list) return;
+    if (!list)
+        return;
 
-    const points =
-        Number(
-            document.getElementById("newLevelPoints")
-                .value
-        );
+
+    const creator =
+        document
+            .getElementById(
+                "newCreator"
+            )
+            .value
+            .trim();
+
+
+    const verifier =
+        document
+            .getElementById(
+                "newVerifier"
+            )
+            .value
+            .trim();
+
+
+    const verifiedDate =
+        document
+            .getElementById(
+                "newVerifiedDate"
+            )
+            .value;
+
 
     const videoUrl =
-        document.getElementById("newLevelVideo")
-            .value.trim();
+        document
+            .getElementById(
+                "newLevelVideo"
+            )
+            .value
+            .trim();
 
-    if (!Number.isFinite(points)) {
-
-        alert("Enter a valid points value.");
-
-        return;
-    }
 
     const duplicate =
         list.levels.some(
             existing =>
+
                 (
-                    existing.source === level.source &&
                     existing.gdId &&
                     level.gdId &&
-                    String(existing.gdId) ===
-                    String(level.gdId)
-                ) ||
+                    String(
+                        existing.gdId
+                    ) ===
+                    String(
+                        level.gdId
+                    )
+                )
+
+                ||
+
                 (
-                    existing.name.toLowerCase() ===
-                    level.name.toLowerCase()
+                    existing.name
+                        .toLowerCase() ===
+                    level.name
+                        .toLowerCase()
                 )
         );
+
 
     if (duplicate) {
 
@@ -2095,17 +2630,19 @@ function addSelectedLevel(level) {
         return;
     }
 
+
     const thumbnail =
-        getYouTubeThumbnail(videoUrl) ||
+        getYouTubeThumbnail(
+            videoUrl
+        ) ||
         level.thumbnail ||
         "";
+
 
     list.levels.push({
 
         id:
-            crypto.randomUUID
-                ? crypto.randomUUID()
-                : Date.now().toString(),
+            createId(),
 
         gdId:
             level.gdId || "",
@@ -2114,10 +2651,15 @@ function addSelectedLevel(level) {
             level.name,
 
         creator:
-            level.creator || "Unknown",
+            creator ||
+            level.creator ||
+            "Unknown",
 
-        points:
-            points,
+        verifier:
+            verifier,
+
+        verifiedDate:
+            verifiedDate,
 
         source:
             level.source,
@@ -2132,8 +2674,10 @@ function addSelectedLevel(level) {
             Date.now()
     });
 
+
     list.updatedAt =
         Date.now();
+
 
     saveState();
 
@@ -2144,65 +2688,483 @@ function addSelectedLevel(level) {
 
 
 /* =========================================================
-   YOUTUBE THUMBNAILS
+   EDIT LEVEL
+========================================================= */
+
+function editLevel(id) {
+
+    const list =
+        getSelectedList();
+
+    if (!list)
+        return;
+
+
+    const level =
+        list.levels.find(
+            item =>
+                item.id === id
+        );
+
+    if (!level)
+        return;
+
+
+    openModal(`
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+        <h2>
+            Edit Level
+        </h2>
+
+
+        <label class="form-label">
+            Level Name
+        </label>
+
+        <input
+            id="editName"
+            class="form-input"
+            value="${escapeAttribute(
+                level.name
+            )}"
+        >
+
+
+        <label class="form-label">
+            Creator
+        </label>
+
+        <input
+            id="editCreator"
+            class="form-input"
+            value="${escapeAttribute(
+                level.creator || ""
+            )}"
+        >
+
+
+        <label class="form-label">
+            Verifier
+        </label>
+
+        <input
+            id="editVerifier"
+            class="form-input"
+            value="${escapeAttribute(
+                level.verifier || ""
+            )}"
+        >
+
+
+        <label class="form-label">
+            Verified Date
+        </label>
+
+        <input
+            id="editVerifiedDate"
+            class="form-input"
+            type="date"
+            value="${escapeAttribute(
+                level.verifiedDate || ""
+            )}"
+        >
+
+
+        <label class="form-label">
+            Video URL
+        </label>
+
+        <input
+            id="editVideo"
+            class="form-input"
+            value="${escapeAttribute(
+                level.videoUrl || ""
+            )}"
+        >
+
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="saveLevelEdit('${escapeAttribute(id)}')"
+            >
+                Save Changes
+            </button>
+
+        </div>
+
+    `);
+}
+
+
+function saveLevelEdit(id) {
+
+    const list =
+        getSelectedList();
+
+    if (!list)
+        return;
+
+
+    const level =
+        list.levels.find(
+            item =>
+                item.id === id
+        );
+
+    if (!level)
+        return;
+
+
+    const name =
+        document
+            .getElementById(
+                "editName"
+            )
+            .value
+            .trim();
+
+
+    if (!name) {
+
+        alert(
+            "Level name cannot be empty."
+        );
+
+        return;
+    }
+
+
+    level.name =
+        name;
+
+    level.creator =
+        document
+            .getElementById(
+                "editCreator"
+            )
+            .value
+            .trim();
+
+    level.verifier =
+        document
+            .getElementById(
+                "editVerifier"
+            )
+            .value
+            .trim();
+
+    level.verifiedDate =
+        document
+            .getElementById(
+                "editVerifiedDate"
+            )
+            .value;
+
+    level.videoUrl =
+        document
+            .getElementById(
+                "editVideo"
+            )
+            .value
+            .trim();
+
+
+    const thumbnail =
+        getYouTubeThumbnail(
+            level.videoUrl
+        );
+
+    if (thumbnail) {
+
+        level.thumbnail =
+            thumbnail;
+    }
+
+
+    list.updatedAt =
+        Date.now();
+
+
+    saveState();
+
+    closeModal();
+
+    render();
+}
+
+
+/* =========================================================
+   DELETE LEVEL
+========================================================= */
+
+function deleteLevel(id) {
+
+    const list =
+        getSelectedList();
+
+    if (!list)
+        return;
+
+
+    const level =
+        list.levels.find(
+            item =>
+                item.id === id
+        );
+
+    if (!level)
+        return;
+
+
+    if (
+        !confirm(
+            `Remove "${level.name}" from this Demonlist?`
+        )
+    ) {
+
+        return;
+    }
+
+
+    list.levels =
+        list.levels.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    list.updatedAt =
+        Date.now();
+
+
+    saveState();
+
+    render();
+}
+
+
+/* =========================================================
+   TIME AGO
+========================================================= */
+
+function timeAgo(dateString) {
+
+    const date =
+        new Date(
+            dateString +
+            "T00:00:00"
+        );
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "Unknown date";
+    }
+
+
+    const now =
+        new Date();
+
+
+    const difference =
+        now.getTime() -
+        date.getTime();
+
+
+    if (difference < 0) {
+
+        return "in the future";
+    }
+
+
+    const seconds =
+        Math.floor(
+            difference /
+            1000
+        );
+
+
+    const minutes =
+        Math.floor(
+            seconds /
+            60
+        );
+
+
+    const hours =
+        Math.floor(
+            minutes /
+            60
+        );
+
+
+    const days =
+        Math.floor(
+            hours /
+            24
+        );
+
+
+    const months =
+        Math.floor(
+            days /
+            30.4375
+        );
+
+
+    const years =
+        Math.floor(
+            days /
+            365.25
+        );
+
+
+    if (years >= 1) {
+
+        return years === 1
+            ? "1 Year Ago"
+            : `${years} Years Ago`;
+    }
+
+
+    if (months >= 1) {
+
+        return months === 1
+            ? "1 Month Ago"
+            : `${months} Months Ago`;
+    }
+
+
+    if (days >= 1) {
+
+        return days === 1
+            ? "1 Day Ago"
+            : `${days} Days Ago`;
+    }
+
+
+    if (hours >= 1) {
+
+        return hours === 1
+            ? "1 Hour Ago"
+            : `${hours} Hours Ago`;
+    }
+
+
+    if (minutes >= 1) {
+
+        return minutes === 1
+            ? "1 Minute Ago"
+            : `${minutes} Minutes Ago`;
+    }
+
+
+    return "Just Now";
+}
+
+
+/* =========================================================
+   YOUTUBE
 ========================================================= */
 
 function getYouTubeThumbnail(url) {
 
-    if (!url) return "";
+    if (!url)
+        return "";
+
 
     try {
 
         const parsed =
             new URL(url);
 
-        let videoId = "";
+
+        let videoId =
+            "";
+
 
         if (
-            parsed.hostname.includes(
-                "youtube.com"
-            )
+            parsed.hostname
+                .includes(
+                    "youtube.com"
+                )
         ) {
 
             videoId =
-                parsed.searchParams.get("v") || "";
-
+                parsed.searchParams
+                    .get("v") ||
+                "";
         }
 
+
         if (
-            parsed.hostname === "youtu.be"
+            parsed.hostname ===
+            "youtu.be"
         ) {
 
             videoId =
                 parsed.pathname
-                    .replace("/", "");
+                    .replace(
+                        "/",
+                        ""
+                    );
         }
 
+
         if (
-            parsed.pathname.includes(
-                "/shorts/"
-            )
+            parsed.pathname
+                .includes(
+                    "/shorts/"
+                )
         ) {
 
             videoId =
                 parsed.pathname
-                    .split("/shorts/")[1]
+                    .split(
+                        "/shorts/"
+                    )[1]
                     .split("/")[0];
         }
 
+
         if (
-            parsed.pathname.includes(
-                "/embed/"
-            )
+            parsed.pathname
+                .includes(
+                    "/embed/"
+                )
         ) {
 
             videoId =
                 parsed.pathname
-                    .split("/embed/")[1]
+                    .split(
+                        "/embed/"
+                    )[1]
                     .split("/")[0];
         }
 
-        if (!videoId) return "";
+
+        if (!videoId)
+            return "";
+
 
         return (
             "https://img.youtube.com/vi/" +
@@ -2217,17 +3179,22 @@ function getYouTubeThumbnail(url) {
 }
 
 
+/* =========================================================
+   FALLBACK THUMBNAIL
+========================================================= */
+
 function createFallbackThumbnail() {
 
     return (
         "data:image/svg+xml;charset=UTF-8," +
         encodeURIComponent(`
+
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="300"
                 height="180"
-                viewBox="0 0 300 180"
             >
+
                 <rect
                     width="300"
                     height="180"
@@ -2244,6 +3211,7 @@ function createFallbackThumbnail() {
                 >
                     GD LEVEL
                 </text>
+
             </svg>
         `)
     );
@@ -2251,29 +3219,334 @@ function createFallbackThumbnail() {
 
 
 /* =========================================================
-   MODAL
+   SETTINGS
+========================================================= */
+
+function openSettings() {
+
+    openModal(`
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+        <h2>
+            Settings
+        </h2>
+
+        <p style="color:#858e9f">
+            Your profile and Demonlists are stored
+            locally in this browser.
+        </p>
+
+
+        <div class="settings-grid">
+
+            <button
+                class="secondary-btn"
+                onclick="changeUsername();closeModal()"
+            >
+                ✏️ Change Username
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="exportData()"
+            >
+                📤 Export Backup
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="triggerImport()"
+            >
+                📥 Import Backup
+            </button>
+
+            <button
+                class="danger-btn"
+                onclick="resetEverything()"
+            >
+                🧹 Reset Everything
+            </button>
+
+        </div>
+
+
+        <input
+            id="importFile"
+            type="file"
+            accept=".json,application/json"
+            class="hidden"
+            onchange="importData(event)"
+        >
+
+    `);
+}
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+function exportData() {
+
+    const data =
+        JSON.stringify(
+            state,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [data],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+    link.href =
+        url;
+
+    link.download =
+        "CreateYourDemonlist-Backup.json";
+
+
+    document.body.appendChild(
+        link
+    );
+
+    link.click();
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+}
+
+
+/* =========================================================
+   IMPORT
+========================================================= */
+
+function triggerImport() {
+
+    const input =
+        document.getElementById(
+            "importFile"
+        );
+
+    if (input) {
+
+        input.click();
+
+    } else {
+
+        const newInput =
+            document.createElement(
+                "input"
+            );
+
+        newInput.type =
+            "file";
+
+        newInput.accept =
+            ".json,application/json";
+
+        newInput.onchange =
+            importData;
+
+        newInput.click();
+    }
+}
+
+
+function importData(event) {
+
+    const file =
+        event.target.files?.[0];
+
+    if (!file)
+        return;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        () => {
+
+            try {
+
+                const imported =
+                    JSON.parse(
+                        reader.result
+                    );
+
+
+                if (
+                    typeof imported !==
+                    "object" ||
+                    !Array.isArray(
+                        imported.lists
+                    )
+                ) {
+
+                    throw new Error(
+                        "Invalid backup."
+                    );
+                }
+
+
+                if (
+                    !confirm(
+                        "Import this backup? Your current local data will be replaced."
+                    )
+                ) {
+
+                    return;
+                }
+
+
+                state = {
+
+                    username:
+                        imported.username ||
+                        "",
+
+                    lists:
+                        imported.lists,
+
+                    selectedListId:
+                        imported.selectedListId ||
+                        (
+                            imported.lists[0]
+                                ?.id ||
+                            null
+                        )
+                };
+
+
+                saveState();
+
+                closeModal();
+
+                initialize();
+
+                alert(
+                    "Backup imported successfully!"
+                );
+
+            } catch {
+
+                alert(
+                    "That file is not a valid CreateYourDemonlist backup."
+                );
+            }
+        };
+
+
+    reader.readAsText(
+        file
+    );
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetEverything() {
+
+    if (
+        !confirm(
+            "RESET EVERYTHING?\n\nThis will delete your profile and every Demonlist stored in this browser."
+        )
+    ) {
+
+        return;
+    }
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    state = {
+
+        username: "",
+
+        lists: [],
+
+        selectedListId: null
+    };
+
+
+    closeModal();
+
+    initialize();
+}
+
+
+/* =========================================================
+   MODALS
 ========================================================= */
 
 function openModal(html) {
 
     document
-        .getElementById("modal")
-        .innerHTML = html;
+        .getElementById(
+            "modal"
+        )
+        .innerHTML =
+            html;
 
     document
-        .getElementById("modalBackdrop")
-        .classList.remove("hidden");
+        .getElementById(
+            "modalBackdrop"
+        )
+        .classList.remove(
+            "hidden"
+        );
 }
 
 
 function closeModal() {
 
     document
-        .getElementById("modalBackdrop")
-        .classList.add("hidden");
+        .getElementById(
+            "modalBackdrop"
+        )
+        .classList.add(
+            "hidden"
+        );
 
     document
-        .getElementById("modal")
+        .getElementById(
+            "modal"
+        )
         .innerHTML = "";
 }
 
@@ -2282,7 +3555,9 @@ function closeModalOutside(event) {
 
     if (
         event.target ===
-        document.getElementById("modalBackdrop")
+        document.getElementById(
+            "modalBackdrop"
+        )
     ) {
 
         closeModal();
@@ -2291,23 +3566,42 @@ function closeModalOutside(event) {
 
 
 /* =========================================================
-   SECURITY / TEXT HELPERS
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHtml(value) {
 
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 }
 
 
 function escapeAttribute(value) {
 
-    return escapeHtml(value);
+    return escapeHtml(
+        value
+    );
 }
 
 </script>
