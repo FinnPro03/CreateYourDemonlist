@@ -1,3166 +1,693 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CreateYourDemonlist</title>
-
-  <style>
-    :root {
-      --bg: #08090d;
-      --panel: #101218;
-      --panel-2: #151821;
-      --panel-3: #1b1f2a;
-      --border: #292e3b;
-      --text: #f4f6fb;
-      --muted: #9299aa;
-      --red: #ff334f;
-      --red-2: #ff5b70;
-      --green: #35d07f;
-      --yellow: #ffd166;
-      --blue: #4da3ff;
-      --shadow: 0 15px 45px rgba(0,0,0,.35);
-      --radius: 16px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(255,51,79,.08), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(77,163,255,.05), transparent 35%),
-        var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      min-height: 100vh;
-      display: flex;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-      width: 285px;
-      min-height: 100vh;
-      background: rgba(13,15,21,.97);
-      border-right: 1px solid var(--border);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      z-index: 20;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--red), #b90020);
-      box-shadow: 0 8px 25px rgba(255,51,79,.22);
-      font-size: 20px;
-      font-weight: 900;
-    }
-
-    .brand-title {
-      font-size: 17px;
-      font-weight: 850;
-      line-height: 1.1;
-    }
-
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    .sidebar-section-title {
-      color: #747b8c;
-      text-transform: uppercase;
-      letter-spacing: .09em;
-      font-size: 10px;
-      font-weight: 800;
-      margin: 10px 5px 8px;
-    }
-
-    .list-container {
-      flex: 1;
-      overflow-y: auto;
-      padding-right: 3px;
-    }
-
-    .list-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      width: 100%;
-      padding: 11px 10px;
-      margin-bottom: 6px;
-      border-radius: 11px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text);
-      text-align: left;
-      transition: .15s ease;
-    }
-
-    .list-item:hover {
-      background: var(--panel);
-      border-color: var(--border);
-    }
-
-    .list-item.active {
-      background: rgba(255,51,79,.12);
-      border-color: rgba(255,51,79,.28);
-    }
-
-    .list-item-icon {
-      width: 29px;
-      height: 29px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      background: var(--panel-3);
-      color: #cdd2df;
-      font-size: 13px;
-      flex-shrink: 0;
-    }
-
-    .list-item.active .list-item-icon {
-      background: var(--red);
-      color: white;
-    }
-
-    .list-item-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .list-item-name {
-      font-weight: 750;
-      font-size: 13px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .list-item-count {
-      color: var(--muted);
-      font-size: 10px;
-      margin-top: 2px;
-    }
-
-    .sidebar-bottom {
-      border-top: 1px solid var(--border);
-      padding-top: 14px;
-      margin-top: 12px;
-    }
-
-    .sidebar-button {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-      text-align: left;
-      transition: .15s ease;
-    }
-
-    .sidebar-button:hover {
-      border-color: #3b4150;
-      background: var(--panel-2);
-    }
-
-    .sidebar-button.primary {
-      background: var(--red);
-      border-color: var(--red);
-      color: white;
-      font-weight: 800;
-    }
-
-    .sidebar-button.primary:hover {
-      background: var(--red-2);
-    }
-
-    /* MAIN */
-
-    .main {
-      flex: 1;
-      min-width: 0;
-      padding: 28px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 25px;
-    }
-
-    .page-title {
-      font-size: 27px;
-      font-weight: 900;
-      letter-spacing: -.03em;
-    }
-
-    .page-subtitle {
-      color: var(--muted);
-      margin-top: 5px;
-      font-size: 13px;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 9px;
-      align-items: center;
-    }
-
-    .icon-button,
-    .profile-button {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      border-radius: 11px;
-      padding: 10px 13px;
-    }
-
-    .profile-button {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-weight: 750;
-    }
-
-    .profile-avatar {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      background: var(--red);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .empty-state {
-      max-width: 700px;
-      margin: 100px auto;
-      text-align: center;
-    }
-
-    .empty-icon {
-      font-size: 52px;
-      margin-bottom: 14px;
-    }
-
-    .empty-state h2 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
-
-    .empty-state p {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .card {
-      background: rgba(16,18,24,.88);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    /* LIST HEADER */
-
-    .list-header {
-      padding: 20px;
-      margin-bottom: 18px;
-    }
-
-    .list-header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
-    }
-
-    .list-name {
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: -.02em;
-    }
-
-    .list-meta {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    .list-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .button {
-      border: 1px solid var(--border);
-      background: var(--panel-2);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 9px 12px;
-      font-weight: 700;
-      transition: .15s ease;
-    }
-
-    .button:hover {
-      border-color: #444b5b;
-      transform: translateY(-1px);
-    }
-
-    .button.primary {
-      background: var(--red);
-      border-color: var(--red);
-      color: white;
-    }
-
-    .button.primary:hover {
-      background: var(--red-2);
-    }
-
-    .button.danger {
-      color: #ff7185;
-    }
-
-    /* SEARCH */
-
-    .search-card {
-      padding: 18px;
-      margin-bottom: 18px;
-    }
-
-    .search-row {
-      display: flex;
-      gap: 9px;
-    }
-
-    .search-input-wrap {
-      flex: 1;
-      position: relative;
-    }
-
-    .search-input {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: #0b0d12;
-      color: var(--text);
-      border-radius: 11px;
-      padding: 13px 14px;
-      outline: none;
-    }
-
-    .search-input:focus {
-      border-color: rgba(255,51,79,.65);
-      box-shadow: 0 0 0 3px rgba(255,51,79,.08);
-    }
-
-    .search-status {
-      min-height: 20px;
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 10px;
-    }
-
-    .search-results {
-      margin-top: 12px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .search-result {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      padding: 10px;
-      border-radius: 12px;
-    }
-
-    .result-thumb {
-      width: 88px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 7px;
-      background: #07080b;
-      flex-shrink: 0;
-    }
-
-    .result-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .result-name {
-      font-weight: 800;
-      font-size: 13px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .result-meta {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 3px;
-    }
-
-    .source-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      border-radius: 999px;
-      padding: 3px 7px;
-      font-size: 9px;
-      font-weight: 850;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      background: #202531;
-      color: #cdd2df;
-      margin-left: 4px;
-    }
-
-    .source-badge.custom {
-      background: rgba(255,209,102,.12);
-      color: var(--yellow);
-    }
-
-    /* CUSTOM FALLBACK */
-
-    .custom-search-card {
-      border: 1px solid rgba(255,209,102,.22);
-      background: rgba(255,209,102,.045);
-      border-radius: 13px;
-      padding: 15px;
-      margin-top: 12px;
-    }
-
-    .custom-search-title {
-      font-weight: 850;
-      margin-bottom: 5px;
-    }
-
-    .custom-search-text {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-      margin-bottom: 11px;
-    }
-
-    /* LEVELS */
-
-    .levels {
-      display: grid;
-      gap: 10px;
-    }
-
-    .level-card {
-      display: flex;
-      align-items: stretch;
-      gap: 13px;
-      padding: 11px;
-      min-width: 0;
-    }
-
-    .rank {
-      width: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-      font-weight: 950;
-      color: #d8dce6;
-      flex-shrink: 0;
-    }
-
-    .level-thumbnail {
-      width: 150px;
-      height: 85px;
-      border-radius: 10px;
-      object-fit: cover;
-      background: #07080b;
-      flex-shrink: 0;
-    }
-
-    .no-thumbnail {
-      width: 150px;
-      height: 85px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(135deg, #171a22, #0b0d12);
-      border: 1px solid #232834;
-      color: #555d6e;
-      font-size: 25px;
-      flex-shrink: 0;
-    }
-
-    .level-main {
-      min-width: 0;
-      flex: 1;
-      padding: 2px 0;
-    }
-
-    .level-name {
-      font-size: 16px;
-      font-weight: 900;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .level-creator {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 3px;
-    }
-
-    .level-details {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 9px;
-    }
-
-    .detail-chip {
-      background: var(--panel-3);
-      border: 1px solid #292f3b;
-      color: #bfc5d3;
-      padding: 4px 7px;
-      border-radius: 7px;
-      font-size: 10px;
-    }
-
-    .level-actions {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-shrink: 0;
-    }
-
-    .small-button {
-      width: 31px;
-      height: 31px;
-      border: 1px solid var(--border);
-      background: var(--panel-2);
-      color: #d9deea;
-      border-radius: 8px;
-      font-weight: 900;
-    }
-
-    .small-button:hover {
-      background: var(--panel-3);
-    }
-
-    .small-button.danger:hover {
-      color: #ff7185;
-      border-color: rgba(255,113,133,.35);
-    }
-
-    .empty-list {
-      padding: 55px 20px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .empty-list strong {
-      display: block;
-      color: var(--text);
-      font-size: 17px;
-      margin-bottom: 5px;
-    }
-
-    /* MODAL */
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(0,0,0,.72);
-      backdrop-filter: blur(7px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .modal {
-      width: min(600px, 100%);
-      max-height: 90vh;
-      overflow-y: auto;
-      background: #11141b;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      box-shadow: 0 30px 90px rgba(0,0,0,.55);
-      padding: 21px;
-    }
-
-    .modal.large {
-      width: min(720px, 100%);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .modal-title {
-      font-size: 20px;
-      font-weight: 900;
-    }
-
-    .close-button {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--muted);
-      font-size: 18px;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 13px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .field label {
-      display: block;
-      color: #c4c9d5;
-      font-size: 11px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .field input,
-    .field textarea,
-    .field select {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: #0a0c11;
-      color: var(--text);
-      border-radius: 10px;
-      padding: 11px;
-      outline: none;
-    }
-
-    .field textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      border-color: rgba(255,51,79,.6);
-    }
-
-    .help-text {
-      color: #707889;
-      font-size: 10px;
-      line-height: 1.5;
-      margin-top: 5px;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 19px;
-    }
-
-    /* PROFILE */
-
-    .profile-box {
-      text-align: center;
-    }
-
-    .big-avatar {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 12px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--red), #a6001d);
-      font-size: 27px;
-      font-weight: 950;
-    }
-
-    .profile-name {
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .profile-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
-      margin-top: 20px;
-    }
-
-    .stat {
-      padding: 14px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .stat-value {
-      font-size: 21px;
-      font-weight: 900;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 10px;
-      margin-top: 3px;
-    }
-
-    /* TOAST */
-
-    .toast-container {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 500;
-      display: grid;
-      gap: 8px;
-    }
-
-    .toast {
-      max-width: 360px;
-      background: #171a22;
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 11px;
-      padding: 11px 14px;
-      box-shadow: var(--shadow);
-      font-size: 12px;
-      animation: toastIn .2s ease;
-    }
-
-    .toast.success {
-      border-color: rgba(53,208,127,.3);
-    }
-
-    .toast.error {
-      border-color: rgba(255,51,79,.35);
-    }
-
-    @keyframes toastIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* MOBILE */
-
-    .mobile-header {
-      display: none;
-    }
-
-    @media (max-width: 850px) {
-      .sidebar {
-        width: 235px;
-      }
-
-      .main {
-        padding: 20px;
-      }
-
-      .level-thumbnail,
-      .no-thumbnail {
-        width: 125px;
-        height: 72px;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .app {
-        display: block;
-      }
-
-      .sidebar {
-        position: fixed;
-        inset: 0 auto 0 0;
-        width: min(290px, 86vw);
-        transform: translateX(-105%);
-        transition: transform .2s ease;
-        box-shadow: 20px 0 70px rgba(0,0,0,.45);
-      }
-
-      .sidebar.mobile-open {
-        transform: translateX(0);
-      }
-
-      .mobile-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 13px 15px;
-        border-bottom: 1px solid var(--border);
-        background: rgba(9,11,15,.94);
-        position: sticky;
-        top: 0;
-        z-index: 30;
-      }
-
-      .mobile-menu {
-        border: 1px solid var(--border);
-        background: var(--panel);
-        color: white;
-        border-radius: 9px;
-        padding: 8px 11px;
-      }
-
-      .mobile-title {
-        font-size: 14px;
-        font-weight: 900;
-      }
-
-      .main {
-        padding: 16px;
-      }
-
-      .topbar {
-        align-items: flex-start;
-      }
-
-      .top-actions .icon-button {
-        display: none;
-      }
-
-      .page-title {
-        font-size: 22px;
-      }
-
-      .list-header-top {
-        display: block;
-      }
-
-      .list-actions {
-        margin-top: 13px;
-      }
-
-      .search-row {
-        flex-direction: column;
-      }
-
-      .level-card {
-        flex-wrap: wrap;
-      }
-
-      .rank {
-        width: 32px;
-      }
-
-      .level-thumbnail,
-      .no-thumbnail {
-        width: 105px;
-        height: 62px;
-      }
-
-      .level-main {
-        min-width: calc(100% - 170px);
-      }
-
-      .level-actions {
-        width: 100%;
-        justify-content: flex-end;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CreateYourDemonlist</title>
+<style>
+:root{--bg:#08090d;--panel:#101218;--panel-2:#151821;--panel-3:#1b1f2a;--border:#292e3b;--text:#f4f6fb;--muted:#9299aa;--red:#ff334f;--red-2:#ff5b70;--green:#35d07f;--yellow:#ffd166;--blue:#4da3ff;--shadow:0 15px 45px rgba(0,0,0,.35);--radius:16px}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at top left,rgba(255,51,79,.08),transparent 35%),radial-gradient(circle at bottom right,rgba(77,163,255,.05),transparent 35%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:flex}
+.sidebar{width:285px;min-height:100vh;background:rgba(13,15,21,.97);border-right:1px solid var(--border);padding:20px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:20}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.brand-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#b90020);box-shadow:0 8px 25px rgba(255,51,79,.22);font-size:20px;font-weight:900}.brand-title{font-size:17px;font-weight:850;line-height:1.1}.brand-subtitle{color:var(--muted);font-size:11px;margin-top:4px}
+.sidebar-section-title{color:#747b8c;text-transform:uppercase;letter-spacing:.09em;font-size:10px;font-weight:800;margin:10px 5px 8px}.list-container{flex:1;overflow-y:auto;padding-right:3px}
+.list-item{display:flex;align-items:center;gap:9px;width:100%;padding:11px 10px;margin-bottom:6px;border-radius:11px;border:1px solid transparent;background:transparent;color:var(--text);text-align:left;transition:.15s ease}.list-item:hover{background:var(--panel);border-color:var(--border)}.list-item.active{background:rgba(255,51,79,.12);border-color:rgba(255,51,79,.28)}
+.list-item-icon{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;background:var(--panel-3);color:#cdd2df;font-size:13px;flex-shrink:0}.list-item.active .list-item-icon{background:var(--red);color:white}.list-item-info{min-width:0;flex:1}.list-item-name{font-weight:750;font-size:13px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.list-item-count{color:var(--muted);font-size:10px;margin-top:2px}
+.sidebar-bottom{border-top:1px solid var(--border);padding-top:14px;margin-top:12px}.sidebar-button{width:100%;border:1px solid var(--border);background:var(--panel);color:var(--text);padding:10px 12px;border-radius:10px;margin-bottom:8px;text-align:left;transition:.15s ease}.sidebar-button:hover{border-color:#3b4150;background:var(--panel-2)}.sidebar-button.primary{background:var(--red);border-color:var(--red);color:white;font-weight:800}.sidebar-button.primary:hover{background:var(--red-2)}
+.main{flex:1;min-width:0;padding:28px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:25px}.page-title{font-size:27px;font-weight:900;letter-spacing:-.03em}.page-subtitle{color:var(--muted);margin-top:5px;font-size:13px}.top-actions{display:flex;gap:9px;align-items:center}
+.icon-button,.profile-button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:11px;padding:10px 13px}.profile-button{display:flex;align-items:center;gap:9px;font-weight:750}.profile-avatar{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:var(--red);font-size:12px;font-weight:900}
+.empty-state{max-width:700px;margin:100px auto;text-align:center}.empty-icon{font-size:52px;margin-bottom:14px}.empty-state h2{margin:0 0 8px;font-size:28px}.empty-state p{color:var(--muted);line-height:1.6}.card{background:rgba(16,18,24,.88);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.list-header{padding:20px;margin-bottom:18px}.list-header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.list-name{font-size:24px;font-weight:900;letter-spacing:-.02em}.list-meta{color:var(--muted);font-size:12px;margin-top:5px}.list-actions{display:flex;gap:8px;flex-wrap:wrap}
+.button{border:1px solid var(--border);background:var(--panel-2);color:var(--text);border-radius:10px;padding:9px 12px;font-weight:700;transition:.15s ease}.button:hover{border-color:#444b5b;transform:translateY(-1px)}.button.primary{background:var(--red);border-color:var(--red);color:white}.button.primary:hover{background:var(--red-2)}.button.danger{color:#ff7185}
+.search-card{padding:18px;margin-bottom:18px}.search-row{display:flex;gap:9px}.search-input-wrap{flex:1;position:relative}.search-input{width:100%;border:1px solid var(--border);background:#0b0d12;color:var(--text);border-radius:11px;padding:13px 14px;outline:none}.search-input:focus{border-color:rgba(255,51,79,.65);box-shadow:0 0 0 3px rgba(255,51,79,.08)}.search-status{min-height:20px;color:var(--muted);font-size:12px;margin-top:10px}.search-results{margin-top:12px;display:grid;gap:8px}
+.search-result{display:flex;align-items:center;gap:12px;border:1px solid var(--border);background:var(--panel);padding:10px;border-radius:12px}.result-thumb{width:88px;height:50px;object-fit:cover;border-radius:7px;background:#07080b;flex-shrink:0}.result-info{min-width:0;flex:1}.result-name{font-weight:800;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.result-meta{color:var(--muted);font-size:11px;margin-top:3px}
+.source-badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.05em;background:#202531;color:#cdd2df;margin-left:4px}.source-badge.custom{background:rgba(255,209,102,.12);color:var(--yellow)}
+.custom-search-card{border:1px solid rgba(255,209,102,.22);background:rgba(255,209,102,.045);border-radius:13px;padding:15px;margin-top:12px}.custom-search-title{font-weight:850;margin-bottom:5px}.custom-search-text{color:var(--muted);font-size:12px;line-height:1.5;margin-bottom:11px}
+.levels{display:grid;gap:10px}.level-card{display:flex;align-items:stretch;gap:13px;padding:11px;min-width:0}.rank{width:48px;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:950;color:#d8dce6;flex-shrink:0}.level-thumbnail{width:150px;height:85px;border-radius:10px;object-fit:cover;background:#07080b;flex-shrink:0}.no-thumbnail{width:150px;height:85px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#171a22,#0b0d12);border:1px solid #232834;color:#555d6e;font-size:25px;flex-shrink:0}
+.level-main{min-width:0;flex:1;padding:2px 0}.level-name{font-size:16px;font-weight:900;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.level-creator{color:var(--muted);font-size:11px;margin-top:3px}.level-details{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.detail-chip{background:var(--panel-3);border:1px solid #292f3b;color:#bfc5d3;padding:4px 7px;border-radius:7px;font-size:10px}
+.level-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}.small-button{width:31px;height:31px;border:1px solid var(--border);background:var(--panel-2);color:#d9deea;border-radius:8px;font-weight:900}.small-button:hover{background:var(--panel-3)}.small-button.danger:hover{color:#ff7185;border-color:rgba(255,113,133,.35)}
+.empty-list{padding:55px 20px;text-align:center;color:var(--muted)}.empty-list strong{display:block;color:var(--text);font-size:17px;margin-bottom:5px}
+.modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:20px}.modal-overlay.open{display:flex}.modal{width:min(600px,100%);max-height:90vh;overflow-y:auto;background:#11141b;border:1px solid var(--border);border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.55);padding:21px}.modal.large{width:min(720px,100%)}.modal-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}.modal-title{font-size:20px;font-weight:900}.close-button{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:18px}
+.form-grid{display:grid;gap:13px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;color:#c4c9d5;font-size:11px;font-weight:800;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);background:#0a0c11;color:var(--text);border-radius:10px;padding:11px;outline:none}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(255,51,79,.6)}.help-text{color:#707889;font-size:10px;line-height:1.5;margin-top:5px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:19px}
+.profile-box{text-align:center}.big-avatar{width:72px;height:72px;margin:0 auto 12px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#a6001d);font-size:27px;font-weight:950}.profile-name{font-size:22px;font-weight:900}.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:20px}.stat{padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:12px}.stat-value{font-size:21px;font-weight:900}.stat-label{color:var(--muted);font-size:10px;margin-top:3px}
+.toast-container{position:fixed;right:20px;bottom:20px;z-index:500;display:grid;gap:8px}.toast{max-width:360px;background:#171a22;border:1px solid var(--border);color:var(--text);border-radius:11px;padding:11px 14px;box-shadow:var(--shadow);font-size:12px;animation:toastIn .2s ease}.toast.success{border-color:rgba(53,208,127,.3)}.toast.error{border-color:rgba(255,51,79,.35)}@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.mobile-header{display:none}
+@media(max-width:850px){.sidebar{width:235px}.main{padding:20px}.level-thumbnail,.no-thumbnail{width:125px;height:72px}}
+@media(max-width:680px){.app{display:block}.sidebar{position:fixed;inset:0 auto 0 0;width:min(290px,86vw);transform:translateX(-105%);transition:transform .2s ease;box-shadow:20px 0 70px rgba(0,0,0,.45)}.sidebar.mobile-open{transform:translateX(0)}.mobile-header{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--border);background:rgba(9,11,15,.94);position:sticky;top:0;z-index:30}.mobile-menu{border:1px solid var(--border);background:var(--panel);color:white;border-radius:9px;padding:8px 11px}.mobile-title{font-size:14px;font-weight:900}.main{padding:16px}.topbar{align-items:flex-start}.top-actions .icon-button{display:none}.page-title{font-size:22px}.list-header-top{display:block}.list-actions{margin-top:13px}.search-row{flex-direction:column}.level-card{flex-wrap:wrap}.rank{width:32px}.level-thumbnail,.no-thumbnail{width:105px;height:62px}.level-main{min-width:calc(100% - 170px)}.level-actions{width:100%;justify-content:flex-end}.form-row{grid-template-columns:1fr}}
+</style>
 </head>
-
 <body>
 
 <div class="mobile-header">
-  <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
-  <div class="mobile-title">CreateYourDemonlist</div>
-  <button class="mobile-menu" onclick="openProfile()">👤</button>
+<button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+<div class="mobile-title">CreateYourDemonlist</div>
+<button class="mobile-menu" onclick="openProfile()">👤</button>
 </div>
 
 <div class="app">
-
-  <aside class="sidebar" id="sidebar">
-
-    <div class="brand">
-      <div class="brand-icon">D</div>
-      <div>
-        <div class="brand-title">CreateYourDemonlist</div>
-        <div class="brand-subtitle">Your GD list. Your rules.</div>
-      </div>
-    </div>
-
-    <div class="sidebar-section-title">Your Demonlists</div>
-
-    <div class="list-container" id="listContainer"></div>
-
-    <div class="sidebar-bottom">
-      <button class="sidebar-button primary" onclick="openCreateList()">
-        ＋ Create Demonlist
-      </button>
-
-      <button class="sidebar-button" onclick="openProfile()">
-        👤 Profile
-      </button>
-
-      <button class="sidebar-button" onclick="exportData()">
-        💾 Export Backup
-      </button>
-
-      <button class="sidebar-button" onclick="document.getElementById('importFile').click()">
-        📥 Import Backup
-      </button>
-
-      <input
-        id="importFile"
-        type="file"
-        accept=".json,application/json"
-        style="display:none"
-        onchange="importData(event)"
-      />
-
-      <button class="sidebar-button" onclick="resetEverything()">
-        ⚠ Reset Everything
-      </button>
-    </div>
-
-  </aside>
-
-  <main class="main">
-
-    <div class="topbar">
-      <div>
-        <div class="page-title" id="pageTitle">CreateYourDemonlist</div>
-        <div class="page-subtitle" id="pageSubtitle">
-          Build your own Geometry Dash Demonlist.
-        </div>
-      </div>
-
-      <div class="top-actions">
-        <button class="icon-button" onclick="openCreateList()">＋ List</button>
-
-        <button class="profile-button" onclick="openProfile()">
-          <span class="profile-avatar" id="topAvatar">?</span>
-          <span id="topUsername">Profile</span>
-        </button>
-      </div>
-    </div>
-
-    <div id="content"></div>
-
-  </main>
+<aside class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brand-icon">D</div>
+<div><div class="brand-title">CreateYourDemonlist</div><div class="brand-subtitle">Your GD list. Your rules.</div></div>
 </div>
+<div class="sidebar-section-title">Your Demonlists</div>
+<div class="list-container" id="listContainer"></div>
+<div class="sidebar-bottom">
+<button class="sidebar-button primary" onclick="openCreateList()">＋ Create Demonlist</button>
+<button class="sidebar-button" onclick="openProfile()">👤 Profile</button>
+<button class="sidebar-button" onclick="exportData()">💾 Export Backup</button>
+<button class="sidebar-button" onclick="document.getElementById('importFile').click()">📥 Import Backup</button>
+<input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importData(event)">
+<button class="sidebar-button" onclick="resetEverything()">⚠ Reset Everything</button>
+</div>
+</aside>
 
-
-<!-- USERNAME MODAL -->
+<main class="main">
+<div class="topbar">
+<div><div class="page-title" id="pageTitle">CreateYourDemonlist</div><div class="page-subtitle" id="pageSubtitle">Build your own Geometry Dash Demonlist.</div></div>
+<div class="top-actions">
+<button class="icon-button" onclick="openCreateList()">＋ List</button>
+<button class="profile-button" onclick="openProfile()"><span class="profile-avatar" id="topAvatar">?</span><span id="topUsername">Profile</span></button>
+</div>
+</div>
+<div id="content"></div>
+</main>
+</div>
 
 <div class="modal-overlay" id="usernameModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Welcome to CreateYourDemonlist 👋</div>
-    </div>
-
-    <div class="form-grid">
-      <div>
-        <div style="color:#c9ceda;font-size:13px;line-height:1.6;">
-          Choose a username for your local profile.
-          No account is created and nothing is sent to a server.
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Username</label>
-        <input id="usernameInput" maxlength="30" placeholder="FinnPro_03" />
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="button primary" onclick="saveUsername()">
-        Continue
-      </button>
-    </div>
-  </div>
+<div class="modal">
+<div class="modal-header"><div class="modal-title">Welcome to CreateYourDemonlist 👋</div></div>
+<div class="form-grid">
+<div style="color:#c9ceda;font-size:13px;line-height:1.6;">Choose a username for your local profile. No account is created and nothing is sent to a server.</div>
+<div class="field"><label>Username</label><input id="usernameInput" maxlength="30" placeholder="FinnPro_03"></div>
 </div>
-
-
-<!-- CREATE LIST MODAL -->
+<div class="modal-actions"><button class="button primary" onclick="saveUsername()">Continue</button></div>
+</div>
+</div>
 
 <div class="modal-overlay" id="createListModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Create Demonlist</div>
-      <button class="close-button" onclick="closeModal('createListModal')">×</button>
-    </div>
-
-    <div class="form-grid">
-      <div class="field">
-        <label>List Name</label>
-        <input id="newListName" maxlength="60" placeholder="My Demonlist" />
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="button" onclick="closeModal('createListModal')">Cancel</button>
-      <button class="button primary" onclick="createList()">Create</button>
-    </div>
-  </div>
+<div class="modal">
+<div class="modal-header"><div class="modal-title">Create Demonlist</div><button class="close-button" onclick="closeModal('createListModal')">×</button></div>
+<div class="form-grid"><div class="field"><label>List Name</label><input id="newListName" maxlength="60" placeholder="My Demonlist"></div></div>
+<div class="modal-actions"><button class="button" onclick="closeModal('createListModal')">Cancel</button><button class="button primary" onclick="createList()">Create</button></div>
 </div>
-
-
-<!-- EDIT LIST MODAL -->
+</div>
 
 <div class="modal-overlay" id="editListModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Rename Demonlist</div>
-      <button class="close-button" onclick="closeModal('editListModal')">×</button>
-    </div>
-
-    <div class="form-grid">
-      <div class="field">
-        <label>List Name</label>
-        <input id="editListName" maxlength="60" />
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="button" onclick="closeModal('editListModal')">Cancel</button>
-      <button class="button primary" onclick="saveListName()">Save</button>
-    </div>
-  </div>
+<div class="modal">
+<div class="modal-header"><div class="modal-title">Rename Demonlist</div><button class="close-button" onclick="closeModal('editListModal')">×</button></div>
+<div class="form-grid"><div class="field"><label>List Name</label><input id="editListName" maxlength="60"></div></div>
+<div class="modal-actions"><button class="button" onclick="closeModal('editListModal')">Cancel</button><button class="button primary" onclick="saveListName()">Save</button></div>
 </div>
-
-
-<!-- PROFILE MODAL -->
+</div>
 
 <div class="modal-overlay" id="profileModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Profile</div>
-      <button class="close-button" onclick="closeModal('profileModal')">×</button>
-    </div>
-
-    <div class="profile-box">
-      <div class="big-avatar" id="profileAvatar">?</div>
-      <div class="profile-name" id="profileName">User</div>
-
-      <div class="profile-stats">
-        <div class="stat">
-          <div class="stat-value" id="profileListCount">0</div>
-          <div class="stat-label">Demonlists</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-value" id="profileLevelCount">0</div>
-          <div class="stat-label">Levels</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="button" onclick="closeModal('profileModal')">Close</button>
-      <button class="button" onclick="changeUsername()">Change Username</button>
-    </div>
-  </div>
+<div class="modal">
+<div class="modal-header"><div class="modal-title">Profile</div><button class="close-button" onclick="closeModal('profileModal')">×</button></div>
+<div class="profile-box">
+<div class="big-avatar" id="profileAvatar">?</div>
+<div class="profile-name" id="profileName">User</div>
+<div class="profile-stats">
+<div class="stat"><div class="stat-value" id="profileListCount">0</div><div class="stat-label">Demonlists</div></div>
+<div class="stat"><div class="stat-value" id="profileLevelCount">0</div><div class="stat-label">Levels</div></div>
 </div>
-
-
-<!-- LEVEL MODAL -->
+</div>
+<div class="modal-actions"><button class="button" onclick="closeModal('profileModal')">Close</button><button class="button" onclick="changeUsername()">Change Username</button></div>
+</div>
+</div>
 
 <div class="modal-overlay" id="levelModal">
-  <div class="modal large">
-    <div class="modal-header">
-      <div class="modal-title" id="levelModalTitle">Add Level</div>
-      <button class="close-button" onclick="closeModal('levelModal')">×</button>
-    </div>
-
-    <input type="hidden" id="editingLevelId" />
-
-    <div class="form-grid">
-
-      <div class="form-row">
-
-        <div class="field">
-          <label>Level Name *</label>
-          <input id="levelNameInput" maxlength="100" />
-        </div>
-
-        <div class="field">
-          <label>Geometry Dash Level ID</label>
-          <input id="levelIdInput" maxlength="30" />
-        </div>
-
-      </div>
-
-      <div class="form-row">
-
-        <div class="field">
-          <label>Creator</label>
-          <input id="levelCreatorInput" maxlength="100" />
-        </div>
-
-        <div class="field">
-          <label>Verifier</label>
-          <input id="levelVerifierInput" maxlength="100" />
-        </div>
-
-      </div>
-
-      <div class="form-row">
-
-        <div class="field">
-          <label>Verified Date</label>
-          <input id="levelDateInput" type="date" />
-        </div>
-
-        <div class="field">
-          <label>Source</label>
-          <select id="levelSourceInput">
-            <option value="Custom">Custom</option>
-            <option value="Pointercrate">Pointercrate</option>
-            <option value="AREDL">AREDL</option>
-          </select>
-        </div>
-
-      </div>
-
-      <div class="field">
-        <label>Video URL</label>
-        <input
-          id="levelVideoInput"
-          type="url"
-          placeholder="https://www.youtube.com/watch?v=..."
-        />
-
-        <div class="help-text">
-          Optional. If the imported level provides a usable video URL,
-          it is filled automatically. You can replace it here.
-        </div>
-      </div>
-
-    </div>
-
-    <div class="modal-actions">
-      <button class="button" onclick="closeModal('levelModal')">Cancel</button>
-      <button class="button primary" onclick="saveLevel()">Save Level</button>
-    </div>
-  </div>
+<div class="modal large">
+<div class="modal-header"><div class="modal-title" id="levelModalTitle">Add Level</div><button class="close-button" onclick="closeModal('levelModal')">×</button></div>
+<input type="hidden" id="editingLevelId">
+<div class="form-grid">
+<div class="form-row">
+<div class="field"><label>Level Name *</label><input id="levelNameInput" maxlength="100"></div>
+<div class="field"><label>Creator</label><input id="levelCreatorInput" maxlength="100"></div>
 </div>
-
-
-<!-- CUSTOM LEVEL MODAL -->
+<div class="form-row">
+<div class="field"><label>Verifier</label><input id="levelVerifierInput" maxlength="100"></div>
+<div class="field"><label>Verified Date</label><input id="levelDateInput" type="date"></div>
+</div>
+<div class="field">
+<label>Source</label>
+<select id="levelSourceInput"><option value="Custom">Custom</option><option value="Pointercrate">Pointercrate</option><option value="AREDL">AREDL</option></select>
+</div>
+<div class="field">
+<label>Video URL</label>
+<input id="levelVideoInput" type="url" placeholder="https://www.youtube.com/watch?v=...">
+<div class="help-text">Optional. Imported videos are filled automatically when available.</div>
+</div>
+</div>
+<div class="modal-actions"><button class="button" onclick="closeModal('levelModal')">Cancel</button><button class="button primary" onclick="saveLevel()">Save Level</button></div>
+</div>
+</div>
 
 <div class="modal-overlay" id="customLevelModal">
-  <div class="modal large">
-    <div class="modal-header">
-      <div class="modal-title">Add Custom Level 🛠️</div>
-      <button class="close-button" onclick="closeModal('customLevelModal')">×</button>
-    </div>
-
-    <div class="custom-search-card" style="margin-top:0;margin-bottom:18px;">
-      <div class="custom-search-title">Not found in Pointercrate or AREDL</div>
-      <div class="custom-search-text">
-        That's okay! You can still put the level on your personal Demonlist.
-        Custom levels are stored locally just like imported levels.
-      </div>
-    </div>
-
-    <div class="form-grid">
-
-      <div class="form-row">
-
-        <div class="field">
-          <label>Level Name *</label>
-          <input id="customNameInput" maxlength="100" />
-        </div>
-
-        <div class="field">
-          <label>Geometry Dash Level ID</label>
-          <input id="customIdInput" maxlength="30" />
-        </div>
-
-      </div>
-
-      <div class="form-row">
-
-        <div class="field">
-          <label>Creator</label>
-          <input id="customCreatorInput" maxlength="100" />
-        </div>
-
-        <div class="field">
-          <label>Verifier</label>
-          <input id="customVerifierInput" maxlength="100" />
-        </div>
-
-      </div>
-
-      <div class="field">
-        <label>Verified Date</label>
-        <input id="customDateInput" type="date" />
-      </div>
-
-      <div class="field">
-        <label>Video URL</label>
-        <input
-          id="customVideoInput"
-          type="url"
-          placeholder="Optional YouTube / video URL"
-        />
-
-        <div class="help-text">
-          Add a video if you want a thumbnail. This is optional.
-        </div>
-      </div>
-
-    </div>
-
-    <div class="modal-actions">
-      <button class="button" onclick="closeModal('customLevelModal')">Cancel</button>
-      <button class="button primary" onclick="saveCustomLevel()">Add Custom Level</button>
-    </div>
-  </div>
+<div class="modal large">
+<div class="modal-header"><div class="modal-title">Add Custom Level 🛠️</div><button class="close-button" onclick="closeModal('customLevelModal')">×</button></div>
+<div class="custom-search-card" style="margin-top:0;margin-bottom:18px;">
+<div class="custom-search-title">Not found in Pointercrate or AREDL</div>
+<div class="custom-search-text">That's okay! You can still put the level on your personal Demonlist. Custom levels are stored locally just like imported levels.</div>
 </div>
-
+<div class="form-grid">
+<div class="form-row">
+<div class="field"><label>Level Name *</label><input id="customNameInput" maxlength="100"></div>
+<div class="field"><label>Creator</label><input id="customCreatorInput" maxlength="100"></div>
+</div>
+<div class="form-row">
+<div class="field"><label>Verifier</label><input id="customVerifierInput" maxlength="100"></div>
+<div class="field"><label>Verified Date</label><input id="customDateInput" type="date"></div>
+</div>
+<div class="field">
+<label>Video URL</label>
+<input id="customVideoInput" type="url" placeholder="Optional YouTube / video URL">
+<div class="help-text">Add a video if you want a thumbnail. This is optional.</div>
+</div>
+</div>
+<div class="modal-actions"><button class="button" onclick="closeModal('customLevelModal')">Cancel</button><button class="button primary" onclick="saveCustomLevel()">Add Custom Level</button></div>
+</div>
+</div>
 
 <div class="toast-container" id="toastContainer"></div>
 
-
 <script>
-  "use strict";
-
-  /* ============================================================
-     CREATEYOURDEMONLIST V2
-     Local-only Demonlist builder
-     ============================================================ */
-
-  const STORAGE_KEY = "createYourDemonlist_v2";
-
-  const POINTERCRATE_API = "https://pointercrate.com/api/v2/demons/";
-  const AREDL_API = "https://api.aredl.net/v2/api/aredl/levels";
-
-  let state = loadState();
-  let currentSearchToken = 0;
-  let editingListId = null;
-
-  /* ============================================================
-     UTILITIES
-     ============================================================ */
-
-  function uid() {
-    if (window.crypto && crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-
-    return "id_" +
-      Date.now().toString(36) +
-      "_" +
-      Math.random().toString(36).slice(2);
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function escapeAttribute(value) {
-    return escapeHtml(value);
-  }
-
-  function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
-
-  function loadState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-
-      if (!raw) {
-        return {
-          username: "",
-          lists: [],
-          selectedListId: null
-        };
-      }
-
-      const parsed = JSON.parse(raw);
-
-      return {
-        username: parsed.username || "",
-        lists: Array.isArray(parsed.lists) ? parsed.lists : [],
-        selectedListId: parsed.selectedListId || null
-      };
-
-    } catch (error) {
-      console.error("Could not load local data:", error);
-
-      return {
-        username: "",
-        lists: [],
-        selectedListId: null
-      };
-    }
-  }
-
-  function closeModal(id) {
-    document.getElementById(id).classList.remove("open");
-  }
-
-  function openModal(id) {
-    document.getElementById(id).classList.add("open");
-  }
-
-  function getCurrentList() {
-    return state.lists.find(
-      list => list.id === state.selectedListId
-    ) || null;
-  }
-
-  function getInitials(name) {
-    if (!name) return "?";
-
-    const cleaned = name.trim();
-
-    if (!cleaned) return "?";
-
-    return cleaned
-      .split(/\s+/)
-      .slice(0, 2)
-      .map(x => x[0])
-      .join("")
-      .toUpperCase();
-  }
-
-  function timeAgo(dateString) {
-    if (!dateString) return "";
-
-    const date = new Date(dateString + "T00:00:00");
-
-    if (Number.isNaN(date.getTime())) {
-      return "";
-    }
-
-    const now = new Date();
-
-    let seconds = Math.floor((now - date) / 1000);
-
-    if (seconds < 0) {
-      return "Just Now";
-    }
-
-    if (seconds < 60) {
-      return "Just Now";
-    }
-
-    const minutes = Math.floor(seconds / 60);
-
-    if (minutes < 60) {
-      return minutes === 1
-        ? "1 Minute Ago"
-        : `${minutes} Minutes Ago`;
-    }
-
-    const hours = Math.floor(minutes / 60);
-
-    if (hours < 24) {
-      return hours === 1
-        ? "1 Hour Ago"
-        : `${hours} Hours Ago`;
-    }
-
-    const days = Math.floor(hours / 24);
-
-    if (days < 30) {
-      return days === 1
-        ? "1 Day Ago"
-        : `${days} Days Ago`;
-    }
-
-    const months = Math.floor(days / 30.4375);
-
-    if (months < 12) {
-      return months === 1
-        ? "1 Month Ago"
-        : `${months} Months Ago`;
-    }
-
-    const years = Math.floor(months / 12);
-
-    return years === 1
-      ? "1 Year Ago"
-      : `${years} Years Ago`;
-  }
-
-  /* ============================================================
-     VIDEO URL HANDLING
-     ============================================================ */
-
-  function normalizeVideoUrl(value) {
-    if (!value) return "";
-
-    if (typeof value !== "string") {
-      return "";
-    }
-
-    const trimmed = value.trim();
-
-    if (!trimmed) return "";
-
-    try {
-      const url = new URL(trimmed);
-
-      const allowedHosts = [
-        "youtube.com",
-        "www.youtube.com",
-        "youtu.be",
-        "m.youtube.com",
-        "youtube-nocookie.com",
-        "www.youtube-nocookie.com",
-        "twitch.tv",
-        "www.twitch.tv",
-        "vimeo.com",
-        "www.vimeo.com",
-        "bilibili.com",
-        "www.bilibili.com"
-      ];
-
-      const host = url.hostname.toLowerCase();
-
-      if (
-        allowedHosts.some(
-          allowed => host === allowed || host.endsWith("." + allowed)
-        )
-      ) {
-        return url.href;
-      }
-
-      return trimmed;
-
-    } catch {
-      return "";
-    }
-  }
-
-  function getYouTubeId(urlString) {
-    if (!urlString) return null;
-
-    try {
-      const url = new URL(urlString);
-      const host = url.hostname.toLowerCase();
-
-      if (host === "youtu.be") {
-        return url.pathname.slice(1).split("/")[0] || null;
-      }
-
-      if (
-        host === "youtube.com" ||
-        host === "www.youtube.com" ||
-        host === "m.youtube.com"
-      ) {
-        if (url.searchParams.get("v")) {
-          return url.searchParams.get("v");
-        }
-
-        const parts = url.pathname.split("/").filter(Boolean);
-
-        if (
-          parts[0] === "shorts" ||
-          parts[0] === "embed" ||
-          parts[0] === "live"
-        ) {
-          return parts[1] || null;
-        }
-      }
-
-    } catch {
-      return null;
-    }
-
-    return null;
-  }
-
-  function getThumbnailFromVideo(videoUrl) {
-    const id = getYouTubeId(videoUrl);
-
-    if (!id) {
-      return "";
-    }
-
-    return `https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`;
-  }
-
-  /*
-    APIs can expose videos using different property names depending
-    on endpoint/version. This searches recursively for likely URL fields.
-  */
-
-  function findVideoUrlInObject(obj, depth = 0) {
-    if (!obj || depth > 5) {
-      return "";
-    }
-
-    if (typeof obj === "string") {
-      if (
-        obj.includes("youtube.com/") ||
-        obj.includes("youtu.be/") ||
-        obj.includes("twitch.tv/") ||
-        obj.includes("vimeo.com/") ||
-        obj.includes("bilibili.com/")
-      ) {
-        return normalizeVideoUrl(obj);
-      }
-
-      return "";
-    }
-
-    if (Array.isArray(obj)) {
-      for (const item of obj) {
-        const result = findVideoUrlInObject(item, depth + 1);
-
-        if (result) {
-          return result;
-        }
-      }
-
-      return "";
-    }
-
-    if (typeof obj === "object") {
-
-      const priorityKeys = [
-        "video_url",
-        "videoUrl",
-        "video",
-        "verification_video",
-        "verificationVideo",
-        "verification_video_url",
-        "verificationVideoUrl",
-        "youtube_url",
-        "youtubeUrl",
-        "youtube",
-        "proof",
-        "proof_url",
-        "proofUrl",
-        "video_link",
-        "videoLink",
-        "url"
-      ];
-
-      for (const key of priorityKeys) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          const result = findVideoUrlInObject(
-            obj[key],
-            depth + 1
-          );
-
-          if (result) {
-            return result;
-          }
-        }
-      }
-
-      for (const [key, value] of Object.entries(obj)) {
-        const lower = key.toLowerCase();
-
-        if (
-          lower.includes("video") ||
-          lower.includes("youtube") ||
-          lower.includes("proof")
-        ) {
-          const result = findVideoUrlInObject(
-            value,
-            depth + 1
-          );
-
-          if (result) {
-            return result;
-          }
-        }
-      }
-    }
-
-    return "";
-  }
-
-  /* ============================================================
-     API NORMALIZATION
-     ============================================================ */
-
-  function firstValue(obj, keys) {
-    for (const key of keys) {
-      if (
-        obj &&
-        Object.prototype.hasOwnProperty.call(obj, key) &&
-        obj[key] !== null &&
-        obj[key] !== undefined &&
-        String(obj[key]).trim() !== ""
-      ) {
-        return obj[key];
-      }
-    }
-
-    return "";
-  }
-
-  function normalizeLevel(raw, source) {
-
-    const name = firstValue(raw, [
-      "name",
-      "level_name",
-      "levelName",
-      "title"
-    ]);
-
-    const creator = firstValue(raw, [
-      "creator",
-      "creator_name",
-      "creatorName",
-      "author",
-      "publisher",
-      "host"
-    ]);
-
-    const verifier = firstValue(raw, [
-      "verifier",
-      "verifier_name",
-      "verifierName",
-      "verified_by",
-      "verifiedBy"
-    ]);
-
-    const gdId = firstValue(raw, [
-      "id",
-      "level_id",
-      "levelId",
-      "gd_id",
-      "gdId",
-      "levelID"
-    ]);
-
-    const dateValue = firstValue(raw, [
-      "verified_date",
-      "verifiedDate",
-      "verification_date",
-      "verificationDate",
-      "verified_at",
-      "verifiedAt"
-    ]);
-
-    const rawVideo = findVideoUrlInObject(raw);
-
-    let verifiedDate = "";
-
-    if (dateValue) {
-      try {
-        const parsed = new Date(dateValue);
-
-        if (!Number.isNaN(parsed.getTime())) {
-          verifiedDate = parsed.toISOString().slice(0, 10);
-        } else if (/^\d{4}-\d{2}-\d{2}$/.test(String(dateValue))) {
-          verifiedDate = String(dateValue);
-        }
-      } catch {
-        verifiedDate = "";
-      }
-    }
-
-    const videoUrl = normalizeVideoUrl(rawVideo);
-
-    return {
-      gdId: String(gdId || ""),
-      name: String(name || "Unknown Level"),
-      creator: String(creator || "Unknown"),
-      verifier: String(verifier || ""),
-      verifiedDate,
-      source,
-      videoUrl,
-      thumbnail: getThumbnailFromVideo(videoUrl),
-      raw
-    };
-  }
-
-  function extractArray(payload) {
-
-    if (Array.isArray(payload)) {
-      return payload;
-    }
-
-    if (!payload || typeof payload !== "object") {
-      return [];
-    }
-
-    const possibleKeys = [
-      "data",
-      "results",
-      "levels",
-      "demons",
-      "items",
-      "objects"
-    ];
-
-    for (const key of possibleKeys) {
-      if (Array.isArray(payload[key])) {
-        return payload[key];
-      }
-    }
-
-    return [];
-  }
-
-  /* ============================================================
-     POINTERCRATE SEARCH
-     ============================================================ */
-
-  async function searchPointercrate(query) {
-
-    const url =
-      POINTERCRATE_API +
-      "?name=" +
-      encodeURIComponent(query);
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(
-        `Pointercrate returned HTTP ${response.status}`
-      );
-    }
-
-    const payload = await response.json();
-
-    return extractArray(payload)
-      .map(item => normalizeLevel(item, "Pointercrate"))
-      .filter(level => level.name);
-  }
-
-  /* ============================================================
-     AREDL SEARCH
-     ============================================================ */
-
-  async function searchAREDL(query) {
-
-    const url =
-      AREDL_API +
-      "?name=" +
-      encodeURIComponent(query);
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(
-        `AREDL returned HTTP ${response.status}`
-      );
-    }
-
-    const payload = await response.json();
-
-    return extractArray(payload)
-      .map(item => normalizeLevel(item, "AREDL"))
-      .filter(level => level.name);
-  }
-
-  /* ============================================================
-     SEARCH
-     ============================================================ */
-
-  async function searchLevels() {
-
-    const input = document.getElementById("levelSearch");
-    const status = document.getElementById("searchStatus");
-    const results = document.getElementById("searchResults");
-
-    if (!input || !status || !results) {
-      return;
-    }
-
-    const query = input.value.trim();
-
-    results.innerHTML = "";
-
-    if (!query) {
-      status.textContent = "Type a level name to search.";
-      return;
-    }
-
-    const token = ++currentSearchToken;
-
-    status.textContent = "Searching Pointercrate + AREDL...";
-    results.innerHTML = `
-      <div style="color:#858c9d;font-size:12px;padding:10px;">
-        Searching...
-      </div>
-    `;
-
-    let pointercrateResults = [];
-    let aredlResults = [];
-
-    try {
-      pointercrateResults = await searchPointercrate(query);
-    } catch (error) {
-      console.warn("Pointercrate search failed:", error);
-    }
-
-    if (token !== currentSearchToken) return;
-
-    try {
-      aredlResults = await searchAREDL(query);
-    } catch (error) {
-      console.warn("AREDL search failed:", error);
-    }
-
-    if (token !== currentSearchToken) return;
-
-    const allResults = [
-      ...pointercrateResults,
-      ...aredlResults
-    ];
-
-    const deduped = [];
-
-    const seen = new Set();
-
-    for (const level of allResults) {
-
-      const identity =
-        level.gdId
-          ? `id:${level.gdId}`
-          : `name:${level.name.toLowerCase()}`;
-
-      if (seen.has(identity)) {
-        continue;
-      }
-
-      seen.add(identity);
-      deduped.push(level);
-    }
-
-    results.innerHTML = "";
-
-    if (!deduped.length) {
-
-      status.textContent =
-        "No matching level found in Pointercrate or AREDL.";
-
-      const fallback = document.createElement("div");
-
-      fallback.className = "custom-search-card";
-
-      fallback.innerHTML = `
-        <div class="custom-search-title">
-          🛠️ Add "${escapeHtml(query)}" as a Custom Level
-        </div>
-
-        <div class="custom-search-text">
-          This level wasn't found in Pointercrate or AREDL.
-          You can still add it to your personal Demonlist.
-        </div>
-
-        <button class="button primary" onclick="openCustomLevel('${escapeAttribute(query)}')">
-          ＋ Add Custom Level
-        </button>
-      `;
-
-      results.appendChild(fallback);
-
-      return;
-    }
-
-    status.textContent =
-      `${deduped.length} result${deduped.length === 1 ? "" : "s"} found.`;
-
-    deduped.forEach(level => {
-      renderSearchResult(level, results);
-    });
-
-  }
-
-  function renderSearchResult(level, container) {
-
-    const result = document.createElement("div");
-
-    result.className = "search-result";
-
-    const thumb =
-      level.thumbnail
-        ? `<img class="result-thumb" src="${escapeAttribute(level.thumbnail)}" alt="">`
-        : `<div class="result-thumb"></div>`;
-
-    result.innerHTML = `
-      ${thumb}
-
-      <div class="result-info">
-
-        <div class="result-name">
-          ${escapeHtml(level.name)}
-
-          <span class="source-badge">
-            ${escapeHtml(level.source)}
-          </span>
-
-          ${
-            level.videoUrl
-              ? `<span class="source-badge" style="color:#35d07f;">VIDEO ✓</span>`
-              : ""
-          }
-        </div>
-
-        <div class="result-meta">
-          ${escapeHtml(level.creator || "Unknown Creator")}
-          ${
-            level.verifier
-              ? ` · Verified by ${escapeHtml(level.verifier)}`
-              : ""
-          }
-        </div>
-
-      </div>
-
-      <button class="button primary">
-        Add
-      </button>
-    `;
-
-    result
-      .querySelector("button")
-      .addEventListener("click", () => {
-        addImportedLevel(level);
-      });
-
-    container.appendChild(result);
-  }
-
-  /* ============================================================
-     ADD IMPORTED LEVEL
-     ============================================================ */
-
-  function addImportedLevel(apiLevel) {
-
-    const list = getCurrentList();
-
-    if (!list) {
-      toast("Create or select a Demonlist first.", "error");
-      return;
-    }
-
-    const existing = list.levels.find(level => {
-
-      if (apiLevel.gdId && level.gdId) {
-        return String(level.gdId) === String(apiLevel.gdId);
-      }
-
-      return (
-        level.name.toLowerCase() ===
-        apiLevel.name.toLowerCase()
-      );
-    });
-
-    if (existing) {
-      toast("That level is already on this Demonlist.", "error");
-      return;
-    }
-
-    const level = {
-      id: uid(),
-      gdId: apiLevel.gdId || "",
-      name: apiLevel.name || "Unknown Level",
-      creator: apiLevel.creator || "",
-      verifier: apiLevel.verifier || "",
-      verifiedDate: apiLevel.verifiedDate || "",
-      source: apiLevel.source || "Custom",
-      videoUrl: apiLevel.videoUrl || "",
-      thumbnail:
-        apiLevel.thumbnail ||
-        getThumbnailFromVideo(apiLevel.videoUrl || ""),
-      addedAt: Date.now()
-    };
-
-    list.levels.push(level);
-    list.updatedAt = Date.now();
-
-    saveState();
-    render();
-
-    toast(
-      level.videoUrl
-        ? `"${level.name}" added with automatic video thumbnail! 🎥`
-        : `"${level.name}" added!`,
-      "success"
-    );
-
-    const search = document.getElementById("levelSearch");
-
-    if (search) {
-      search.value = "";
-    }
-
-    const status = document.getElementById("searchStatus");
-
-    if (status) {
-      status.textContent = "";
-    }
-
-    const results = document.getElementById("searchResults");
-
-    if (results) {
-      results.innerHTML = "";
-    }
-  }
-
-  /* ============================================================
-     CUSTOM LEVEL
-     ============================================================ */
-
-  function openCustomLevel(name = "") {
-
-    document.getElementById("customNameInput").value = name;
-    document.getElementById("customIdInput").value = "";
-    document.getElementById("customCreatorInput").value = "";
-    document.getElementById("customVerifierInput").value = "";
-    document.getElementById("customDateInput").value = "";
-    document.getElementById("customVideoInput").value = "";
-
-    openModal("customLevelModal");
-  }
-
-  function saveCustomLevel() {
-
-    const list = getCurrentList();
-
-    if (!list) {
-      toast("Create or select a Demonlist first.", "error");
-      return;
-    }
-
-    const name =
-      document.getElementById("customNameInput").value.trim();
-
-    if (!name) {
-      toast("A custom level needs a name.", "error");
-      return;
-    }
-
-    const videoUrl =
-      normalizeVideoUrl(
-        document.getElementById("customVideoInput").value
-      );
-
-    const level = {
-      id: uid(),
-      gdId:
-        document.getElementById("customIdInput").value.trim(),
-
-      name,
-
-      creator:
-        document.getElementById("customCreatorInput").value.trim(),
-
-      verifier:
-        document.getElementById("customVerifierInput").value.trim(),
-
-      verifiedDate:
-        document.getElementById("customDateInput").value,
-
-      source: "Custom",
-
-      videoUrl,
-
-      thumbnail:
-        getThumbnailFromVideo(videoUrl),
-
-      addedAt: Date.now()
-    };
-
-    list.levels.push(level);
-    list.updatedAt = Date.now();
-
-    saveState();
-    closeModal("customLevelModal");
-    render();
-
-    toast(`"${name}" added as a custom level! 🛠️`, "success");
-  }
-
-  /* ============================================================
-     EDIT LEVEL
-     ============================================================ */
-
-  function openEditLevel(levelId) {
-
-    const list = getCurrentList();
-
-    if (!list) return;
-
-    const level = list.levels.find(
-      item => item.id === levelId
-    );
-
-    if (!level) return;
-
-    document.getElementById("editingLevelId").value = level.id;
-    document.getElementById("levelModalTitle").textContent =
-      "Edit Level";
-
-    document.getElementById("levelNameInput").value =
-      level.name || "";
-
-    document.getElementById("levelIdInput").value =
-      level.gdId || "";
-
-    document.getElementById("levelCreatorInput").value =
-      level.creator || "";
-
-    document.getElementById("levelVerifierInput").value =
-      level.verifier || "";
-
-    document.getElementById("levelDateInput").value =
-      level.verifiedDate || "";
-
-    document.getElementById("levelSourceInput").value =
-      level.source || "Custom";
-
-    document.getElementById("levelVideoInput").value =
-      level.videoUrl || "";
-
-    openModal("levelModal");
-  }
-
-  function saveLevel() {
-
-    const list = getCurrentList();
-
-    if (!list) return;
-
-    const levelId =
-      document.getElementById("editingLevelId").value;
-
-    const level = list.levels.find(
-      item => item.id === levelId
-    );
-
-    if (!level) return;
-
-    const name =
-      document.getElementById("levelNameInput").value.trim();
-
-    if (!name) {
-      toast("Level name cannot be empty.", "error");
-      return;
-    }
-
-    const videoUrl =
-      normalizeVideoUrl(
-        document.getElementById("levelVideoInput").value
-      );
-
-    level.name = name;
-
-    level.gdId =
-      document.getElementById("levelIdInput").value.trim();
-
-    level.creator =
-      document.getElementById("levelCreatorInput").value.trim();
-
-    level.verifier =
-      document.getElementById("levelVerifierInput").value.trim();
-
-    level.verifiedDate =
-      document.getElementById("levelDateInput").value;
-
-    level.source =
-      document.getElementById("levelSourceInput").value;
-
-    level.videoUrl = videoUrl;
-
-    level.thumbnail =
-      getThumbnailFromVideo(videoUrl);
-
-    list.updatedAt = Date.now();
-
-    saveState();
-    closeModal("levelModal");
-    render();
-
-    toast("Level updated.", "success");
-  }
-
-  /* ============================================================
-     LEVEL RANKING
-     ============================================================ */
-
-  function moveLevel(levelId, direction) {
-
-    const list = getCurrentList();
-
-    if (!list) return;
-
-    const index = list.levels.findIndex(
-      level => level.id === levelId
-    );
-
-    if (index === -1) return;
-
-    const target = index + direction;
-
-    if (target < 0 || target >= list.levels.length) {
-      return;
-    }
-
-    [
-      list.levels[index],
-      list.levels[target]
-    ] = [
-      list.levels[target],
-      list.levels[index]
-    ];
-
-    list.updatedAt = Date.now();
-
-    saveState();
-    render();
-  }
-
-  function deleteLevel(levelId) {
-
-    const list = getCurrentList();
-
-    if (!list) return;
-
-    const level = list.levels.find(
-      item => item.id === levelId
-    );
-
-    if (!level) return;
-
-    const confirmed =
-      confirm(`Delete "${level.name}" from this Demonlist?`);
-
-    if (!confirmed) return;
-
-    list.levels =
-      list.levels.filter(
-        item => item.id !== levelId
-      );
-
-    list.updatedAt = Date.now();
-
-    saveState();
-    render();
-
-    toast("Level removed.");
-  }
-
-  /* ============================================================
-     LIST MANAGEMENT
-     ============================================================ */
-
-  function openCreateList() {
-    document.getElementById("newListName").value = "";
-    openModal("createListModal");
-  }
-
-  function createList() {
-
-    const name =
-      document.getElementById("newListName").value.trim();
-
-    if (!name) {
-      toast("Give your Demonlist a name.", "error");
-      return;
-    }
-
-    const list = {
-      id: uid(),
-      name,
-      levels: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    };
-
-    state.lists.push(list);
-    state.selectedListId = list.id;
-
-    saveState();
-    closeModal("createListModal");
-    render();
-
-    toast(`"${name}" created! 🔥`, "success");
-  }
-
-  function selectList(id) {
-
-    if (!state.lists.some(list => list.id === id)) {
-      return;
-    }
-
-    state.selectedListId = id;
-
-    saveState();
-    render();
-
-    if (window.innerWidth <= 680) {
-      document.getElementById("sidebar")
-        .classList.remove("mobile-open");
-    }
-  }
-
-  function openEditList() {
-
-    const list = getCurrentList();
-
-    if (!list) return;
-
-    editingListId = list.id;
-
-    document.getElementById("editListName").value =
-      list.name;
-
-    openModal("editListModal");
-  }
-
-  function saveListName() {
-
-    if (!editingListId) return;
-
-    const list = state.lists.find(
-      item => item.id === editingListId
-    );
-
-    if (!list) return;
-
-    const name =
-      document.getElementById("editListName").value.trim();
-
-    if (!name) {
-      toast("List name cannot be empty.", "error");
-      return;
-    }
-
-    list.name = name;
-    list.updatedAt = Date.now();
-
-    saveState();
-    closeModal("editListModal");
-    render();
-
-    toast("Demonlist renamed.", "success");
-  }
-
-  function deleteCurrentList() {
-
-    const list = getCurrentList();
-
-    if (!list) return;
-
-    const confirmed =
-      confirm(
-        `Delete "${list.name}" and all ${list.levels.length} levels?`
-      );
-
-    if (!confirmed) return;
-
-    state.lists =
-      state.lists.filter(
-        item => item.id !== list.id
-      );
-
-    state.selectedListId =
-      state.lists.length
-        ? state.lists[0].id
-        : null;
-
-    saveState();
-    render();
-
-    toast("Demonlist deleted.");
-  }
-
-  /* ============================================================
-     RENDER SIDEBAR
-     ============================================================ */
-
-  function renderSidebar() {
-
-    const container =
-      document.getElementById("listContainer");
-
-    container.innerHTML = "";
-
-    if (!state.lists.length) {
-
-      container.innerHTML = `
-        <div style="
-          color:#666d7d;
-          font-size:11px;
-          line-height:1.6;
-          padding:8px 5px;
-        ">
-          No Demonlists yet.<br>
-          Create one to get started.
-        </div>
-      `;
-
-      return;
-    }
-
-    state.lists.forEach(list => {
-
-      const button =
-        document.createElement("button");
-
-      button.className =
-        "list-item" +
-        (list.id === state.selectedListId
-          ? " active"
-          : "");
-
-      button.onclick = () => selectList(list.id);
-
-      button.innerHTML = `
-        <div class="list-item-icon">🏆</div>
-
-        <div class="list-item-info">
-
-          <div class="list-item-name">
-            ${escapeHtml(list.name)}
-          </div>
-
-          <div class="list-item-count">
-            ${list.levels.length}
-            ${list.levels.length === 1 ? "level" : "levels"}
-          </div>
-
-        </div>
-      `;
-
-      container.appendChild(button);
-    });
-  }
-
-  /* ============================================================
-     RENDER CONTENT
-     ============================================================ */
-
-  function render() {
-
-    renderSidebar();
-
-    const content =
-      document.getElementById("content");
-
-    const title =
-      document.getElementById("pageTitle");
-
-    const subtitle =
-      document.getElementById("pageSubtitle");
-
-    const currentList = getCurrentList();
-
-    if (!state.username) {
-
-      title.textContent = "CreateYourDemonlist";
-      subtitle.textContent =
-        "Create your local Geometry Dash Demonlists.";
-
-      content.innerHTML = `
-        <div class="empty-state">
-
-          <div class="empty-icon">🏆</div>
-
-          <h2>Create your own Demonlist</h2>
-
-          <p>
-            Build completely custom Demonlists with real
-            Pointercrate and AREDL levels, or add your own
-            custom levels.
-          </p>
-
-          <button class="button primary" onclick="openModal('usernameModal')">
-            Get Started
-          </button>
-
-        </div>
-      `;
-
-      return;
-    }
-
-    if (!state.lists.length) {
-
-      title.textContent = "CreateYourDemonlist";
-      subtitle.textContent =
-        `Welcome, ${state.username}!`;
-
-      content.innerHTML = `
-        <div class="empty-state">
-
-          <div class="empty-icon">📋</div>
-
-          <h2>Your Demonlist collection is empty</h2>
-
-          <p>
-            Create your first Demonlist and start ranking levels.
-          </p>
-
-          <button class="button primary" onclick="openCreateList()">
-            ＋ Create Demonlist
-          </button>
-
-        </div>
-      `;
-
-      return;
-    }
-
-    if (!currentList) {
-
-      state.selectedListId =
-        state.lists[0].id;
-
-      saveState();
-
-      render();
-      return;
-    }
-
-    title.textContent =
-      currentList.name;
-
-    subtitle.textContent =
-      `${currentList.levels.length} ${
-        currentList.levels.length === 1
-          ? "level"
-          : "levels"
-      } · Ranked manually`;
-
-    content.innerHTML = `
-      <div class="card list-header">
-
-        <div class="list-header-top">
-
-          <div>
-            <div class="list-name">
-              ${escapeHtml(currentList.name)}
-            </div>
-
-            <div class="list-meta">
-              ${currentList.levels.length}
-              ${
-                currentList.levels.length === 1
-                  ? "level"
-                  : "levels"
-              }
-              · No points · Order determines rank
-            </div>
-          </div>
-
-          <div class="list-actions">
-            <button class="button" onclick="openEditList()">
-              ✏ Rename
-            </button>
-
-            <button class="button danger" onclick="deleteCurrentList()">
-              🗑 Delete
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="card search-card">
-
-        <div class="search-row">
-
-          <div class="search-input-wrap">
-            <input
-              id="levelSearch"
-              class="search-input"
-              placeholder="Search Pointercrate + AREDL..."
-              autocomplete="off"
-              onkeydown="handleSearchKey(event)"
-            />
-          </div>
-
-          <button class="button primary" onclick="searchLevels()">
-            🔎 Search
-          </button>
-
-          <button class="button" onclick="openCustomLevel()">
-            ＋ Custom
-          </button>
-
-        </div>
-
-        <div class="search-status" id="searchStatus"></div>
-
-        <div class="search-results" id="searchResults"></div>
-
-      </div>
-
-
-      <div class="levels" id="levelsContainer">
-
-        ${
-          currentList.levels.length
-            ? currentList.levels.map(
-                (level, index) =>
-                  renderLevelCard(level, index)
-              ).join("")
-            : `
-              <div class="card empty-list">
-
-                <strong>No levels yet</strong>
-
-                Search for a level above or add a
-                custom level to begin ranking.
-
-              </div>
-            `
-        }
-
-      </div>
-    `;
-
-    setupSearchEnter();
-  }
-
-  function setupSearchEnter() {
-    const input =
-      document.getElementById("levelSearch");
-
-    if (!input) return;
-
-    input.addEventListener("keydown", handleSearchKey);
-  }
-
-  function handleSearchKey(event) {
-
-    if (event.key === "Enter") {
-      event.preventDefault();
-      searchLevels();
-    }
-  }
-
-  /* ============================================================
-     LEVEL CARD
-     ============================================================ */
-
-  function renderLevelCard(level, index) {
-
-    const thumbnail =
-      level.thumbnail ||
-      getThumbnailFromVideo(level.videoUrl);
-
-    const image =
-      thumbnail
-        ? `
-          <img
-            class="level-thumbnail"
-            src="${escapeAttribute(thumbnail)}"
-            alt=""
-            loading="lazy"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
-          >
-          <div class="no-thumbnail" style="display:none;">
-            🎮
-          </div>
-        `
-        : `
-          <div class="no-thumbnail">
-            🎮
-          </div>
-        `;
-
-    const verified =
-      level.verifier
-        ? `Verified by ${escapeHtml(level.verifier)}`
-        : "";
-
-    const date =
-      level.verifiedDate
-        ? timeAgo(level.verifiedDate)
-        : "";
-
-    const source =
-      level.source || "Custom";
-
-    return `
-      <div class="card level-card">
-
-        <div class="rank">
-          #${index + 1}
-        </div>
-
-        ${image}
-
-        <div class="level-main">
-
-          <div class="level-name">
-            ${escapeHtml(level.name)}
-          </div>
-
-          <div class="level-creator">
-            by ${escapeHtml(level.creator || "Unknown Creator")}
-          </div>
-
-          <div class="level-details">
-
-            ${
-              verified
-                ? `<span class="detail-chip">✓ ${verified}</span>`
-                : ""
-            }
-
-            ${
-              date
-                ? `<span class="detail-chip">📅 ${escapeHtml(date)}</span>`
-                : ""
-            }
-
-            <span class="detail-chip">
-              ${escapeHtml(source)}
-            </span>
-
-            ${
-              level.gdId
-                ? `<span class="detail-chip">ID ${escapeHtml(level.gdId)}</span>`
-                : ""
-            }
-
-            ${
-              level.videoUrl
-                ? `<span class="detail-chip" style="color:#6ee7a0;">
-                    🎥 Video
-                  </span>`
-                : ""
-            }
-
-          </div>
-
-        </div>
-
-        <div class="level-actions">
-
-          <button
-            class="small-button"
-            title="Move up"
-            onclick="moveLevel('${escapeAttribute(level.id)}', -1)"
-          >
-            ↑
-          </button>
-
-          <button
-            class="small-button"
-            title="Move down"
-            onclick="moveLevel('${escapeAttribute(level.id)}', 1)"
-          >
-            ↓
-          </button>
-
-          <button
-            class="small-button"
-            title="Edit"
-            onclick="openEditLevel('${escapeAttribute(level.id)}')"
-          >
-            ✏
-          </button>
-
-          <button
-            class="small-button danger"
-            title="Delete"
-            onclick="deleteLevel('${escapeAttribute(level.id)}')"
-          >
-            ×
-          </button>
-
-        </div>
-
-      </div>
-    `;
-  }
-
-  /* ============================================================
-     PROFILE
-     ============================================================ */
-
-  function openProfile() {
-
-    if (!state.username) {
-      openModal("usernameModal");
-      return;
-    }
-
-    const levelCount =
-      state.lists.reduce(
-        (total, list) => total + list.levels.length,
-        0
-      );
-
-    document.getElementById("profileName").textContent =
-      state.username;
-
-    document.getElementById("profileAvatar").textContent =
-      getInitials(state.username);
-
-    document.getElementById("profileListCount").textContent =
-      state.lists.length;
-
-    document.getElementById("profileLevelCount").textContent =
-      levelCount;
-
-    openModal("profileModal");
-  }
-
-  function changeUsername() {
-
-    closeModal("profileModal");
-
-    const newName =
-      prompt(
-        "Enter your new username:",
-        state.username
-      );
-
-    if (newName === null) return;
-
-    const cleaned = newName.trim();
-
-    if (!cleaned) {
-      toast("Username cannot be empty.", "error");
-      return;
-    }
-
-    state.username = cleaned.slice(0, 30);
-
-    saveState();
-    renderTopProfile();
-
-    toast("Username updated.", "success");
-  }
-
-  function renderTopProfile() {
-
-    const username =
-      document.getElementById("topUsername");
-
-    const avatar =
-      document.getElementById("topAvatar");
-
-    if (!username || !avatar) return;
-
-    username.textContent =
-      state.username || "Profile";
-
-    avatar.textContent =
-      getInitials(state.username);
-  }
-
-  /* ============================================================
-     USERNAME SETUP
-     ============================================================ */
-
-  function saveUsername() {
-
-    const input =
-      document.getElementById("usernameInput");
-
-    const username =
-      input.value.trim();
-
-    if (!username) {
-      toast("Please choose a username.", "error");
-      return;
-    }
-
-    state.username =
-      username.slice(0, 30);
-
-    saveState();
-    closeModal("usernameModal");
-
-    if (!state.lists.length) {
-      openCreateList();
-    }
-
-    render();
-    renderTopProfile();
-
-    toast(`Welcome, ${state.username}! 👋`, "success");
-  }
-
-  /* ============================================================
-     EXPORT / IMPORT
-     ============================================================ */
-
-  function exportData() {
-
-    const backup = {
-      ...state,
-      exportedAt: new Date().toISOString(),
-      app: "CreateYourDemonlist",
-      version: 2
-    };
-
-    const blob =
-      new Blob(
-        [JSON.stringify(backup, null, 2)],
-        { type: "application/json" }
-      );
-
-    const url =
-      URL.createObjectURL(blob);
-
-    const link =
-      document.createElement("a");
-
-    link.href = url;
-
-    link.download =
-      `CreateYourDemonlist-${new Date()
-        .toISOString()
-        .slice(0, 10)}.json`;
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    URL.revokeObjectURL(url);
-
-    toast("Backup exported. 💾", "success");
-  }
-
-  function importData(event) {
-
-    const file =
-      event.target.files?.[0];
-
-    if (!file) return;
-
-    const reader =
-      new FileReader();
-
-    reader.onload = () => {
-
-      try {
-
-        const imported =
-          JSON.parse(reader.result);
-
-        if (
-          !imported ||
-          typeof imported !== "object" ||
-          !Array.isArray(imported.lists)
-        ) {
-          throw new Error("Invalid backup format.");
-        }
-
-        const confirmed =
-          confirm(
-            "Import this backup? Your current local data will be replaced."
-          );
-
-        if (!confirmed) {
-          event.target.value = "";
-          return;
-        }
-
-        state = {
-          username: imported.username || "",
-          lists: imported.lists,
-          selectedListId:
-            imported.selectedListId ||
-            imported.lists[0]?.id ||
-            null
-        };
-
-        saveState();
-        render();
-        renderTopProfile();
-
-        toast("Backup imported successfully. 📥", "success");
-
-      } catch (error) {
-
-        console.error(error);
-
-        toast(
-          "That file isn't a valid CreateYourDemonlist backup.",
-          "error"
-        );
-      }
-
-      event.target.value = "";
-    };
-
-    reader.readAsText(file);
-  }
-
-  /* ============================================================
-     RESET
-     ============================================================ */
-
-  function resetEverything() {
-
-    const confirmed =
-      confirm(
-        "This will permanently delete all local Demonlists and your local profile. Continue?"
-      );
-
-    if (!confirmed) return;
-
-    localStorage.removeItem(STORAGE_KEY);
-
-    state = {
-      username: "",
-      lists: [],
-      selectedListId: null
-    };
-
-    render();
-    renderTopProfile();
-
-    openModal("usernameModal");
-
-    toast("Everything was reset.");
-  }
-
-  /* ============================================================
-     MOBILE SIDEBAR
-     ============================================================ */
-
-  function toggleSidebar() {
-
-    document
-      .getElementById("sidebar")
-      .classList.toggle("mobile-open");
-  }
-
-  /* ============================================================
-     TOAST
-     ============================================================ */
-
-    function toast(message, type = "") {
-
-    const container =
-      document.getElementById("toastContainer");
-
-    const element =
-      document.createElement("div");
-
-    element.className =
-      `toast ${type}`;
-
-    element.textContent =
-      message;
-
-    container.appendChild(element);
-
-    setTimeout(() => {
-      element.remove();
-    }, 3500);
-  }
-
-  /* ============================================================
-     MODAL BACKDROP
-     ============================================================ */
-
-  document.querySelectorAll(".modal-overlay")
-    .forEach(overlay => {
-
-      overlay.addEventListener("click", event => {
-
-        if (event.target === overlay) {
-          overlay.classList.remove("open");
-        }
-
-      });
-
-    });
-
-  /* ============================================================
-     STARTUP
-     ============================================================ */
-
-  render();
-  renderTopProfile();
-
-  if (!state.username) {
-    setTimeout(() => {
-      openModal("usernameModal");
-    }, 150);
-  }
-
+"use strict";
+
+const STORAGE_KEY="createYourDemonlist_v2";
+const POINTERCRATE_API="https://pointercrate.com/api/v2/demons/";
+const AREDL_API="https://api.aredl.net/v2/api/aredl/levels";
+let state=loadState(),currentSearchToken=0,editingListId=null,aredlCache=null,aredlLoading=null;
+
+function uid(){return window.crypto?.randomUUID?crypto.randomUUID():"id_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2)}
+function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function escapeAttribute(v){return escapeHtml(v)}
+function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+function emptyState(){return{username:"",lists:[],selectedListId:null}}
+function loadState(){
+try{
+const raw=localStorage.getItem(STORAGE_KEY);
+if(!raw)return emptyState();
+const p=JSON.parse(raw);
+const lists=Array.isArray(p.lists)?p.lists:[];
+lists.forEach(list=>{
+if(!Array.isArray(list.levels))list.levels=[];
+list.levels.forEach(level=>{
+delete level.gdId;
+delete level.levelId;
+});
+});
+return{username:p.username||"",lists,selectedListId:p.selectedListId||null};
+}catch(e){console.error(e);return emptyState()}
+}
+function closeModal(id){document.getElementById(id)?.classList.remove("open")}
+function openModal(id){document.getElementById(id)?.classList.add("open")}
+function getCurrentList(){return state.lists.find(x=>x.id===state.selectedListId)||null}
+function getInitials(name){if(!name?.trim())return"?";return name.trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase()}
+function timeAgo(dateString){
+if(!dateString)return"";
+const date=new Date(dateString+"T00:00:00");
+if(Number.isNaN(date.getTime()))return"";
+let seconds=Math.floor((new Date()-date)/1000);
+if(seconds<60)return"Just Now";
+const minutes=Math.floor(seconds/60);
+if(minutes<60)return minutes===1?"1 Minute Ago":`${minutes} Minutes Ago`;
+const hours=Math.floor(minutes/60);
+if(hours<24)return hours===1?"1 Hour Ago":`${hours} Hours Ago`;
+const days=Math.floor(hours/24);
+if(days<30)return days===1?"1 Day Ago":`${days} Days Ago`;
+const months=Math.floor(days/30.4375);
+if(months<12)return months===1?"1 Month Ago":`${months} Months Ago`;
+const years=Math.floor(months/12);
+return years===1?"1 Year Ago":`${years} Years Ago`;
+}
+
+function normalizeVideoUrl(value){
+if(typeof value!=="string"||!value.trim())return"";
+const s=value.trim();
+try{
+const u=new URL(s),h=u.hostname.toLowerCase();
+const allowed=["youtube.com","www.youtube.com","youtu.be","m.youtube.com","youtube-nocookie.com","www.youtube-nocookie.com","twitch.tv","www.twitch.tv","vimeo.com","www.vimeo.com","bilibili.com","www.bilibili.com","medal.tv","www.medal.tv","outplayed.tv","www.outplayed.tv"];
+return allowed.some(x=>h===x||h.endsWith("."+x))?u.href:s;
+}catch{return""}
+}
+function getYouTubeId(s){
+if(!s)return null;
+try{
+const u=new URL(s),h=u.hostname.toLowerCase();
+if(h==="youtu.be")return u.pathname.slice(1).split("/")[0]||null;
+if(["youtube.com","www.youtube.com","m.youtube.com"].includes(h)){
+if(u.searchParams.get("v"))return u.searchParams.get("v");
+const p=u.pathname.split("/").filter(Boolean);
+if(["shorts","embed","live"].includes(p[0]))return p[1]||null;
+}
+}catch{}
+return null;
+}
+function getThumbnailFromVideo(url){
+const id=getYouTubeId(url);
+return id?`https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`:"";
+}
+function findVideoUrlInObject(obj,depth=0){
+if(!obj||depth>5)return"";
+if(typeof obj==="string"){
+if(/(youtube\.com\/|youtu\.be\/|twitch\.tv\/|vimeo\.com\/|bilibili\.com\/|medal\.tv\/|outplayed\.tv\/)/i.test(obj))return normalizeVideoUrl(obj);
+return"";
+}
+if(Array.isArray(obj)){
+for(const x of obj){const r=findVideoUrlInObject(x,depth+1);if(r)return r}
+return"";
+}
+if(typeof obj==="object"){
+const keys=["video_url","videoUrl","video","verification_video","verificationVideo","verification_video_url","verificationVideoUrl","youtube_url","youtubeUrl","youtube","proof","proof_url","proofUrl","video_link","videoLink","url"];
+for(const k of keys)if(k in obj){const r=findVideoUrlInObject(obj[k],depth+1);if(r)return r}
+for(const[k,v]of Object.entries(obj))if(/video|youtube|proof/i.test(k)){const r=findVideoUrlInObject(v,depth+1);if(r)return r}
+}
+return"";
+}
+function firstValue(obj,keys){
+for(const k of keys)if(obj&&obj[k]!==null&&obj[k]!==undefined&&String(obj[k]).trim()!=="")return obj[k];
+return"";
+}
+function objectName(value){
+if(typeof value==="string"||typeof value==="number")return String(value);
+if(!value||typeof value!=="object")return"";
+for(const k of["name","username","user_name","display_name","displayName","player","creator_name","verifier_name"])if(value[k]!==undefined&&typeof value[k]!=="object")return String(value[k]);
+return"";
+}
+function normalizePerson(value){
+if(Array.isArray(value))return value.map(objectName).filter(Boolean).join(", ");
+return objectName(value);
+}
+function normalizeDate(value){
+if(!value)return"";
+const s=String(value);
+if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;
+const d=new Date(value);
+return Number.isNaN(d.getTime())?"":d.toISOString().slice(0,10);
+}
+function normalizeLevel(raw,source){
+const name=firstValue(raw,["name","level_name","levelName","title"]);
+const rawVideo=findVideoUrlInObject(raw);
+const videoUrl=normalizeVideoUrl(rawVideo);
+let creator="",verifier="";
+if(source==="AREDL"){
+creator=normalizePerson(firstValue(raw,["creator","creator_name","creatorName","author","publisher","host","creators"]));
+verifier=normalizePerson(firstValue(raw,["verifier","verifier_name","verifierName","verified_by","verifiedBy"]));
+}
+const dateValue=firstValue(raw,["verified_date","verifiedDate","verification_date","verificationDate","verified_at","verifiedAt","verification_time"]);
+return{
+name:String(name||"Unknown Level"),
+creator,
+verifier,
+verifiedDate:normalizeDate(dateValue),
+source,
+videoUrl,
+thumbnail:getThumbnailFromVideo(videoUrl),
+raw
+};
+}
+function extractArray(payload){
+if(Array.isArray(payload))return payload;
+if(!payload||typeof payload!=="object")return[];
+for(const k of["data","results","levels","demons","items","objects"])if(Array.isArray(payload[k]))return payload[k];
+return[];
+}
+
+async function searchPointercrate(query){
+const r=await fetch(POINTERCRATE_API+"?name="+encodeURIComponent(query));
+if(!r.ok)throw Error(`Pointercrate HTTP ${r.status}`);
+return extractArray(await r.json()).map(x=>normalizeLevel(x,"Pointercrate")).filter(x=>x.name);
+}
+
+async function loadAREDL(){
+if(aredlCache)return aredlCache;
+if(aredlLoading)return aredlLoading;
+aredlLoading=fetch(AREDL_API+"?exclude_legacy=true&exclude_pending=true&exclude_removed=true")
+.then(async r=>{
+if(!r.ok)throw Error(`AREDL HTTP ${r.status}`);
+const data=extractArray(await r.json());
+aredlCache=data.map(x=>normalizeLevel(x,"AREDL")).filter(x=>x.name);
+return aredlCache;
+})
+.finally(()=>aredlLoading=null);
+return aredlLoading;
+}
+
+async function searchAREDL(query){
+const levels=await loadAREDL();
+const q=query.trim().toLowerCase();
+const words=q.split(/\s+/).filter(Boolean);
+return levels.filter(level=>{
+const hay=`${level.name} ${level.creator}`.toLowerCase();
+return hay.includes(q)||words.every(word=>hay.includes(word));
+});
+}
+
+async function searchLevels(){
+const input=document.getElementById("levelSearch"),status=document.getElementById("searchStatus"),results=document.getElementById("searchResults");
+if(!input||!status||!results)return;
+const query=input.value.trim();
+results.innerHTML="";
+if(!query){status.textContent="Type a level name to search.";return}
+const token=++currentSearchToken;
+status.textContent="Searching Pointercrate + AREDL...";
+results.innerHTML='<div style="color:#858c9d;font-size:12px;padding:10px;">Searching...</div>';
+let pc=[],ar=[];
+try{pc=await searchPointercrate(query)}catch(e){console.warn("Pointercrate search failed:",e)}
+if(token!==currentSearchToken)return;
+try{ar=await searchAREDL(query)}catch(e){console.warn("AREDL search failed:",e)}
+if(token!==currentSearchToken)return;
+const all=[...pc,...ar],deduped=[],seen=new Set();
+for(const level of all){
+const identity=`name:${level.name.toLowerCase()}`;
+if(seen.has(identity))continue;
+seen.add(identity);deduped.push(level);
+}
+results.innerHTML="";
+if(!deduped.length){
+status.textContent="No matching level found in Pointercrate or AREDL.";
+const fallback=document.createElement("div");
+fallback.className="custom-search-card";
+fallback.innerHTML=`<div class="custom-search-title">🛠️ Add "${escapeHtml(query)}" as a Custom Level</div><div class="custom-search-text">This level wasn't found in Pointercrate or AREDL. You can still add it to your personal Demonlist.</div><button class="button primary">＋ Add Custom Level</button>`;
+fallback.querySelector("button").onclick=()=>openCustomLevel(query);
+results.appendChild(fallback);
+return;
+}
+status.textContent=`${deduped.length} result${deduped.length===1?"":"s"} found.`;
+deduped.forEach(level=>renderSearchResult(level,results));
+}
+
+function renderSearchResult(level,container){
+const result=document.createElement("div");
+result.className="search-result";
+const thumb=level.thumbnail?`<img class="result-thumb" src="${escapeAttribute(level.thumbnail)}" alt="">`:`<div class="result-thumb"></div>`;
+result.innerHTML=`${thumb}<div class="result-info"><div class="result-name">${escapeHtml(level.name)} <span class="source-badge">${escapeHtml(level.source)}</span>${level.videoUrl?'<span class="source-badge" style="color:#35d07f;">VIDEO ✓</span>':""}</div><div class="result-meta">${escapeHtml(level.creator||"Creator can be added after importing")}${level.verifier?` · Verified by ${escapeHtml(level.verifier)}`:""}</div></div><button class="button primary">Add</button>`;
+result.querySelector("button").onclick=()=>addImportedLevel(level);
+container.appendChild(result);
+}
+
+function clearSearch(){
+const s=document.getElementById("levelSearch"),st=document.getElementById("searchStatus"),r=document.getElementById("searchResults");
+if(s)s.value="";if(st)st.textContent="";if(r)r.innerHTML="";
+}
+
+function addImportedLevel(apiLevel){
+const list=getCurrentList();
+if(!list){toast("Create or select a Demonlist first.","error");return}
+const exists=list.levels.some(level=>level.name.trim().toLowerCase()===apiLevel.name.trim().toLowerCase());
+if(exists){toast("That level is already on this Demonlist.","error");return}
+const level={
+id:uid(),
+name:apiLevel.name||"Unknown Level",
+creator:"",
+verifier:"",
+verifiedDate:apiLevel.verifiedDate||"",
+source:apiLevel.source||"Custom",
+videoUrl:apiLevel.videoUrl||"",
+thumbnail:apiLevel.thumbnail||getThumbnailFromVideo(apiLevel.videoUrl||""),
+addedAt:Date.now()
+};
+list.levels.push(level);list.updatedAt=Date.now();saveState();render();
+toast(level.videoUrl?`"${level.name}" added with automatic video thumbnail! 🎥`:`"${level.name}" added!`,"success");
+clearSearch();
+}
+
+function openCustomLevel(name=""){
+document.getElementById("customNameInput").value=name;
+document.getElementById("customCreatorInput").value="";
+document.getElementById("customVerifierInput").value="";
+document.getElementById("customDateInput").value="";
+document.getElementById("customVideoInput").value="";
+openModal("customLevelModal");
+}
+
+function saveCustomLevel(){
+const list=getCurrentList();
+if(!list){toast("Create or select a Demonlist first.","error");return}
+const name=document.getElementById("customNameInput").value.trim();
+if(!name){toast("A custom level needs a name.","error");return}
+if(list.levels.some(x=>x.name.toLowerCase()===name.toLowerCase())){toast("That level is already on this Demonlist.","error");return}
+const videoUrl=normalizeVideoUrl(document.getElementById("customVideoInput").value);
+list.levels.push({
+id:uid(),
+name,
+creator:document.getElementById("customCreatorInput").value.trim(),
+verifier:document.getElementById("customVerifierInput").value.trim(),
+verifiedDate:document.getElementById("customDateInput").value,
+source:"Custom",
+videoUrl,
+thumbnail:getThumbnailFromVideo(videoUrl),
+addedAt:Date.now()
+});
+list.updatedAt=Date.now();saveState();closeModal("customLevelModal");render();toast(`"${name}" added as a custom level! 🛠️`,"success");
+}
+
+function openEditLevel(levelId){
+const list=getCurrentList();if(!list)return;
+const level=list.levels.find(x=>x.id===levelId);if(!level)return;
+document.getElementById("editingLevelId").value=level.id;
+document.getElementById("levelModalTitle").textContent="Edit Level";
+document.getElementById("levelNameInput").value=level.name||"";
+document.getElementById("levelCreatorInput").value=level.creator||"";
+document.getElementById("levelVerifierInput").value=level.verifier||"";
+document.getElementById("levelDateInput").value=level.verifiedDate||"";
+document.getElementById("levelSourceInput").value=level.source||"Custom";
+document.getElementById("levelVideoInput").value=level.videoUrl||"";
+openModal("levelModal");
+}
+
+function saveLevel(){
+const list=getCurrentList();if(!list)return;
+const id=document.getElementById("editingLevelId").value;
+const level=list.levels.find(x=>x.id===id);if(!level)return;
+const name=document.getElementById("levelNameInput").value.trim();
+if(!name){toast("Level name cannot be empty.","error");return}
+const videoUrl=normalizeVideoUrl(document.getElementById("levelVideoInput").value);
+level.name=name;
+level.creator=document.getElementById("levelCreatorInput").value.trim();
+level.verifier=document.getElementById("levelVerifierInput").value.trim();
+level.verifiedDate=document.getElementById("levelDateInput").value;
+level.source=document.getElementById("levelSourceInput").value;
+level.videoUrl=videoUrl;
+level.thumbnail=getThumbnailFromVideo(videoUrl);
+list.updatedAt=Date.now();saveState();closeModal("levelModal");render();toast("Level updated.","success");
+}
+
+function moveLevel(levelId,direction){
+const list=getCurrentList();if(!list)return;
+const index=list.levels.findIndex(x=>x.id===levelId);if(index<0)return;
+const target=index+direction;if(target<0||target>=list.levels.length)return;
+[list.levels[index],list.levels[target]]=[list.levels[target],list.levels[index]];
+list.updatedAt=Date.now();saveState();render();
+}
+
+function setLevelSpot(levelId){
+const list=getCurrentList();if(!list)return;
+const index=list.levels.findIndex(x=>x.id===levelId);if(index<0)return;
+const current=index+1;
+const input=prompt(`Move "${list.levels[index].name}" to which spot? (1-${list.levels.length})`,String(current));
+if(input===null)return;
+const spot=Number(input.trim());
+if(!Number.isInteger(spot)||spot<1||spot>list.levels.length){toast(`Spot must be a whole number from 1 to ${list.levels.length}.`,"error");return}
+if(spot===current)return;
+const[level]=list.levels.splice(index,1);
+list.levels.splice(spot-1,0,level);
+list.updatedAt=Date.now();saveState();render();
+toast(`"${level.name}" moved to spot #${spot}.`,"success");
+}
+
+function deleteLevel(levelId){
+const list=getCurrentList();if(!list)return;
+const level=list.levels.find(x=>x.id===levelId);if(!level)return;
+if(!confirm(`Delete "${level.name}" from this Demonlist?`))return;
+list.levels=list.levels.filter(x=>x.id!==levelId);list.updatedAt=Date.now();saveState();render();toast("Level removed.");
+}
+
+function openCreateList(){document.getElementById("newListName").value="";openModal("createListModal")}
+function createList(){
+const name=document.getElementById("newListName").value.trim();
+if(!name){toast("Give your Demonlist a name.","error");return}
+const list={id:uid(),name,levels:[],createdAt:Date.now(),updatedAt:Date.now()};
+state.lists.push(list);state.selectedListId=list.id;saveState();closeModal("createListModal");render();toast(`"${name}" created! 🔥`,"success");
+}
+function selectList(id){
+if(!state.lists.some(x=>x.id===id))return;
+state.selectedListId=id;saveState();render();
+if(innerWidth<=680)document.getElementById("sidebar").classList.remove("mobile-open");
+}
+function openEditList(){
+const list=getCurrentList();if(!list)return;
+editingListId=list.id;document.getElementById("editListName").value=list.name;openModal("editListModal");
+}
+function saveListName(){
+if(!editingListId)return;
+const list=state.lists.find(x=>x.id===editingListId);if(!list)return;
+const name=document.getElementById("editListName").value.trim();
+if(!name){toast("List name cannot be empty.","error");return}
+list.name=name;list.updatedAt=Date.now();saveState();closeModal("editListModal");render();toast("Demonlist renamed.","success");
+}
+function deleteCurrentList(){
+const list=getCurrentList();if(!list)return;
+if(!confirm(`Delete "${list.name}" and all ${list.levels.length} levels?`))return;
+state.lists=state.lists.filter(x=>x.id!==list.id);state.selectedListId=state.lists[0]?.id||null;saveState();render();toast("Demonlist deleted.");
+}
+
+function renderSidebar(){
+const c=document.getElementById("listContainer");c.innerHTML="";
+if(!state.lists.length){c.innerHTML='<div style="color:#666d7d;font-size:11px;line-height:1.6;padding:8px 5px;">No Demonlists yet.<br>Create one to get started.</div>';return}
+state.lists.forEach(list=>{
+const b=document.createElement("button");
+b.className="list-item"+(list.id===state.selectedListId?" active":"");
+b.onclick=()=>selectList(list.id);
+b.innerHTML=`<div class="list-item-icon">🏆</div><div class="list-item-info"><div class="list-item-name">${escapeHtml(list.name)}</div><div class="list-item-count">${list.levels.length} ${list.levels.length===1?"level":"levels"}</div></div>`;
+c.appendChild(b);
+});
+}
+
+function render(){
+renderSidebar();
+const content=document.getElementById("content"),title=document.getElementById("pageTitle"),subtitle=document.getElementById("pageSubtitle"),current=getCurrentList();
+if(!state.username){
+title.textContent="CreateYourDemonlist";subtitle.textContent="Create your local Geometry Dash Demonlists.";
+content.innerHTML='<div class="empty-state"><div class="empty-icon">🏆</div><h2>Create your own Demonlist</h2><p>Build completely custom Demonlists with real Pointercrate and AREDL levels, or add your own custom levels.</p><button class="button primary" onclick="openModal(\'usernameModal\')">Get Started</button></div>';
+return;
+}
+if(!state.lists.length){
+title.textContent="CreateYourDemonlist";subtitle.textContent=`Welcome, ${escapeHtml(state.username)}!`;
+content.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><h2>Your Demonlist collection is empty</h2><p>Create your first Demonlist and start ranking levels.</p><button class="button primary" onclick="openCreateList()">＋ Create Demonlist</button></div>';
+return;
+}
+if(!current){state.selectedListId=state.lists[0].id;saveState();render();return}
+title.textContent=current.name;
+subtitle.textContent=`${current.levels.length} ${current.levels.length===1?"level":"levels"} · Ranked manually`;
+content.innerHTML=`
+<div class="card list-header">
+<div class="list-header-top">
+<div><div class="list-name">${escapeHtml(current.name)}</div><div class="list-meta">${current.levels.length} ${current.levels.length===1?"level":"levels"} · No points · Order determines rank</div></div>
+<div class="list-actions"><button class="button" onclick="openEditList()">✏ Rename</button><button class="button danger" onclick="deleteCurrentList()">🗑 Delete</button></div>
+</div>
+</div>
+<div class="card search-card">
+<div class="search-row">
+<div class="search-input-wrap"><input id="levelSearch" class="search-input" placeholder="Search Pointercrate + AREDL..." autocomplete="off"></div>
+<button class="button primary" onclick="searchLevels()">🔎 Search</button>
+<button class="button" onclick="openCustomLevel()">＋ Custom</button>
+</div>
+<div class="search-status" id="searchStatus"></div>
+<div class="search-results" id="searchResults"></div>
+</div>
+<div class="levels" id="levelsContainer">
+${current.levels.length?current.levels.map(renderLevelCard).join(""):'<div class="card empty-list"><strong>No levels yet</strong>Search for a level above or add a custom level to begin ranking.</div>'}
+</div>`;
+const input=document.getElementById("levelSearch");
+input?.addEventListener("keydown",handleSearchKey);
+}
+
+function handleSearchKey(e){if(e.key==="Enter"){e.preventDefault();searchLevels()}}
+function renderLevelCard(level,index){
+const thumbnail=level.thumbnail||getThumbnailFromVideo(level.videoUrl);
+const image=thumbnail?`<img class="level-thumbnail" src="${escapeAttribute(thumbnail)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="no-thumbnail" style="display:none;">🎮</div>`:'<div class="no-thumbnail">🎮</div>';
+const verified=level.verifier?`Verified by ${escapeHtml(level.verifier)}`:"";
+const date=level.verifiedDate?timeAgo(level.verifiedDate):"";
+return`
+<div class="card level-card">
+<div class="rank">#${index+1}</div>
+${image}
+<div class="level-main">
+<div class="level-name">${escapeHtml(level.name)}</div>
+<div class="level-creator">by ${escapeHtml(level.creator||"Unknown Creator")}</div>
+<div class="level-details">
+${verified?`<span class="detail-chip">✓ ${verified}</span>`:""}
+${date?`<span class="detail-chip">📅 ${escapeHtml(date)}</span>`:""}
+<span class="detail-chip">${escapeHtml(level.source||"Custom")}</span>
+${level.videoUrl?'<span class="detail-chip" style="color:#6ee7a0;">🎥 Video</span>':""}
+</div>
+</div>
+<div class="level-actions">
+<button class="small-button" title="Move up" onclick="moveLevel('${escapeAttribute(level.id)}',-1)">↑</button>
+<button class="small-button" title="Move down" onclick="moveLevel('${escapeAttribute(level.id)}',1)">↓</button>
+<button class="small-button" title="Set spot" onclick="setLevelSpot('${escapeAttribute(level.id)}')">#</button>
+<button class="small-button" title="Edit" onclick="openEditLevel('${escapeAttribute(level.id)}')">✏</button>
+<button class="small-button danger" title="Delete" onclick="deleteLevel('${escapeAttribute(level.id)}')">×</button>
+</div>
+</div>`;
+}
+
+function openProfile(){
+if(!state.username){openModal("usernameModal");return}
+const count=state.lists.reduce((n,l)=>n+l.levels.length,0);
+document.getElementById("profileName").textContent=state.username;
+document.getElementById("profileAvatar").textContent=getInitials(state.username);
+document.getElementById("profileListCount").textContent=state.lists.length;
+document.getElementById("profileLevelCount").textContent=count;
+openModal("profileModal");
+}
+function changeUsername(){
+closeModal("profileModal");
+const name=prompt("Enter your new username:",state.username);
+if(name===null)return;
+const cleaned=name.trim();
+if(!cleaned){toast("Username cannot be empty.","error");return}
+state.username=cleaned.slice(0,30);saveState();renderTopProfile();toast("Username updated.","success");
+}
+function renderTopProfile(){
+const username=document.getElementById("topUsername"),avatar=document.getElementById("topAvatar");
+if(!username||!avatar)return;
+username.textContent=state.username||"Profile";avatar.textContent=getInitials(state.username);
+}
+function saveUsername(){
+const name=document.getElementById("usernameInput").value.trim();
+if(!name){toast("Please choose a username.","error");return}
+state.username=name.slice(0,30);saveState();closeModal("usernameModal");
+if(!state.lists.length)openCreateList();
+render();renderTopProfile();toast(`Welcome, ${state.username}! 👋`,"success");
+}
+
+function exportData(){
+const backup={...state,exportedAt:new Date().toISOString(),app:"CreateYourDemonlist",version:2};
+const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+const url=URL.createObjectURL(blob),link=document.createElement("a");
+link.href=url;link.download=`CreateYourDemonlist-${new Date().toISOString().slice(0,10)}.json`;
+document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);toast("Backup exported. 💾","success");
+}
+
+function importData(event){
+const file=event.target.files?.[0];if(!file)return;
+const reader=new FileReader();
+reader.onload=()=>{
+try{
+const imported=JSON.parse(reader.result);
+if(!imported||typeof imported!=="object"||!Array.isArray(imported.lists))throw Error("Invalid backup format.");
+if(!confirm("Import this backup? Your current local data will be replaced.")){event.target.value="";return}
+imported.lists.forEach(list=>{
+if(!Array.isArray(list.levels))list.levels=[];
+list.levels.forEach(level=>{delete level.gdId;delete level.levelId});
+});
+state={username:imported.username||"",lists:imported.lists,selectedListId:imported.selectedListId||imported.lists[0]?.id||null};
+saveState();render();renderTopProfile();toast("Backup imported successfully. 📥","success");
+}catch(e){console.error(e);toast("That file isn't a valid CreateYourDemonlist backup.","error")}
+event.target.value="";
+};
+reader.readAsText(file);
+}
+
+function resetEverything(){
+if(!confirm("This will permanently delete all local Demonlists and your local profile. Continue?"))return;
+localStorage.removeItem(STORAGE_KEY);state=emptyState();aredlCache=null;render();renderTopProfile();openModal("usernameModal");toast("Everything was reset.");
+}
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("mobile-open")}
+function toast(message,type=""){
+const container=document.getElementById("toastContainer"),element=document.createElement("div");
+element.className=`toast ${type}`;element.textContent=message;container.appendChild(element);
+setTimeout(()=>element.remove(),3500);
+}
+
+document.querySelectorAll(".modal-overlay").forEach(overlay=>overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.classList.remove("open")}));
+
+render();renderTopProfile();
+if(!state.username)setTimeout(()=>openModal("usernameModal"),150);
 </script>
-
 </body>
 </html>
