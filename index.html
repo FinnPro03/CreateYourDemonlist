@@ -19,7 +19,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:
 .icon-button,.profile-button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:11px;padding:10px 13px}.profile-button{display:flex;align-items:center;gap:9px;font-weight:750}.profile-avatar{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:var(--red);font-size:12px;font-weight:900}
 .empty-state{max-width:700px;margin:100px auto;text-align:center}.empty-icon{font-size:52px;margin-bottom:14px}.empty-state h2{margin:0 0 8px;font-size:28px}.empty-state p{color:var(--muted);line-height:1.6}.card{background:rgba(16,18,24,.88);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 .list-header{padding:20px;margin-bottom:18px}.list-header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.list-name{font-size:24px;font-weight:900;letter-spacing:-.02em}.list-meta{color:var(--muted);font-size:12px;margin-top:5px}.list-actions{display:flex;gap:8px;flex-wrap:wrap}
-.button{border:1px solid var(--border);background:var(--panel-2);color:var(--text);border-radius:10px;padding:9px 12px;font-weight:700;transition:.15s ease}.button:hover{border-color:#444b5b;transform:translateY(-1px)}.button.primary{background:var(--red);border-color:var(--red);color:white}.button.primary:hover{background:var(--red-2)}.button.danger{color:#ff7185}
+.button{border:1px solid var(--border);background:var(--panel-2);color:var(--text);border-radius:10px;padding:9px 12px;font-weight:700;transition:.15s ease}.button:hover{border-color:#444b5b;transform:translateY(-1px)}.button.primary{background:var(--red);border-color:var(--red);color:white}.button.primary:hover{background:var(--red-2)}.button.danger{color:#ff7185}.button.green{background:rgba(53,208,127,.12);border-color:rgba(53,208,127,.3);color:#6ee7a0}
 .search-card{padding:18px;margin-bottom:18px}.search-row{display:flex;gap:9px}.search-input-wrap{flex:1;position:relative}.search-input{width:100%;border:1px solid var(--border);background:#0b0d12;color:var(--text);border-radius:11px;padding:13px 14px;outline:none}.search-input:focus{border-color:rgba(255,51,79,.65);box-shadow:0 0 0 3px rgba(255,51,79,.08)}.search-status{min-height:20px;color:var(--muted);font-size:12px;margin-top:10px}.search-results{margin-top:12px;display:grid;gap:8px}
 .search-result{display:flex;align-items:center;gap:12px;border:1px solid var(--border);background:var(--panel);padding:10px;border-radius:12px}.result-thumb{width:88px;height:50px;object-fit:cover;border-radius:7px;background:#07080b;flex-shrink:0}.result-info{min-width:0;flex:1}.result-name{font-weight:800;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.result-meta{color:var(--muted);font-size:11px;margin-top:3px}
 .source-badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.05em;background:#202531;color:#cdd2df;margin-left:4px}.source-badge.custom{background:rgba(255,209,102,.12);color:var(--yellow)}
@@ -27,6 +27,8 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:
 .levels{display:grid;gap:10px}.level-card{display:flex;align-items:stretch;gap:13px;padding:11px;min-width:0}.rank{width:48px;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:950;color:#d8dce6;flex-shrink:0}.level-thumbnail{width:150px;height:85px;border-radius:10px;object-fit:cover;background:#07080b;flex-shrink:0}.no-thumbnail{width:150px;height:85px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#171a22,#0b0d12);border:1px solid #232834;color:#555d6e;font-size:25px;flex-shrink:0}
 .level-main{min-width:0;flex:1;padding:2px 0}.level-name{font-size:16px;font-weight:900;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.level-creator{color:var(--muted);font-size:11px;margin-top:3px}.level-details{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.detail-chip{background:var(--panel-3);border:1px solid #292f3b;color:#bfc5d3;padding:4px 7px;border-radius:7px;font-size:10px}
 .level-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}.small-button{width:31px;height:31px;border:1px solid var(--border);background:var(--panel-2);color:#d9deea;border-radius:8px;font-weight:900}.small-button:hover{background:var(--panel-3)}.small-button.danger:hover{color:#ff7185;border-color:rgba(255,113,133,.35)}
+.public-banner{padding:14px 18px;margin-bottom:18px;border:1px solid rgba(77,163,255,.3);background:rgba(77,163,255,.07);border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:15px}.public-banner-title{font-weight:850}.public-banner-text{color:var(--muted);font-size:11px;margin-top:3px}.public-badge{display:inline-flex;align-items:center;background:rgba(77,163,255,.14);color:#7dbdff;border:1px solid rgba(77,163,255,.25);border-radius:999px;padding:5px 9px;font-size:10px;font-weight:850;white-space:nowrap}
+.public-owner{text-align:center;padding:25px 20px;margin-bottom:18px}.public-owner-avatar{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--red),#a6001d);display:grid;place-items:center;font-size:22px;font-weight:950;margin:0 auto 9px}.public-owner-name{font-size:15px;font-weight:850}.public-owner-label{font-size:10px;color:var(--muted);margin-top:3px}
 .empty-list{padding:55px 20px;text-align:center;color:var(--muted)}.empty-list strong{display:block;color:var(--text);font-size:17px;margin-bottom:5px}
 .modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:20px}.modal-overlay.open{display:flex}.modal{width:min(600px,100%);max-height:90vh;overflow-y:auto;background:#11141b;border:1px solid var(--border);border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.55);padding:21px}.modal.large{width:min(720px,100%)}.modal-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}.modal-title{font-size:20px;font-weight:900}.close-button{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:18px}
 .form-grid{display:grid;gap:13px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;color:#c4c9d5;font-size:11px;font-weight:800;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);background:#0a0c11;color:var(--text);border-radius:10px;padding:11px;outline:none}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(255,51,79,.6)}.help-text{color:#707889;font-size:10px;line-height:1.5;margin-top:5px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:19px}
@@ -34,7 +36,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:
 .toast-container{position:fixed;right:20px;bottom:20px;z-index:500;display:grid;gap:8px}.toast{max-width:360px;background:#171a22;border:1px solid var(--border);color:var(--text);border-radius:11px;padding:11px 14px;box-shadow:var(--shadow);font-size:12px;animation:toastIn .2s ease}.toast.success{border-color:rgba(53,208,127,.3)}.toast.error{border-color:rgba(255,51,79,.35)}@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .mobile-header{display:none}
 @media(max-width:850px){.sidebar{width:235px}.main{padding:20px}.level-thumbnail,.no-thumbnail{width:125px;height:72px}}
-@media(max-width:680px){.app{display:block}.sidebar{position:fixed;inset:0 auto 0 0;width:min(290px,86vw);transform:translateX(-105%);transition:transform .2s ease;box-shadow:20px 0 70px rgba(0,0,0,.45)}.sidebar.mobile-open{transform:translateX(0)}.mobile-header{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--border);background:rgba(9,11,15,.94);position:sticky;top:0;z-index:30}.mobile-menu{border:1px solid var(--border);background:var(--panel);color:white;border-radius:9px;padding:8px 11px}.mobile-title{font-size:14px;font-weight:900}.main{padding:16px}.topbar{align-items:flex-start}.top-actions .icon-button{display:none}.page-title{font-size:22px}.list-header-top{display:block}.list-actions{margin-top:13px}.search-row{flex-direction:column}.level-card{flex-wrap:wrap}.rank{width:32px}.level-thumbnail,.no-thumbnail{width:105px;height:62px}.level-main{min-width:calc(100% - 170px)}.level-actions{width:100%;justify-content:flex-end}.form-row{grid-template-columns:1fr}}
+@media(max-width:680px){.app{display:block}.sidebar{position:fixed;inset:0 auto 0 0;width:min(290px,86vw);transform:translateX(-105%);transition:transform .2s ease;box-shadow:20px 0 70px rgba(0,0,0,.45)}.sidebar.mobile-open{transform:translateX(0)}.mobile-header{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--border);background:rgba(9,11,15,.94);position:sticky;top:0;z-index:30}.mobile-menu{border:1px solid var(--border);background:var(--panel);color:white;border-radius:9px;padding:8px 11px}.mobile-title{font-size:14px;font-weight:900}.main{padding:16px}.topbar{align-items:flex-start}.top-actions .icon-button{display:none}.page-title{font-size:22px}.list-header-top{display:block}.list-actions{margin-top:13px}.search-row{flex-direction:column}.level-card{flex-wrap:wrap}.rank{width:32px}.level-thumbnail,.no-thumbnail{width:105px;height:62px}.level-main{min-width:calc(100% - 170px)}.level-actions{width:100%;justify-content:flex-end}.form-row{grid-template-columns:1fr}.public-banner{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -56,6 +58,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:
 <div class="sidebar-bottom">
 <button class="sidebar-button primary" onclick="openCreateList()">＋ Create Demonlist</button>
 <button class="sidebar-button" onclick="openProfile()">👤 Profile</button>
+<button class="sidebar-button" onclick="openExplore()">🌍 Public Lists</button>
 <button class="sidebar-button" onclick="exportData()">💾 Export Backup</button>
 <button class="sidebar-button" onclick="document.getElementById('importFile').click()">📥 Import Backup</button>
 <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importData(event)">
@@ -67,6 +70,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:
 <div class="topbar">
 <div><div class="page-title" id="pageTitle">CreateYourDemonlist</div><div class="page-subtitle" id="pageSubtitle">Build your own Geometry Dash Demonlist.</div></div>
 <div class="top-actions">
+<button class="icon-button" onclick="openExplore()">🌍 Public Lists</button>
 <button class="icon-button" onclick="openCreateList()">＋ List</button>
 <button class="profile-button" onclick="openProfile()"><span class="profile-avatar" id="topAvatar">?</span><span id="topUsername">Profile</span></button>
 </div>
@@ -178,13 +182,16 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:
 const STORAGE_KEY="createYourDemonlist_v2";
 const POINTERCRATE_API="https://pointercrate.com/api/v2/demons/";
 const AREDL_API="https://api.aredl.net/v2/api/aredl/levels";
+
 let state=loadState(),currentSearchToken=0,editingListId=null,aredlCache=null,aredlLoading=null;
+let publicMode=false,publicList=null,publicError="";
 
 function uid(){return window.crypto?.randomUUID?crypto.randomUUID():"id_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2)}
 function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 function escapeAttribute(v){return escapeHtml(v)}
 function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function emptyState(){return{username:"",lists:[],selectedListId:null}}
+
 function loadState(){
 try{
 const raw=localStorage.getItem(STORAGE_KEY);
@@ -193,18 +200,17 @@ const p=JSON.parse(raw);
 const lists=Array.isArray(p.lists)?p.lists:[];
 lists.forEach(list=>{
 if(!Array.isArray(list.levels))list.levels=[];
-list.levels.forEach(level=>{
-delete level.gdId;
-delete level.levelId;
-});
+list.levels.forEach(level=>{delete level.gdId;delete level.levelId});
 });
 return{username:p.username||"",lists,selectedListId:p.selectedListId||null};
 }catch(e){console.error(e);return emptyState()}
 }
+
 function closeModal(id){document.getElementById(id)?.classList.remove("open")}
 function openModal(id){document.getElementById(id)?.classList.add("open")}
 function getCurrentList(){return state.lists.find(x=>x.id===state.selectedListId)||null}
 function getInitials(name){if(!name?.trim())return"?";return name.trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase()}
+
 function timeAgo(dateString){
 if(!dateString)return"";
 const date=new Date(dateString+"T00:00:00");
@@ -232,6 +238,7 @@ const allowed=["youtube.com","www.youtube.com","youtu.be","m.youtube.com","youtu
 return allowed.some(x=>h===x||h.endsWith("."+x))?u.href:s;
 }catch{return""}
 }
+
 function getYouTubeId(s){
 if(!s)return null;
 try{
@@ -245,10 +252,12 @@ if(["shorts","embed","live"].includes(p[0]))return p[1]||null;
 }catch{}
 return null;
 }
+
 function getThumbnailFromVideo(url){
 const id=getYouTubeId(url);
 return id?`https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`:"";
 }
+
 function findVideoUrlInObject(obj,depth=0){
 if(!obj||depth>5)return"";
 if(typeof obj==="string"){
@@ -266,20 +275,24 @@ for(const[k,v]of Object.entries(obj))if(/video|youtube|proof/i.test(k)){const r=
 }
 return"";
 }
+
 function firstValue(obj,keys){
 for(const k of keys)if(obj&&obj[k]!==null&&obj[k]!==undefined&&String(obj[k]).trim()!=="")return obj[k];
 return"";
 }
+
 function objectName(value){
 if(typeof value==="string"||typeof value==="number")return String(value);
 if(!value||typeof value!=="object")return"";
 for(const k of["name","username","user_name","display_name","displayName","player","creator_name","verifier_name"])if(value[k]!==undefined&&typeof value[k]!=="object")return String(value[k]);
 return"";
 }
+
 function normalizePerson(value){
 if(Array.isArray(value))return value.map(objectName).filter(Boolean).join(", ");
 return objectName(value);
 }
+
 function normalizeDate(value){
 if(!value)return"";
 const s=String(value);
@@ -287,6 +300,7 @@ if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;
 const d=new Date(value);
 return Number.isNaN(d.getTime())?"":d.toISOString().slice(0,10);
 }
+
 function normalizeLevel(raw,source){
 const name=firstValue(raw,["name","level_name","levelName","title"]);
 const rawVideo=findVideoUrlInObject(raw);
@@ -297,17 +311,9 @@ creator=normalizePerson(firstValue(raw,["creator","creator_name","creatorName","
 verifier=normalizePerson(firstValue(raw,["verifier","verifier_name","verifierName","verified_by","verifiedBy"]));
 }
 const dateValue=firstValue(raw,["verified_date","verifiedDate","verification_date","verificationDate","verified_at","verifiedAt","verification_time"]);
-return{
-name:String(name||"Unknown Level"),
-creator,
-verifier,
-verifiedDate:normalizeDate(dateValue),
-source,
-videoUrl,
-thumbnail:getThumbnailFromVideo(videoUrl),
-raw
-};
+return{name:String(name||"Unknown Level"),creator,verifier,verifiedDate:normalizeDate(dateValue),source,videoUrl,thumbnail:getThumbnailFromVideo(videoUrl),raw};
 }
+
 function extractArray(payload){
 if(Array.isArray(payload))return payload;
 if(!payload||typeof payload!=="object")return[];
@@ -336,9 +342,7 @@ return aredlLoading;
 }
 
 async function searchAREDL(query){
-const levels=await loadAREDL();
-const q=query.trim().toLowerCase();
-const words=q.split(/\s+/).filter(Boolean);
+const levels=await loadAREDL(),q=query.trim().toLowerCase(),words=q.split(/\s+/).filter(Boolean);
 return levels.filter(level=>{
 const hay=`${level.name} ${level.creator}`.toLowerCase();
 return hay.includes(q)||words.every(word=>hay.includes(word));
@@ -401,8 +405,8 @@ if(exists){toast("That level is already on this Demonlist.","error");return}
 const level={
 id:uid(),
 name:apiLevel.name||"Unknown Level",
-creator:"",
-verifier:"",
+creator:apiLevel.creator||"",
+verifier:apiLevel.verifier||"",
 verifiedDate:apiLevel.verifiedDate||"",
 source:apiLevel.source||"Custom",
 videoUrl:apiLevel.videoUrl||"",
@@ -431,15 +435,11 @@ if(!name){toast("A custom level needs a name.","error");return}
 if(list.levels.some(x=>x.name.toLowerCase()===name.toLowerCase())){toast("That level is already on this Demonlist.","error");return}
 const videoUrl=normalizeVideoUrl(document.getElementById("customVideoInput").value);
 list.levels.push({
-id:uid(),
-name,
+id:uid(),name,
 creator:document.getElementById("customCreatorInput").value.trim(),
 verifier:document.getElementById("customVerifierInput").value.trim(),
 verifiedDate:document.getElementById("customDateInput").value,
-source:"Custom",
-videoUrl,
-thumbnail:getThumbnailFromVideo(videoUrl),
-addedAt:Date.now()
+source:"Custom",videoUrl,thumbnail:getThumbnailFromVideo(videoUrl),addedAt:Date.now()
 });
 list.updatedAt=Date.now();saveState();closeModal("customLevelModal");render();toast(`"${name}" added as a custom level! 🛠️`,"success");
 }
@@ -502,25 +502,35 @@ function deleteLevel(levelId){
 const list=getCurrentList();if(!list)return;
 const level=list.levels.find(x=>x.id===levelId);if(!level)return;
 if(!confirm(`Delete "${level.name}" from this Demonlist?`))return;
-list.levels=list.levels.filter(x=>x.id!==levelId);list.updatedAt=Date.now();saveState();render();toast("Level removed.");
+list.levels=list.levels.filter(x=>x.id!==levelId);
+list.updatedAt=Date.now();saveState();render();toast("Level removed.");
 }
 
-function openCreateList(){document.getElementById("newListName").value="";openModal("createListModal")}
+function openCreateList(){
+if(publicMode){exitPublicMode();return}
+document.getElementById("newListName").value="";
+openModal("createListModal");
+}
+
 function createList(){
 const name=document.getElementById("newListName").value.trim();
 if(!name){toast("Give your Demonlist a name.","error");return}
 const list={id:uid(),name,levels:[],createdAt:Date.now(),updatedAt:Date.now()};
 state.lists.push(list);state.selectedListId=list.id;saveState();closeModal("createListModal");render();toast(`"${name}" created! 🔥`,"success");
 }
+
 function selectList(id){
+if(publicMode){exitPublicMode();return}
 if(!state.lists.some(x=>x.id===id))return;
 state.selectedListId=id;saveState();render();
 if(innerWidth<=680)document.getElementById("sidebar").classList.remove("mobile-open");
 }
+
 function openEditList(){
 const list=getCurrentList();if(!list)return;
 editingListId=list.id;document.getElementById("editListName").value=list.name;openModal("editListModal");
 }
+
 function saveListName(){
 if(!editingListId)return;
 const list=state.lists.find(x=>x.id===editingListId);if(!list)return;
@@ -528,15 +538,22 @@ const name=document.getElementById("editListName").value.trim();
 if(!name){toast("List name cannot be empty.","error");return}
 list.name=name;list.updatedAt=Date.now();saveState();closeModal("editListModal");render();toast("Demonlist renamed.","success");
 }
+
 function deleteCurrentList(){
 const list=getCurrentList();if(!list)return;
 if(!confirm(`Delete "${list.name}" and all ${list.levels.length} levels?`))return;
-state.lists=state.lists.filter(x=>x.id!==list.id);state.selectedListId=state.lists[0]?.id||null;saveState();render();toast("Demonlist deleted.");
+state.lists=state.lists.filter(x=>x.id!==list.id);
+state.selectedListId=state.lists[0]?.id||null;
+saveState();render();toast("Demonlist deleted.");
 }
 
 function renderSidebar(){
-const c=document.getElementById("listContainer");c.innerHTML="";
-if(!state.lists.length){c.innerHTML='<div style="color:#666d7d;font-size:11px;line-height:1.6;padding:8px 5px;">No Demonlists yet.<br>Create one to get started.</div>';return}
+const c=document.getElementById("listContainer");
+c.innerHTML="";
+if(!state.lists.length){
+c.innerHTML='<div style="color:#666d7d;font-size:11px;line-height:1.6;padding:8px 5px;">No Demonlists yet.<br>Create one to get started.</div>';
+return;
+}
 state.lists.forEach(list=>{
 const b=document.createElement("button");
 b.className="list-item"+(list.id===state.selectedListId?" active":"");
@@ -548,27 +565,52 @@ c.appendChild(b);
 
 function render(){
 renderSidebar();
-const content=document.getElementById("content"),title=document.getElementById("pageTitle"),subtitle=document.getElementById("pageSubtitle"),current=getCurrentList();
+renderTopProfile();
+const content=document.getElementById("content"),title=document.getElementById("pageTitle"),subtitle=document.getElementById("pageSubtitle");
+
+if(publicMode){
+renderPublicView();
+return;
+}
+
+const current=getCurrentList();
+
 if(!state.username){
-title.textContent="CreateYourDemonlist";subtitle.textContent="Create your local Geometry Dash Demonlists.";
+title.textContent="CreateYourDemonlist";
+subtitle.textContent="Create your local Geometry Dash Demonlists.";
 content.innerHTML='<div class="empty-state"><div class="empty-icon">🏆</div><h2>Create your own Demonlist</h2><p>Build completely custom Demonlists with real Pointercrate and AREDL levels, or add your own custom levels.</p><button class="button primary" onclick="openModal(\'usernameModal\')">Get Started</button></div>';
 return;
 }
+
 if(!state.lists.length){
-title.textContent="CreateYourDemonlist";subtitle.textContent=`Welcome, ${escapeHtml(state.username)}!`;
+title.textContent="CreateYourDemonlist";
+subtitle.textContent=`Welcome, ${escapeHtml(state.username)}!`;
 content.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><h2>Your Demonlist collection is empty</h2><p>Create your first Demonlist and start ranking levels.</p><button class="button primary" onclick="openCreateList()">＋ Create Demonlist</button></div>';
 return;
 }
-if(!current){state.selectedListId=state.lists[0].id;saveState();render();return}
+
+if(!current){
+state.selectedListId=state.lists[0].id;
+saveState();
+render();
+return;
+}
+
 title.textContent=current.name;
 subtitle.textContent=`${current.levels.length} ${current.levels.length===1?"level":"levels"} · Ranked manually`;
+
 content.innerHTML=`
 <div class="card list-header">
 <div class="list-header-top">
 <div><div class="list-name">${escapeHtml(current.name)}</div><div class="list-meta">${current.levels.length} ${current.levels.length===1?"level":"levels"} · No points · Order determines rank</div></div>
-<div class="list-actions"><button class="button" onclick="openEditList()">✏ Rename</button><button class="button danger" onclick="deleteCurrentList()">🗑 Delete</button></div>
+<div class="list-actions">
+<button class="button green" onclick="publishCurrentList()">🌍 Publish</button>
+<button class="button" onclick="openEditList()">✏ Rename</button>
+<button class="button danger" onclick="deleteCurrentList()">🗑 Delete</button>
 </div>
 </div>
+</div>
+
 <div class="card search-card">
 <div class="search-row">
 <div class="search-input-wrap"><input id="levelSearch" class="search-input" placeholder="Search Pointercrate + AREDL..." autocomplete="off"></div>
@@ -578,6 +620,7 @@ content.innerHTML=`
 <div class="search-status" id="searchStatus"></div>
 <div class="search-results" id="searchResults"></div>
 </div>
+
 <div class="levels" id="levelsContainer">
 ${current.levels.length?current.levels.map(renderLevelCard).join(""):'<div class="card empty-list"><strong>No levels yet</strong>Search for a level above or add a custom level to begin ranking.</div>'}
 </div>`;
@@ -585,12 +628,22 @@ const input=document.getElementById("levelSearch");
 input?.addEventListener("keydown",handleSearchKey);
 }
 
-function handleSearchKey(e){if(e.key==="Enter"){e.preventDefault();searchLevels()}}
-function renderLevelCard(level,index){
+function renderLevelCard(level,index,readonly=false){
 const thumbnail=level.thumbnail||getThumbnailFromVideo(level.videoUrl);
 const image=thumbnail?`<img class="level-thumbnail" src="${escapeAttribute(thumbnail)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="no-thumbnail" style="display:none;">🎮</div>`:'<div class="no-thumbnail">🎮</div>';
 const verified=level.verifier?`Verified by ${escapeHtml(level.verifier)}`:"";
 const date=level.verifiedDate?timeAgo(level.verifiedDate):"";
+const video=level.videoUrl?`<span class="detail-chip" style="color:#6ee7a0;">🎥 Video</span>`:"";
+
+const actions=readonly?"":`
+<div class="level-actions">
+<button class="small-button" title="Move up" onclick="moveLevel('${escapeAttribute(level.id)}',-1)">↑</button>
+<button class="small-button" title="Move down" onclick="moveLevel('${escapeAttribute(level.id)}',1)">↓</button>
+<button class="small-button" title="Set spot" onclick="setLevelSpot('${escapeAttribute(level.id)}')">#</button>
+<button class="small-button" title="Edit" onclick="openEditLevel('${escapeAttribute(level.id)}')">✏</button>
+<button class="small-button danger" title="Delete" onclick="deleteLevel('${escapeAttribute(level.id)}')">×</button>
+</div>`;
+
 return`
 <div class="card level-card">
 <div class="rank">#${index+1}</div>
@@ -602,20 +655,15 @@ ${image}
 ${verified?`<span class="detail-chip">✓ ${verified}</span>`:""}
 ${date?`<span class="detail-chip">📅 ${escapeHtml(date)}</span>`:""}
 <span class="detail-chip">${escapeHtml(level.source||"Custom")}</span>
-${level.videoUrl?'<span class="detail-chip" style="color:#6ee7a0;">🎥 Video</span>':""}
+${video}
 </div>
 </div>
-<div class="level-actions">
-<button class="small-button" title="Move up" onclick="moveLevel('${escapeAttribute(level.id)}',-1)">↑</button>
-<button class="small-button" title="Move down" onclick="moveLevel('${escapeAttribute(level.id)}',1)">↓</button>
-<button class="small-button" title="Set spot" onclick="setLevelSpot('${escapeAttribute(level.id)}')">#</button>
-<button class="small-button" title="Edit" onclick="openEditLevel('${escapeAttribute(level.id)}')">✏</button>
-<button class="small-button danger" title="Delete" onclick="deleteLevel('${escapeAttribute(level.id)}')">×</button>
-</div>
+${actions}
 </div>`;
 }
 
 function openProfile(){
+if(publicMode){exitPublicMode();return}
 if(!state.username){openModal("usernameModal");return}
 const count=state.lists.reduce((n,l)=>n+l.levels.length,0);
 document.getElementById("profileName").textContent=state.username;
@@ -624,37 +672,54 @@ document.getElementById("profileListCount").textContent=state.lists.length;
 document.getElementById("profileLevelCount").textContent=count;
 openModal("profileModal");
 }
+
 function changeUsername(){
 closeModal("profileModal");
 const name=prompt("Enter your new username:",state.username);
 if(name===null)return;
 const cleaned=name.trim();
 if(!cleaned){toast("Username cannot be empty.","error");return}
-state.username=cleaned.slice(0,30);saveState();renderTopProfile();toast("Username updated.","success");
+state.username=cleaned.slice(0,30);
+saveState();
+renderTopProfile();
+toast("Username updated.","success");
 }
+
 function renderTopProfile(){
 const username=document.getElementById("topUsername"),avatar=document.getElementById("topAvatar");
 if(!username||!avatar)return;
-username.textContent=state.username||"Profile";avatar.textContent=getInitials(state.username);
+username.textContent=state.username||"Profile";
+avatar.textContent=getInitials(state.username);
 }
+
 function saveUsername(){
 const name=document.getElementById("usernameInput").value.trim();
 if(!name){toast("Please choose a username.","error");return}
-state.username=name.slice(0,30);saveState();closeModal("usernameModal");
+state.username=name.slice(0,30);
+saveState();
+closeModal("usernameModal");
 if(!state.lists.length)openCreateList();
-render();renderTopProfile();toast(`Welcome, ${state.username}! 👋`,"success");
+render();
+renderTopProfile();
+toast(`Welcome, ${state.username}! 👋`,"success");
 }
 
 function exportData(){
 const backup={...state,exportedAt:new Date().toISOString(),app:"CreateYourDemonlist",version:2};
 const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
 const url=URL.createObjectURL(blob),link=document.createElement("a");
-link.href=url;link.download=`CreateYourDemonlist-${new Date().toISOString().slice(0,10)}.json`;
-document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);toast("Backup exported. 💾","success");
+link.href=url;
+link.download=`CreateYourDemonlist-${new Date().toISOString().slice(0,10)}.json`;
+document.body.appendChild(link);
+link.click();
+link.remove();
+URL.revokeObjectURL(url);
+toast("Backup exported. 💾","success");
 }
 
 function importData(event){
-const file=event.target.files?.[0];if(!file)return;
+const file=event.target.files?.[0];
+if(!file)return;
 const reader=new FileReader();
 reader.onload=()=>{
 try{
@@ -666,8 +731,14 @@ if(!Array.isArray(list.levels))list.levels=[];
 list.levels.forEach(level=>{delete level.gdId;delete level.levelId});
 });
 state={username:imported.username||"",lists:imported.lists,selectedListId:imported.selectedListId||imported.lists[0]?.id||null};
-saveState();render();renderTopProfile();toast("Backup imported successfully. 📥","success");
-}catch(e){console.error(e);toast("That file isn't a valid CreateYourDemonlist backup.","error")}
+saveState();
+render();
+renderTopProfile();
+toast("Backup imported successfully. 📥","success");
+}catch(e){
+console.error(e);
+toast("That file isn't a valid CreateYourDemonlist backup.","error");
+}
 event.target.value="";
 };
 reader.readAsText(file);
@@ -675,19 +746,330 @@ reader.readAsText(file);
 
 function resetEverything(){
 if(!confirm("This will permanently delete all local Demonlists and your local profile. Continue?"))return;
-localStorage.removeItem(STORAGE_KEY);state=emptyState();aredlCache=null;render();renderTopProfile();openModal("usernameModal");toast("Everything was reset.");
+localStorage.removeItem(STORAGE_KEY);
+state=emptyState();
+aredlCache=null;
+publicMode=false;
+publicList=null;
+render();
+renderTopProfile();
+openModal("usernameModal");
+toast("Everything was reset.");
 }
-function toggleSidebar(){document.getElementById("sidebar").classList.toggle("mobile-open")}
+
+function toggleSidebar(){
+document.getElementById("sidebar").classList.toggle("mobile-open");
+}
+
 function toast(message,type=""){
 const container=document.getElementById("toastContainer"),element=document.createElement("div");
-element.className=`toast ${type}`;element.textContent=message;container.appendChild(element);
+element.className=`toast ${type}`;
+element.textContent=message;
+container.appendChild(element);
 setTimeout(()=>element.remove(),3500);
 }
 
-document.querySelectorAll(".modal-overlay").forEach(overlay=>overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.classList.remove("open")}));
+/* =========================
+   PUBLIC LIST SYSTEM
+   ========================= */
 
-render();renderTopProfile();
-if(!state.username)setTimeout(()=>openModal("usernameModal"),150);
+function encodePublicList(list){
+const payload={
+version:1,
+username:state.username||"Anonymous",
+list:{
+name:list.name||"Unnamed Demonlist",
+levels:Array.isArray(list.levels)?list.levels.map(level=>({
+name:level.name||"",
+creator:level.creator||"",
+verifier:level.verifier||"",
+verifiedDate:level.verifiedDate||"",
+source:level.source||"Custom",
+videoUrl:level.videoUrl||"",
+thumbnail:level.thumbnail||""
+})):[],
+updatedAt:list.updatedAt||Date.now()
+}
+};
+
+const json=JSON.stringify(payload);
+const bytes=new TextEncoder().encode(json);
+let binary="";
+for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));
+return btoa(binary).replaceAll("+","-").replaceAll("/","_").replaceAll("=","");
+}
+
+function decodePublicList(encoded){
+try{
+const normalized=encoded.replaceAll("-","+").replaceAll("_","/");
+const padded=normalized+"=".repeat((4-normalized.length%4)%4);
+const binary=atob(padded);
+const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+const json=new TextDecoder().decode(bytes);
+const data=JSON.parse(json);
+
+if(!data||data.version!==1||!data.list||typeof data.list!=="object")return null;
+if(typeof data.list.name!=="string"||!Array.isArray(data.list.levels))return null;
+
+return{
+username:String(data.username||"Anonymous"),
+list:{
+name:data.list.name,
+levels:data.list.levels.map(level=>({
+name:String(level.name||"Unknown Level"),
+creator:String(level.creator||""),
+verifier:String(level.verifier||""),
+verifiedDate:String(level.verifiedDate||""),
+source:String(level.source||"Custom"),
+videoUrl:String(level.videoUrl||""),
+thumbnail:String(level.thumbnail||"")
+})),
+updatedAt:Number(data.list.updatedAt)||Date.now()
+}
+};
+}catch(e){
+console.error("Public list decode failed:",e);
+return null;
+}
+}
+
+function buildPublicUrl(list){
+const encoded=encodePublicList(list);
+const url=new URL(window.location.href);
+url.hash="";
+url.search="";
+url.searchParams.set("public",encoded);
+return url.href;
+}
+
+async function publishCurrentList(){
+const list=getCurrentList();
+if(!list){
+toast("Create or select a Demonlist first.","error");
+return;
+}
+
+if(!state.username){
+toast("Choose a username before publishing.","error");
+return;
+}
+
+try{
+const url=buildPublicUrl(list);
+await copyText(url);
+toast("Public link copied! 🌍🔗","success");
+}catch(e){
+console.error(e);
+toast("Could not create the public link.","error");
+}
+}
+
+async function copyPublicLink(){
+if(!publicList)return;
+try{
+const url=buildPublicUrl({
+name:publicList.name,
+levels:publicList.levels,
+updatedAt:publicList.updatedAt
+});
+await copyText(url);
+toast("Public link copied! 🔗","success");
+}catch(e){
+toast("Could not copy the link.","error");
+}
+}
+
+async function copyText(text){
+if(navigator.clipboard&&window.isSecureContext){
+await navigator.clipboard.writeText(text);
+return;
+}
+const area=document.createElement("textarea");
+area.value=text;
+area.style.position="fixed";
+area.style.opacity="0";
+document.body.appendChild(area);
+area.focus();
+area.select();
+document.execCommand("copy");
+area.remove();
+}
+
+function loadPublicFromUrl(){
+const params=new URLSearchParams(window.location.search);
+const encoded=params.get("public");
+
+if(!encoded)return false;
+
+const decoded=decodePublicList(encoded);
+
+if(!decoded){
+publicMode=true;
+publicError="This public Demonlist link is invalid or corrupted.";
+return true;
+}
+
+publicMode=true;
+publicList=decoded.list;
+publicList.owner=decoded.username;
+return true;
+}
+
+function renderPublicView(){
+const content=document.getElementById("content");
+const title=document.getElementById("pageTitle");
+const subtitle=document.getElementById("pageSubtitle");
+
+document.getElementById("sidebar").style.display="none";
+
+if(publicError){
+title.textContent="Public Demonlist";
+subtitle.textContent="Unable to load this list.";
+content.innerHTML=`
+<div class="empty-state">
+<div class="empty-icon">⚠️</div>
+<h2>Invalid Public List</h2>
+<p>${escapeHtml(publicError)}</p>
+<button class="button primary" onclick="exitPublicMode()">← Return to CreateYourDemonlist</button>
+</div>`;
+return;
+}
+
+const list=publicList;
+const owner=list.owner||"Anonymous";
+
+title.textContent=list.name;
+subtitle.textContent=`${list.levels.length} ${list.levels.length===1?"level":"levels"} · Public view · Read-only`;
+
+content.innerHTML=`
+<div class="public-banner">
+<div>
+<div class="public-banner-title">🌍 Public Demonlist</div>
+<div class="public-banner-text">You're viewing a shared Demonlist in read-only mode.</div>
+</div>
+<div class="public-badge">READ ONLY</div>
+</div>
+
+<div class="card public-owner">
+<div class="public-owner-avatar">${escapeHtml(getInitials(owner))}</div>
+<div class="public-owner-name">${escapeHtml(owner)}</div>
+<div class="public-owner-label">Demonlist creator</div>
+<div style="margin-top:15px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">
+<button class="button green" onclick="copyPublicLink()">🔗 Copy Public Link</button>
+<button class="button" onclick="exitPublicMode()">← My Demonlists</button>
+</div>
+</div>
+
+<div class="card list-header">
+<div class="list-header-top">
+<div>
+<div class="list-name">${escapeHtml(list.name)}</div>
+<div class="list-meta">${list.levels.length} ${list.levels.length===1?"level":"levels"} · No points · Order determines rank</div>
+</div>
+</div>
+</div>
+
+<div class="levels">
+${list.levels.length?list.levels.map((level,index)=>renderLevelCard(level,index,true)).join(""):'<div class="card empty-list"><strong>This Demonlist has no levels</strong>The creator has not added any levels yet.</div>'}
+</div>`;
+}
+
+function openExplore(){
+if(publicMode){
+exitPublicMode();
+return;
+}
+
+document.getElementById("pageTitle").textContent="Public Demonlists";
+document.getElementById("pageSubtitle").textContent="Open a shared Demonlist link.";
+document.getElementById("content").innerHTML=`
+<div class="card" style="padding:28px;max-width:760px;margin:0 auto;">
+<div style="font-size:28px;margin-bottom:10px;">🌍</div>
+<div style="font-size:22px;font-weight:900;">View a Public Demonlist</div>
+<div style="color:var(--muted);font-size:13px;line-height:1.6;margin-top:7px;">
+Paste a CreateYourDemonlist public link below to view someone's list.
+</div>
+<div style="display:flex;gap:9px;margin-top:18px;">
+<input id="publicUrlInput" class="search-input" placeholder="https://your-site.github.io/?public=..." style="flex:1;">
+<button class="button primary" onclick="openPublicFromInput()">Open</button>
+</div>
+<div class="help-text" style="margin-top:12px;">
+Public lists are shared through links. No account or server is required.
+</div>
+</div>`;
+}
+
+function openPublicFromInput(){
+const input=document.getElementById("publicUrlInput");
+if(!input)return;
+
+const value=input.value.trim();
+if(!value){
+toast("Paste a public Demonlist link first.","error");
+return;
+}
+
+try{
+const url=new URL(value);
+const encoded=url.searchParams.get("public");
+
+if(!encoded)throw Error("Missing public list data.");
+
+const decoded=decodePublicList(encoded);
+
+if(!decoded)throw Error("Invalid public list.");
+
+publicMode=true;
+publicError="";
+publicList=decoded.list;
+publicList.owner=decoded.username;
+
+history.pushState({},document.title,url.href);
+document.getElementById("sidebar").style.display="none";
+render();
+}catch(e){
+toast("That doesn't look like a valid CreateYourDemonlist public link.","error");
+}
+}
+
+function exitPublicMode(){
+publicMode=false;
+publicList=null;
+publicError="";
+document.getElementById("sidebar").style.display="";
+history.pushState({},document.title,window.location.pathname+window.location.hash);
+render();
+}
+
+window.addEventListener("popstate",()=>{
+publicMode=false;
+publicList=null;
+publicError="";
+document.getElementById("sidebar").style.display="";
+loadPublicFromUrl();
+render();
+});
+
+/* =========================
+   STARTUP
+   ========================= */
+
+document.querySelectorAll(".modal-overlay").forEach(overlay=>{
+overlay.addEventListener("click",e=>{
+if(e.target===overlay)overlay.classList.remove("open");
+});
+});
+
+if(!loadPublicFromUrl()){
+publicMode=false;
+}
+
+render();
+renderTopProfile();
+
+if(!publicMode&&!state.username){
+setTimeout(()=>openModal("usernameModal"),150);
+}
 </script>
 </body>
 </html>
